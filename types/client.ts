@@ -3,15 +3,41 @@ export type ActivityLevel = 'sedentary' | 'light' | 'moderate' | 'active' | 'ath
 export type Goal = 'weight_loss' | 'maintenance' | 'muscle_gain' | 'energy' | 'digestion' | 'sugar_regulation' | 'cholesterol' | 'sleep' | 'other';
 export type FoodPreference = 'like' | 'neutral' | 'dislike';
 
+export interface Installment {
+    number: number;
+    amount: string;
+    date: string;
+    reminderDate: string;
+    isPaid: boolean;
+}
+
+export interface PackageItem {
+    id: string;
+    type: string; // Relaxed to allow Greek strings like '1 μήνας' used in UI
+    startDate: string;
+    endDate: string;
+    sessions: number;
+    price: string;
+    status: 'active' | 'completed' | 'future';
+}
+
 export interface ClientFormData {
     // Step 1: Personal Info
     firstName: string;
     lastName: string;
+    fathersName: string; // Added
     birthDate: string;
     gender: Gender;
     phone: string;
     email: string;
     occupation: string;
+    address: { // Added
+        street: string;
+        number: string;
+        area: string;
+        city: string;
+        postalCode: string;
+    };
 
     // Step 2: Health
     conditions: string[];
@@ -22,6 +48,9 @@ export interface ClientFormData {
     wakeUpTime: string;
     bedTime: string;
     workSchedule: string;
+    workHoursFrom: string; // Added
+    workHoursTo: string; // Added
+    shiftRotation: '2_shifts' | '3_shifts' | ''; // Added
     shiftWork: boolean;
     mealsPerDay: string; // "2"-"7"
     skipBreakfast: boolean;
@@ -30,7 +59,10 @@ export interface ClientFormData {
     delivery: boolean;
     coffee: boolean;
     coffeeCups: string;
+    coffeeSugar: 'sketos' | 'metrios' | 'glykos' | ''; // Added
+    coffeeMilk: boolean; // Added
     alcohol: boolean;
+    alcoholFrequency: string; // Added (string to handle empty state easily in forms)
     smoking: boolean;
 
     // Step 4: Diet Preferences
@@ -64,22 +96,35 @@ export interface ClientFormData {
         date: string;
         method: string;
     };
+    paymentPlan: Installment[]; // Added
+    packages: PackageItem[]; // Added for history
 }
 
 export const initialClientState: ClientFormData = {
     firstName: '',
     lastName: '',
+    fathersName: '',
     birthDate: '',
     gender: '',
     phone: '',
     email: '',
     occupation: '',
+    address: {
+        street: '',
+        number: '',
+        area: '',
+        city: '',
+        postalCode: ''
+    },
     conditions: [],
     medications: [],
     medicalNotes: '',
     wakeUpTime: '',
     bedTime: '',
     workSchedule: '',
+    workHoursFrom: '',
+    workHoursTo: '',
+    shiftRotation: '',
     shiftWork: false,
     mealsPerDay: '3',
     skipBreakfast: false,
@@ -88,7 +133,10 @@ export const initialClientState: ClientFormData = {
     delivery: false,
     coffee: false,
     coffeeCups: '',
+    coffeeSugar: '',
+    coffeeMilk: false,
     alcohol: false,
+    alcoholFrequency: '',
     smoking: false,
     foodPreferences: {},
     dislikedFoods: '',
@@ -110,5 +158,7 @@ export const initialClientState: ClientFormData = {
         amount: '',
         date: '',
         method: ''
-    }
+    },
+    paymentPlan: [],
+    packages: []
 };

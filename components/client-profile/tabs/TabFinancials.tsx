@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ClientFormData } from '@/types/client';
-import { Calculator, Calendar, CreditCard, Plus, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Calculator, Calendar, CreditCard, Plus, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
 
 interface Props {
@@ -74,87 +74,165 @@ export default function TabFinancials({ client }: Props) {
         }
     };
 
+    // Local state for packages list, initialized from client data
+    const [packages, setPackages] = useState<any[]>(client.packages || []);
+
+    const [isRenewing, setIsRenewing] = useState(false);
+    const [newPackage, setNewPackage] = useState({
+        type: '3 μήνες',
+        startDate: new Date().toISOString().split('T')[0],
+        price: '150'
+    });
+
+    // Auto-calculate end date for the new package form
+    // Logic: End Date is the date of the last session.
+    // Formula: Start + ((Sessions - 1) * 7 days)
+    const getCalculatedEndDate = (type: string, start: string) => {
+        if (!start) return '';
+        const date = new Date(start);
+
+        let sessions = 0;
+        switch (type) {
+            case '1 μήνας': sessions = 4; break;
+            case '3 μήνες': sessions = 12; break;
+            case '6 μήνες': sessions = 24; break;
+            case '12 μήνες': sessions = 48; break;
+        }
+
+        if (sessions > 0) {
+            date.setDate(date.getDate() + ((sessions - 1) * 7));
+            return date.toISOString().split('T')[0];
+        }
+        return '';
+    };
+
+    const handleAddRenewal = () => {
+        const endDate = getCalculatedEndDate(newPackage.type, newPackage.startDate);
+
+        let sessions = 0;
+        switch (newPackage.type) {
+            case '1 μήνας': sessions = 4; break;
+            case '3 μήνες': sessions = 12; break;
+            case '6 μήνες': sessions = 24; break;
+            case '12 μήνες': sessions = 48; break;
+        }
+
+        const pkgToAdd = {
+            id: Math.random().toString(36).substr(2, 9),
+            type: newPackage.type,
+            startDate: newPackage.startDate,
+            endDate: endDate,
+            sessions: sessions,
+            price: newPackage.price,
+            status: 'future'
+        };
+
+        setPackages([...packages, pkgToAdd]);
+        setIsRenewing(false);
+        setNewPackage({
+            type: '3 μήνες',
+            startDate: new Date().toISOString().split('T')[0],
+            price: '150'
+        });
+    };
+
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-300">
-
-            {/* Section 1: Package Settings */}
-            <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-                <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center border-b pb-2">
-                    <Calculator className="w-5 h-5 mr-2 text-blue-600" />
-                    Στοιχεία Πακέτου
-                </h3>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div>
-                        <label className="block text-sm font-medium text-gray-500 mb-1">Τύπος Συνεργασίας</label>
-                        <select
-                            value={packageDetails.type}
-                            onChange={e => setPackageDetails({ ...packageDetails, type: e.target.value })}
-                            className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border"
-                        >
-                            <option value="">Επιλογή...</option>
-                            {['1 μήνας', '3 μήνες', '6 μήνες', '12 μήνες', 'Συνεδρία-συνεδρία'].map(t => <option key={t} value={t}>{t}</option>)}
-                        </select>
-                    </div>
-
-                    <div>
-                        <label className="block text-sm font-medium text-gray-500 mb-1">Τιμή (καθαρή)</label>
-                        <div className="relative">
+            {isRenewing && (
+                <div className="bg-blue-50 p-6 rounded-xl border border-blue-200 animate-in slide-in-from-top-4 mb-6">
+                    <h4 className="font-bold text-blue-800 mb-4">Νέα Ανανέωση / Πακέτο</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                        <div>
+                            <label className="block text-xs font-semibold text-blue-600 uppercase mb-1">Τύπος</label>
+                            <select
+                                value={newPackage.type}
+                                onChange={e => setNewPackage({ ...newPackage, type: e.target.value })}
+                                className="w-full rounded-md border-blue-300 p-2 text-sm"
+                            >
+                                <option value="1 μήνας">1 μήνας (4 εβδ.)</option>
+                                <option value="3 μήνες">3 μήνες (12 εβδ.)</option>
+                                <option value="6 μήνες">6 μήνες (24 εβδ.)</option>
+                                <option value="12 μήνες">12 μήνες (48 εβδ.)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label className="block text-xs font-semibold text-blue-600 uppercase mb-1">Έναρξη</label>
+                            <input
+                                type="date"
+                                value={newPackage.startDate}
+                                onChange={e => setNewPackage({ ...newPackage, startDate: e.target.value })}
+                                className="w-full rounded-md border-blue-300 p-2 text-sm"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-xs font-semibold text-blue-600 uppercase mb-1">Τιμή</label>
                             <input
                                 type="number"
-                                value={packageDetails.price}
-                                onChange={e => setPackageDetails({ ...packageDetails, price: e.target.value })}
-                                className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border pr-8"
+                                value={newPackage.price}
+                                onChange={e => setNewPackage({ ...newPackage, price: e.target.value })}
+                                className="w-full rounded-md border-blue-300 p-2 text-sm"
                             />
-                            <span className="absolute right-3 top-2 text-gray-400">€</span>
+                        </div>
+                        <div className="flex space-x-2">
+                            <button onClick={handleAddRenewal} className="flex-1 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 text-sm font-medium">Αποθήκευση</button>
+                            <button onClick={() => setIsRenewing(false)} className="px-4 py-2 bg-white border border-blue-300 text-blue-600 rounded-md hover:bg-blue-50 text-sm font-medium">Ακύρωση</button>
                         </div>
                     </div>
+                </div>
+            )}
 
-                    <div className="flex items-center space-x-3 pt-6">
-                        <label className="flex items-center cursor-pointer">
-                            <input
-                                type="checkbox"
-                                checked={packageDetails.hasVat}
-                                onChange={e => setPackageDetails({ ...packageDetails, hasVat: e.target.checked })}
-                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                            />
-                            <span className="ml-2 text-sm text-gray-700">ΦΠΑ 24%</span>
-                        </label>
+            {/* Section 1: Packages History */}
+            <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                <div className="flex justify-between items-center mb-6 border-b pb-2">
+                    <h3 className="text-lg font-bold text-gray-900 flex items-center">
+                        <Calculator className="w-5 h-5 mr-2 text-blue-600" />
+                        Πακέτα & Συνεργασίες
+                    </h3>
+                    <button
+                        onClick={() => setIsRenewing(true)}
+                        className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
+                    >
+                        <Plus className="w-4 h-4 mr-1" />
+                        Ανανέωση
+                    </button>
+                </div>
+
+                <div className="space-y-4">
+                    {/* Header */}
+                    <div className="grid grid-cols-5 gap-4 text-xs font-semibold text-gray-500 uppercase pb-2 border-b">
+                        <div className="col-span-1">Τύπος</div>
+                        <div className="col-span-1">Έναρξη</div>
+                        <div className="col-span-1">Λήξη</div>
+                        <div className="col-span-1">Συνεδρίες</div>
+                        <div className="col-span-1 text-right">Τιμή</div>
                     </div>
 
-                    <div className="bg-gray-50 p-3 rounded-lg border border-gray-100 flex flex-col justify-center">
-                        <span className="text-xs text-gray-500 uppercase font-bold">Τελικο Συνολο</span>
-                        <span className="text-xl font-bold text-blue-700">{finalPrice.toFixed(2)} €</span>
+                    {/* Rows - Mocking standard active package from legacy data + new packages array */}
+                    {/* In a real app we'd map client.packages. For now we show the 'current' one as a row and allow adding more visualy */}
+                    <div className="grid grid-cols-5 gap-4 py-3 items-center border-b last:border-0 hover:bg-gray-50 transition-colors">
+                        <div className="col-span-1 font-medium text-gray-900">{packageDetails.type || '-'}</div>
+                        <div className="col-span-1 text-sm text-gray-600">{packageDetails.startDate}</div>
+                        <div className="col-span-1 text-sm text-gray-600">{packageDetails.endDate || '-'}</div>
+                        <div className="col-span-1 text-sm text-gray-600">
+                            {/* Auto-calc sessions for display */}
+                            {packageDetails.type === '1 μήνας' ? '4' :
+                                packageDetails.type === '3 μήνες' ? '12' :
+                                    packageDetails.type === '6 μήνες' ? '24' :
+                                        packageDetails.type === '12 μήνες' ? '48' : '-'}
+                        </div>
+                        <div className="col-span-1 text-right font-bold text-blue-600">{packageDetails.price} €</div>
                     </div>
 
-                    {/* Dates */}
-                    <div>
-                        <label className="block text-sm font-medium text-gray-500 mb-1">Έναρξη</label>
-                        <input
-                            type="date"
-                            value={packageDetails.startDate}
-                            onChange={e => setPackageDetails({ ...packageDetails, startDate: e.target.value })}
-                            className="w-full rounded-md border-gray-300 shadow-sm sm:text-sm p-2 border"
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-500 mb-1">Λήξη</label>
-                        <input
-                            type="date"
-                            value={packageDetails.endDate}
-                            onChange={e => setPackageDetails({ ...packageDetails, endDate: e.target.value })}
-                            className="w-full rounded-md border-gray-300 shadow-sm sm:text-sm p-2 border"
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-500 mb-1">Δόσεις</label>
-                        <input
-                            type="number"
-                            value={packageDetails.installments}
-                            onChange={e => setPackageDetails({ ...packageDetails, installments: e.target.value })}
-                            className="w-full rounded-md border-gray-300 shadow-sm sm:text-sm p-2 border"
-                        />
-                    </div>
+                    {/* Future: Map through client.packages here */}
+                    {packages.map((pkg, idx) => (
+                        <div key={idx} className="grid grid-cols-5 gap-4 py-3 items-center border-b last:border-0 hover:bg-gray-50 transition-colors">
+                            <div className="col-span-1 font-medium text-gray-900">{pkg.type}</div>
+                            <div className="col-span-1 text-sm text-gray-600">{pkg.startDate}</div>
+                            <div className="col-span-1 text-sm text-gray-600">{pkg.endDate}</div>
+                            <div className="col-span-1 text-sm text-gray-600">{pkg.sessions}</div>
+                            <div className="col-span-1 text-right font-bold text-blue-600">{pkg.price} €</div>
+                        </div>
+                    ))}
                 </div>
             </div>
 
@@ -254,6 +332,62 @@ export default function TabFinancials({ client }: Props) {
                 </div>
             </div>
 
+            {/* Installments Table */}
+            {(client.paymentPlan || []).length > 0 && (
+                <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden animate-in fade-in slide-in-from-bottom-4">
+                    <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
+                        <h3 className="text-lg font-medium text-gray-900">Πλάνο Δόσεων</h3>
+                    </div>
+                    <div className="overflow-x-auto">
+                        <table className="min-w-full divide-y divide-gray-200">
+                            <thead className="bg-gray-50">
+                                <tr>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Δόση</th>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ποσό</th>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ημ. Πληρωμής</th>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Υπενθύμιση</th>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Κατάσταση</th>
+                                </tr>
+                            </thead>
+                            <tbody className="bg-white divide-y divide-gray-200">
+                                {client.paymentPlan.map((inst, idx) => (
+                                    <tr key={idx} className={inst.isPaid ? 'bg-green-50' : 'hover:bg-gray-50'}>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                            {inst.number}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                            {inst.amount} €
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {inst.date || '-'}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm">
+                                            {inst.reminderDate ? (
+                                                <span className={cn("inline-flex items-center px-2 py-0.5 rounded text-xs font-medium", inst.isPaid ? "text-gray-400 bg-gray-100" : "bg-orange-100 text-orange-800")}>
+                                                    {inst.reminderDate}
+                                                </span>
+                                            ) : '-'}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                            <div className="flex items-center space-x-2">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={inst.isPaid}
+                                                    readOnly // Read-only for now as we don't have update logic in this view component yet
+                                                    className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                                                />
+                                                <span className={cn("font-medium", inst.isPaid ? "text-green-700" : "text-gray-500")}>
+                                                    {inst.isPaid ? 'Εξοφλήθηκε' : 'Εκκρεμεί'}
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

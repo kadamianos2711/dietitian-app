@@ -31,30 +31,81 @@ export default function Step3_Habits({ data, update }: Props) {
                 </div>
 
                 {/* Work */}
-                <div className="md:col-span-2">
+                <div className="md:col-span-2 space-y-4">
                     <label className="block text-sm font-medium text-gray-700">Ωράριο εργασίας</label>
-                    <input
-                        type="text"
-                        placeholder="π.χ. 9:00 - 17:00"
+                    <select
                         value={data.workSchedule}
-                        onChange={(e) => update({ workSchedule: e.target.value })}
+                        onChange={(e) => update({
+                            workSchedule: e.target.value,
+                            // Reset related fields when changing type
+                            workHoursFrom: '',
+                            workHoursTo: '',
+                            shiftRotation: ''
+                        })}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm p-2 border"
-                    />
-                </div>
+                    >
+                        <option value="">Επιλογή...</option>
+                        <option value="standard">Πρωινό (Σταθερό)</option>
+                        <option value="part_time_fixed">Μειωμένο / Part-time (Σταθερό)</option>
+                        <option value="night">Νυχτερινό</option>
+                        <option value="shifts">Βάρδιες</option>
+                        <option value="part_time_shifts">Μειωμένο με βάρδιες</option>
+                        <option value="freelance">Ελεύθερο / Ακατάστατο</option>
+                        <option value="other">Άλλο</option>
+                    </select>
 
-                {/* Shift Work */}
-                <div className="flex items-center space-x-3">
-                    <span className="text-sm font-medium text-gray-700 w-full">Δουλεύετε σε βάρδιες;</span>
-                    <div className="flex space-x-4">
-                        <label className="flex items-center">
-                            <input type="radio" checked={data.shiftWork} onChange={() => update({ shiftWork: true })} className="mr-2 text-green-600 focus:ring-green-500" />
-                            Ναι
-                        </label>
-                        <label className="flex items-center">
-                            <input type="radio" checked={!data.shiftWork} onChange={() => update({ shiftWork: false })} className="mr-2 text-green-600 focus:ring-green-500" />
-                            Όχι
-                        </label>
-                    </div>
+                    {/* Conditional Logic for Fixed Hours */}
+                    {['standard', 'part_time_fixed', 'night'].includes(data.workSchedule) && (
+                        <div className="grid grid-cols-2 gap-4 animate-in fade-in slide-in-from-top-2 p-4 bg-gray-50 rounded-lg">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Από</label>
+                                <input
+                                    type="time"
+                                    value={data.workHoursFrom}
+                                    onChange={(e) => update({ workHoursFrom: e.target.value })}
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm p-2 border"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Έως</label>
+                                <input
+                                    type="time"
+                                    value={data.workHoursTo}
+                                    onChange={(e) => update({ workHoursTo: e.target.value })}
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm p-2 border"
+                                />
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Conditional Logic for Shifts */}
+                    {['shifts', 'part_time_shifts'].includes(data.workSchedule) && (
+                        <div className="p-4 bg-gray-50 rounded-lg animate-in fade-in slide-in-from-top-2">
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Τύπος Βάρδιας</label>
+                            <div className="space-y-2">
+                                <label className="flex items-center">
+                                    <input
+                                        type="radio"
+                                        name="shiftRotation"
+                                        checked={data.shiftRotation === '2_shifts'}
+                                        onChange={() => update({ shiftRotation: '2_shifts' })}
+                                        className="mr-2 text-green-600 focus:ring-green-500"
+                                    />
+                                    <span className="text-sm text-gray-700">2 Βάρδιες (Πρωί - Απόγευμα)</span>
+                                </label>
+                                <label className="flex items-center">
+                                    <input
+                                        type="radio"
+                                        name="shiftRotation"
+                                        checked={data.shiftRotation === '3_shifts'}
+                                        onChange={() => update({ shiftRotation: '3_shifts' })}
+                                        className="mr-2 text-green-600 focus:ring-green-500"
+                                    />
+                                    <span className="text-sm text-gray-700">3 Βάρδιες (Πρωί - Απόγευμα - Βράδυ)</span>
+                                </label>
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 {/* Meals Per Day */}
@@ -118,38 +169,99 @@ export default function Step3_Habits({ data, update }: Props) {
                     </label>
                 </div>
 
-                {/* Coffee / Alcohol / Smoking */}
-                <div className="md:col-span-2 space-y-4 pt-4 border-t border-gray-100">
+                <div className="md:col-span-2 space-y-6 pt-4 border-t border-gray-100">
+                    {/* Coffee Detail */}
+                    <div>
+                        <div className="flex items-center justify-between mb-2">
+                            <label className="flex items-center space-x-3">
+                                <input
+                                    type="checkbox"
+                                    checked={data.coffee}
+                                    onChange={(e) => update({ coffee: e.target.checked })}
+                                    className="h-5 w-5 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                                />
+                                <span className="text-sm font-medium text-gray-700">Πίνετε καφέ;</span>
+                            </label>
+                            {data.coffee && (
+                                <input
+                                    type="number"
+                                    placeholder="κούπες/μέρα"
+                                    value={data.coffeeCups}
+                                    onChange={(e) => update({ coffeeCups: e.target.value })}
+                                    className="w-32 rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm p-1 border"
+                                />
+                            )}
+                        </div>
+                        {data.coffee && (
+                            <div className="ml-8 p-3 bg-gray-50 rounded-md space-y-3 animate-in fade-in slide-in-from-top-2">
+                                <div className="flex gap-4">
+                                    <label className="flex items-center">
+                                        <input
+                                            type="radio"
+                                            name="coffeeSugar"
+                                            checked={data.coffeeSugar === 'sketos'}
+                                            onChange={() => update({ coffeeSugar: 'sketos' })}
+                                            className="mr-2 text-green-600 focus:ring-green-500"
+                                        />
+                                        <span className="text-sm text-gray-700">Σκέτος</span>
+                                    </label>
+                                    <label className="flex items-center">
+                                        <input
+                                            type="radio"
+                                            name="coffeeSugar"
+                                            checked={data.coffeeSugar === 'metrios'}
+                                            onChange={() => update({ coffeeSugar: 'metrios' })}
+                                            className="mr-2 text-green-600 focus:ring-green-500"
+                                        />
+                                        <span className="text-sm text-gray-700">Μέτριος</span>
+                                    </label>
+                                    <label className="flex items-center">
+                                        <input
+                                            type="radio"
+                                            name="coffeeSugar"
+                                            checked={data.coffeeSugar === 'glykos'}
+                                            onChange={() => update({ coffeeSugar: 'glykos' })}
+                                            className="mr-2 text-green-600 focus:ring-green-500"
+                                        />
+                                        <span className="text-sm text-gray-700">Γλυκός</span>
+                                    </label>
+                                </div>
+                                <label className="flex items-center">
+                                    <input
+                                        type="checkbox"
+                                        checked={data.coffeeMilk}
+                                        onChange={(e) => update({ coffeeMilk: e.target.checked })}
+                                        className="mr-2 rounded text-green-600 focus:ring-green-500"
+                                    />
+                                    <span className="text-sm text-gray-700">Με γάλα</span>
+                                </label>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Alcohol Detail */}
                     <div className="flex items-center justify-between">
                         <label className="flex items-center space-x-3">
                             <input
                                 type="checkbox"
-                                checked={data.coffee}
-                                onChange={(e) => update({ coffee: e.target.checked })}
+                                checked={data.alcohol}
+                                onChange={(e) => update({ alcohol: e.target.checked })}
                                 className="h-5 w-5 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                             />
-                            <span className="text-sm font-medium text-gray-700">Πίνετε καφέ;</span>
+                            <span className="text-sm font-medium text-gray-700">Πίνετε αλκοόλ;</span>
                         </label>
-                        {data.coffee && (
-                            <input
-                                type="number"
-                                placeholder="καφέδες/μέρα"
-                                value={data.coffeeCups}
-                                onChange={(e) => update({ coffeeCups: e.target.value })}
-                                className="w-32 rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm p-1 border"
-                            />
+                        {data.alcohol && (
+                            <div className="flex items-center gap-2 animate-in fade-in slide-in-from-right-2">
+                                <span className="text-sm text-gray-500">Ποτά/εβδομάδα:</span>
+                                <input
+                                    type="number"
+                                    value={data.alcoholFrequency}
+                                    onChange={(e) => update({ alcoholFrequency: e.target.value })}
+                                    className="w-20 rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm p-1 border"
+                                />
+                            </div>
                         )}
                     </div>
-
-                    <label className="flex items-center space-x-3">
-                        <input
-                            type="checkbox"
-                            checked={data.alcohol}
-                            onChange={(e) => update({ alcohol: e.target.checked })}
-                            className="h-5 w-5 text-green-600 focus:ring-green-500 border-gray-300 rounded"
-                        />
-                        <span className="text-sm font-medium text-gray-700">Πίνετε αλκοόλ;</span>
-                    </label>
 
                     <label className="flex items-center space-x-3">
                         <input

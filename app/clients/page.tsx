@@ -14,13 +14,31 @@ interface Client {
     id: string;
     name: string;
     email: string;
+    phone?: string; // New field
     status: 'active' | 'inactive' | 'break';
+    nextAppointment?: string; // New field
+    lastAppointment?: string; // New field
+    tags?: string[]; // New field
+    package?: string; // New field
     lastVisit: string;
     financialStatus: FinancialStatus;
 }
 
 // Mock data
 const clients: Client[] = [
+    {
+        id: '12',
+        name: 'Αλέξανδρος Γεωργίου',
+        email: 'alex.georgiou@example.com',
+        phone: '6945551234',
+        status: 'active',
+        nextAppointment: '2025-12-15',
+        lastAppointment: '2025-12-01',
+        tags: ['weight_loss', 'energy'],
+        package: '3month',
+        lastVisit: '01/12/2025', // Using lastAppointment as lastVisit, formatted for consistency
+        financialStatus: 'installments'
+    },
     { id: '1', name: 'Γιώργος Παπαδόπουλος', email: 'g.papadopoulos@example.com', status: 'active', lastVisit: '09/12/2025', financialStatus: 'paid' },
     { id: '2', name: 'Μαρία Οικονόμου', email: 'maria.oik@example.com', status: 'active', lastVisit: '08/12/2025', financialStatus: 'installments' },
     { id: '3', name: 'Κώστας Δημητρίου', email: 'k.dimitriou@example.com', status: 'break', lastVisit: '15/11/2025', financialStatus: 'partial' },
@@ -28,6 +46,10 @@ const clients: Client[] = [
     { id: '5', name: 'Αλέξανδρος Νικολάου', email: 'alex.nik@example.com', status: 'active', lastVisit: '03/12/2025', financialStatus: 'paid' },
     { id: '6', name: 'Σοφία Ιωάννου', email: 'sofia.ioan@example.com', status: 'active', lastVisit: '05/12/2025', financialStatus: 'installments' },
     { id: '7', name: 'Δημήτρης Κωνσταντίνου', email: 'd.konst@example.com', status: 'active', lastVisit: '07/12/2025', financialStatus: 'debt' },
+    { id: '8', name: 'Άννα Βασιλείου', email: 'anna.vas@example.com', status: 'active', lastVisit: '10/12/2025', financialStatus: 'paid' },
+    { id: '9', name: 'Νίκος Σαρρής', email: 'n.sarris@example.com', status: 'break', lastVisit: '20/11/2025', financialStatus: 'paid' },
+    { id: '10', name: 'Γεωργία Αλεξίου', email: 'g.alexiou@example.com', status: 'active', lastVisit: '11/12/2025', financialStatus: 'partial' },
+    { id: '11', name: 'Παύλος Μελάς', email: 'p.melas@example.com', status: 'inactive', lastVisit: '15/09/2025', financialStatus: 'debt' }
 ];
 
 export default function ClientsPage() {

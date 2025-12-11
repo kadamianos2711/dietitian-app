@@ -25,6 +25,7 @@ export default function ClientWizard() {
 
     const [currentStep, setCurrentStep] = useState(1);
     const [formData, setFormData] = useState<ClientFormData>(initialClientState);
+    const [showErrors, setShowErrors] = useState(false);
 
     // Total steps: 8 for Dietitian, 7 for Client (Review is 7, Financial is 8)
     const totalSteps = isDietitian ? 8 : 7;
@@ -35,7 +36,9 @@ export default function ClientWizard() {
         const savedData = localStorage.getItem('currentClientDraft');
         if (savedData) {
             try {
-                setFormData(JSON.parse(savedData));
+                const parsed = JSON.parse(savedData);
+                // Merge saved data with initial state to ensure new fields (like paymentPlan) exist
+                setFormData({ ...initialClientState, ...parsed });
             } catch (e) {
                 console.error('Failed to parse saved draft');
             }
@@ -52,10 +55,25 @@ export default function ClientWizard() {
     };
 
     const nextStep = () => {
-        if (currentStep < totalSteps) {
-            setCurrentStep(prev => prev + 1);
+        if (isStepValid()) {
+            setShowErrors(false);
+            if (currentStep < totalSteps) {
+                setCurrentStep(prev => prev + 1);
+                window.scrollTo(0, 0);
+            }
+        } else {
+            setShowErrors(true);
+            // Optionally scroll to top to show errors if needed
             window.scrollTo(0, 0);
         }
+    };
+
+    const isStepValid = () => {
+        if (currentStep === 1) {
+            const { firstName, lastName, fathersName, birthDate, gender, phone, email } = formData;
+            return firstName && lastName && fathersName && birthDate && gender && phone && email; // All required
+        }
+        return true; // Other steps valid for now or have their own logic
     };
 
     const prevStep = () => {
@@ -90,7 +108,7 @@ export default function ClientWizard() {
 
     const renderStep = () => {
         switch (currentStep) {
-            case 1: return <Step1_Personal data={formData} update={updateFormData} />;
+            case 1: return <Step1_Personal data={formData} update={updateFormData} showErrors={showErrors} />;
             case 2: return <Step2_Health data={formData} update={updateFormData} />;
             case 3: return <Step3_Habits data={formData} update={updateFormData} />;
             case 4: return <Step4_Diet data={formData} update={updateFormData} />;

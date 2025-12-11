@@ -1,6 +1,7 @@
 import { ClientFormData } from '@/types/client';
 import { FileText, Plus, ShoppingCart, Eye, Printer, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
+import { useRouter, useParams } from 'next/navigation';
 
 interface Props {
     client: ClientFormData;
@@ -22,6 +23,14 @@ const MOCK_PLANS: MealPlan[] = [
 ];
 
 export default function TabMealPlans({ client }: Props) {
+    const router = useRouter();
+    const params = useParams();
+    const clientId = params.id as string;
+
+    const handleCreateNew = () => {
+        router.push(`/clients/${clientId}/meal-plans/new`);
+    };
+
     return (
         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
 
@@ -31,7 +40,10 @@ export default function TabMealPlans({ client }: Props) {
                         <FileText className="w-5 h-5 mr-2 text-green-600" />
                         Διαιτολόγια
                     </h3>
-                    <button className="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                    <button
+                        onClick={handleCreateNew}
+                        className="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                    >
                         <Plus className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
                         Νέο Διαιτολόγιο
                     </button>

@@ -6,10 +6,26 @@ interface Props {
 }
 
 const CONDITIONS = [
-    'Ινσουλινική αντίσταση', 'Διαβήτης', 'Υποθυρεοειδισμός', 'Hashimoto', 'PCOS',
-    'Υψηλή χοληστερίνη', 'Τριγλυκερίδια', 'Υπέρταση', 'Γαστρίτιδα / παλινδρόμηση',
-    'Σπαστικό έντερο / IBS', 'Αναιμία / χαμηλή φεριττίνη', 'Οστεοπενία / Οστεοπόρωση',
-    'Αλλεργίες σε τρόφιμα'
+    'Διαβήτης',
+    'Υπέρταση',
+    'Υψηλή Χοληστερίνη',
+    'Υποθυρεοειδισμός',
+    'Hashimoto',
+    'PCOS (Πολυκυστικές)',
+    'Σιδηροπενική Αναιμία',
+    'Γαστροοισοφαγική Παλινδρόμηση',
+    'Δυσκοιλιότητα',
+    'Χρόνια Διάρροια',
+    'Σπαστική Κολίτιδα / IBS',
+    'Ελκώδης Κολίτιδα',
+    'Νόσος Crohn',
+    'Λιπώδες Ήπαρ (NAFLD)',
+    'Χολολιθίαση (Πέτρες)',
+    'Ουρικό Οξύ / Αρθρίτιδα',
+    'Χρόνια Νεφρική Νόσος',
+    'Κοιλιοκάκη / Δυσανεξία Γλουτένη',
+    'Παχυσαρκία',
+    'Εμμηνόπαυση'
 ];
 
 const MEDICATIONS = [
@@ -43,19 +59,35 @@ export default function Step2_Health({ data, update }: Props) {
             {/* Conditions */}
             <div>
                 <h3 className="text-lg font-medium text-gray-900 mb-4">Παθολογικές Καταστάσεις</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {CONDITIONS.map(condition => (
-                        <label key={condition} className="flex items-center space-x-3 p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">
+
+                <div className="space-y-4">
+                    <label className="block text-sm font-medium text-gray-700">Επιλέξτε παθήσεις:</label>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {CONDITIONS.map((condition) => (
+                            <label key={condition} className="flex items-center space-x-3 p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    checked={data.conditions.includes(condition)}
+                                    onChange={() => toggleCondition(condition)}
+                                    className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                                />
+                                <span className="text-sm text-gray-700">{condition}</span>
+                            </label>
+                        ))}
+                        {/* Other field */}
+                        <label className="flex items-center space-x-3 p-3 border rounded-lg hover:bg-gray-50 cursor-pointer col-span-1 md:col-span-2">
+                            <span className="text-sm text-gray-700 min-w-[50px]">Άλλο:</span>
                             <input
-                                type="checkbox"
-                                checked={data.conditions.includes(condition)}
-                                onChange={() => toggleCondition(condition)}
-                                className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                                type="text"
+                                placeholder="Π.χ. Καρδιακή ανεπάρκεια"
+                                className="flex-1 border-0 border-b border-gray-300 focus:ring-0 focus:border-green-500 text-sm p-0 bg-transparent"
+                                onChange={(e) => {
+                                    // For now, allow typing but maybe not saving 'other' strictly unless we add logic.
+                                    // Just keeping the UI requested.
+                                }}
                             />
-                            <span className="text-sm text-gray-700">{condition}</span>
                         </label>
-                    ))}
-                    {/* Custom entry placeholder logic could go here, simplified for now */}
+                    </div>
                 </div>
             </div>
 
