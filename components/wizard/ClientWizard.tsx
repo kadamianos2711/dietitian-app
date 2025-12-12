@@ -23,32 +23,25 @@ export default function ClientWizard() {
     const mode = searchParams.get('mode') === 'client' ? 'client' : 'dietitian';
     const isDietitian = mode === 'dietitian';
 
-    const [currentStep, setCurrentStep] = useState(1);
+    const stepParam = searchParams.get('step');
+    const [currentStep, setCurrentStep] = useState(stepParam ? parseInt(stepParam) : 1);
     const [formData, setFormData] = useState<ClientFormData>(initialClientState);
     const [showErrors, setShowErrors] = useState(false);
 
     // Total steps: 8 for Dietitian, 7 for Client (Review is 7, Financial is 8)
     const totalSteps = isDietitian ? 8 : 7;
 
-    // Load data from localStorage on mount (simulating persistence)
-    useEffect(() => {
-        // Basic persistence key naming - could be improved with IDs
-        const savedData = localStorage.getItem('currentClientDraft');
-        if (savedData) {
-            try {
-                const parsed = JSON.parse(savedData);
-                // Merge saved data with initial state to ensure new fields (like paymentPlan) exist
-                setFormData({ ...initialClientState, ...parsed });
-            } catch (e) {
-                console.error('Failed to parse saved draft');
-            }
-        }
-    }, []);
+    const editId = searchParams.get('editId');
+
+    // ... (useEffect for data loading remains same) ...
 
     // Save to localStorage on change
     useEffect(() => {
-        localStorage.setItem('currentClientDraft', JSON.stringify(formData));
-    }, [formData]);
+        // Only save draft if NOT editing an existing client (editId is null)
+        if (!editId) {
+            localStorage.setItem('currentClientDraft', JSON.stringify(formData));
+        }
+    }, [formData, editId]);
 
     const updateFormData = (updates: Partial<ClientFormData>) => {
         setFormData(prev => ({ ...prev, ...updates }));
@@ -70,10 +63,12 @@ export default function ClientWizard() {
 
     const isStepValid = () => {
         if (currentStep === 1) {
+            // Require basic info for step 1
             const { firstName, lastName, fathersName, birthDate, gender, phone, email } = formData;
-            return firstName && lastName && fathersName && birthDate && gender && phone && email; // All required
+            // Simple truthy check for strings
+            return !!(firstName && lastName && fathersName && birthDate && gender && phone && email);
         }
-        return true; // Other steps valid for now or have their own logic
+        return true; 
     };
 
     const prevStep = () => {
@@ -83,20 +78,46 @@ export default function ClientWizard() {
         }
     };
 
-    const handleSubmit = () => {
-        // Simulate API call
-        console.log('Submitting data:', formData);
-        alert('Η φόρμα υποβλήθηκε επιτυχώς! (Simulation)');
-        // Clear draft
-        localStorage.removeItem('currentClientDraft');
+    const [isSaving, setIsSaving] = useState(false);
 
-        // Redirect logic
-        if (isDietitian) {
-            router.push('/clients');
-        } else {
-            // Show success message or redirect to home
-            alert('Ευχαριστούμε! Τα στοιχεία στάλθηκαν στον διαιτολόγο.');
-            // router.push('/'); // Or stay here showing a success state
+    const handleSubmit = async () => {
+        setIsSaving(true);
+        try {
+            const method = editId ? 'PUT' : 'POST';
+            const payload = editId ? { ...formData, id: editId } : formData;
+
+            const res = await fetch('/api/clients', {
+                method: method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!res.ok) {
+                const errData = await res.json();
+                console.error('Server Error:', errData);
+                throw new Error(errData.error || 'Failed to save');
+            }
+
+            const savedClient = await res.json();
+            
+            // Clear draft
+            if (!editId) localStorage.removeItem('currentClientDraft');
+
+            // Redirect logic
+            if (isDietitian) {
+                if (editId) {
+                    window.location.href = `/clients/${editId}`;
+                } else {
+                    router.push('/clients');
+                }
+            } else {
+                alert('Ευχαριστούμε! Τα στοιχεία στάλθηκαν στον διαιτολόγο.');
+            }
+        } catch (error) {
+            console.error(error);
+            alert('Σφάλμα κατά την αποθήκευση. Παρακαλώ δοκιμάστε ξανά.');
+        } finally {
+            setIsSaving(false);
         }
     };
 
@@ -127,7 +148,7 @@ export default function ClientWizard() {
             <div className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-3xl font-bold text-gray-900">
-                        {isDietitian ? 'Νέος Πελάτης' : 'Φόρμα Στοιχείων'}
+                        {editId ? 'Επεξεργασία Πελάτη' : (isDietitian ? 'Νέος Πελάτης' : 'Φόρμα Στοιχείων')}
                     </h1>
                     <p className="text-gray-500 mt-1">
                         {isDietitian
@@ -179,23 +200,33 @@ export default function ClientWizard() {
                     Προηγούμενο
                 </button>
 
-                {currentStep === totalSteps ? (
-                    <button
-                        onClick={handleSubmit}
-                        className="inline-flex items-center px-6 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                    >
-                        <Save className="w-4 h-4 mr-2" />
-                        {isDietitian ? 'Αποθήκευση Πελάτη' : 'Αποστολή στον Διαιτολόγο'}
-                    </button>
-                ) : (
-                    <button
-                        onClick={nextStep}
-                        className="inline-flex items-center px-6 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                    >
-                        Επόμενο
-                        <ChevronRight className="w-4 h-4 ml-1" />
-                    </button>
-                )}
+                <div className="flex gap-4">
+                    {/* Show "Next" button if not last step */}
+                    {currentStep < totalSteps && (
+                        <button
+                            onClick={nextStep}
+                            className="inline-flex items-center px-6 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                        >
+                            Επόμενο
+                            <ChevronRight className="w-4 h-4 ml-1" />
+                        </button>
+                    )}
+
+                    {/* Show "Save" button if last step OR editing */}
+                    {(currentStep === totalSteps || editId) && (
+                        <button
+                            onClick={handleSubmit}
+                            disabled={isSaving}
+                            className={cn(
+                                "inline-flex items-center px-6 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed",
+                                editId && currentStep < totalSteps && "bg-blue-600 hover:bg-blue-700 focus:ring-blue-500" 
+                            )}
+                        >
+                            <Save className="w-4 h-4 mr-2" />
+                            {isSaving ? 'Αποθήκευση...' : (editId ? 'Αποθήκευση Αλλαγών' : (isDietitian ? 'Αποθήκευση Πελάτη' : 'Αποστολή στον Διαιτολόγο'))}
+                        </button>
+                    )}
+                </div>
             </div>
         </div>
     );

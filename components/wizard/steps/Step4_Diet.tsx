@@ -1,46 +1,25 @@
 import { ClientFormData, FoodPreference } from '@/types/client';
 import { cn } from '@/lib/utils';
-import { ThumbsUp, ThumbsDown, Minus } from 'lucide-react';
+import { ThumbsUp, ThumbsDown, Heart } from 'lucide-react';
 
 interface Props {
     data: ClientFormData;
     update: (data: Partial<ClientFormData>) => void;
 }
 
-const FOOD_CATEGORIES = [
-    {
-        name: 'Κρέας & Πουλερικά',
-        items: ['Κοτόπουλο', 'Μοσχάρι', 'Χοιρινό', 'Αρνί', 'Γαλοπούλα']
-    },
-    {
-        name: 'Ψάρια & Θαλασσινά',
-        items: ['Λευκά ψάρια (π.χ. τσιπούρα)', 'Λιπαρά ψάρια (π.χ. σολομός)', 'Θαλασσινά (γαρίδες κ.λπ.)', 'Τόνος κονσέρβα']
-    },
-    {
-        name: 'Όσπρια & Λαδερά',
-        items: ['Φακές', 'Φασόλια', 'Ρεβύθια', 'Αρακάς / Φασολάκια']
-    },
-    {
-        name: 'Λαχανικά & Φρούτα',
-        items: ['Ωμή σαλάτα', 'Βραστά λαχανικά', 'Φρούτα εποχής', 'Ξηροί καρποί']
-    },
-    {
-        name: 'Γαλακτοκομικά',
-        items: ['Γάλα', 'Γιαούρτι', 'Τυρί', 'Αυγά']
-    },
-    {
-        name: 'Υδατάνθρακες & Γλυκά',
-        items: ['Ψωμί', 'Ζυμαρικά', 'Ρύζι', 'Πατάτες', 'Γλυκά / Σοκολάτα']
-    }
-];
+import { FOOD_CATEGORIES } from '@/lib/constants';
 
 export default function Step4_Diet({ data, update }: Props) {
 
     const setPreference = (food: string, pref: FoodPreference) => {
+        // Toggle logic: if clicking the same preference, reset to neutral
+        const current = data.foodPreferences[food] || 'neutral';
+        const newValue = current === pref ? 'neutral' : pref;
+
         update({
             foodPreferences: {
                 ...data.foodPreferences,
-                [food]: pref
+                [food]: newValue
             }
         });
     };
@@ -60,42 +39,48 @@ export default function Step4_Diet({ data, update }: Props) {
                             <div key={item} className="flex items-center justify-between md:justify-start md:space-x-8">
                                 <span className="text-sm font-medium text-gray-700 w-1/3 md:w-64">{item}</span>
 
-                                <div className="flex bg-gray-100 rounded-lg p-1">
+                                <div className="flex bg-gray-100 rounded-lg p-1 gap-1">
+
+                                    {/* Love */}
+                                    <button
+                                        onClick={() => setPreference(item, 'love')}
+                                        className={cn(
+                                            "p-2 rounded-md transition-all duration-200",
+                                            getPreference(item) === 'love' 
+                                                ? "bg-pink-500 text-white shadow-md transform scale-105" 
+                                                : "text-gray-400 hover:bg-pink-100 hover:text-pink-500"
+                                        )}
+                                        title="Το αγαπώ!"
+                                    >
+                                        <Heart className={cn("w-4 h-4", getPreference(item) === 'love' && "fill-current")} />
+                                    </button>
 
                                     {/* Like */}
                                     <button
                                         onClick={() => setPreference(item, 'like')}
                                         className={cn(
-                                            "p-2 rounded-md transition-all",
-                                            getPreference(item) === 'like' ? "bg-green-500 text-white shadow-sm" : "text-gray-400 hover:text-gray-600"
+                                            "p-2 rounded-md transition-all duration-200",
+                                            getPreference(item) === 'like' 
+                                                ? "bg-green-500 text-white shadow-md transform scale-105" 
+                                                : "text-gray-400 hover:bg-green-100 hover:text-green-500"
                                         )}
                                         title="Μου αρέσει"
                                     >
-                                        <ThumbsUp className="w-4 h-4" />
-                                    </button>
-
-                                    {/* Neutral */}
-                                    <button
-                                        onClick={() => setPreference(item, 'neutral')}
-                                        className={cn(
-                                            "p-2 rounded-md transition-all",
-                                            getPreference(item) === 'neutral' ? "bg-white text-gray-600 shadow-sm" : "text-gray-400 hover:text-gray-600"
-                                        )}
-                                        title="Ουδέτερο"
-                                    >
-                                        <Minus className="w-4 h-4" />
+                                        <ThumbsUp className={cn("w-4 h-4", getPreference(item) === 'like' && "fill-current")} />
                                     </button>
 
                                     {/* Dislike */}
                                     <button
                                         onClick={() => setPreference(item, 'dislike')}
                                         className={cn(
-                                            "p-2 rounded-md transition-all",
-                                            getPreference(item) === 'dislike' ? "bg-red-500 text-white shadow-sm" : "text-gray-400 hover:text-gray-600"
+                                            "p-2 rounded-md transition-all duration-200",
+                                            getPreference(item) === 'dislike' 
+                                                ? "bg-red-500 text-white shadow-md transform scale-105" 
+                                                : "text-gray-400 hover:bg-red-100 hover:text-red-500"
                                         )}
                                         title="Δεν μου αρέσει"
                                     >
-                                        <ThumbsDown className="w-4 h-4" />
+                                        <ThumbsDown className={cn("w-4 h-4", getPreference(item) === 'dislike' && "fill-current")} />
                                     </button>
 
                                 </div>

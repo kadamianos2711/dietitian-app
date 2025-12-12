@@ -1,12 +1,15 @@
 import { ClientFormData } from '@/types/client';
-import { User, Phone, Mail, Briefcase, Calendar } from 'lucide-react';
+import { User, Phone, Mail, Briefcase, Calendar, Edit } from 'lucide-react';
 import { differenceInYears, parseISO, format } from 'date-fns';
+import { useRouter } from 'next/navigation';
 
 interface Props {
     client: ClientFormData;
 }
 
 export default function TabProfile({ client }: Props) {
+    const router = useRouter();
+
     const formatDate = (dateStr: string) => {
         if (!dateStr) return '-';
         try {
@@ -23,10 +26,19 @@ export default function TabProfile({ client }: Props) {
 
     return (
         <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm animate-in fade-in slide-in-from-bottom-2 duration-300">
-            <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
-                <User className="w-5 h-5 mr-2 text-green-600" />
-                Προσωπικά Στοιχεία
-            </h2>
+            <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl font-bold text-gray-900 flex items-center">
+                    <User className="w-5 h-5 mr-2 text-green-600" />
+                    Προσωπικά Στοιχεία
+                </h2>
+                <button
+                    onClick={() => window.location.href = `/clients/new?editId=${client.id}&step=1`}
+                    className="text-sm font-medium text-blue-600 hover:text-blue-800 flex items-center"
+                >
+                    <Edit className="w-4 h-4 mr-1" />
+                    Επεξεργασία
+                </button>
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
 

@@ -1,7 +1,7 @@
 export type Gender = 'male' | 'female' | 'other' | '';
 export type ActivityLevel = 'sedentary' | 'light' | 'moderate' | 'active' | 'athlete' | '';
 export type Goal = 'weight_loss' | 'maintenance' | 'muscle_gain' | 'energy' | 'digestion' | 'sugar_regulation' | 'cholesterol' | 'sleep' | 'other';
-export type FoodPreference = 'like' | 'neutral' | 'dislike';
+export type FoodPreference = 'love' | 'like' | 'neutral' | 'dislike';
 
 export interface Installment {
     number: number;
@@ -22,6 +22,7 @@ export interface PackageItem {
 }
 
 export interface ClientFormData {
+    id?: string; // Optional for creation, required for updates
     // Step 1: Personal Info
     firstName: string;
     lastName: string;
@@ -69,6 +70,7 @@ export interface ClientFormData {
     // We'll store preferences as a map or simpler structure for the prototype
     foodPreferences: Record<string, FoodPreference>;
     dislikedFoods: string; // Text field
+    likedFoods: string; // Text field
     lovedFoods: string; // Text field
 
     // Step 5: Exercise & Sleep
@@ -140,6 +142,7 @@ export const initialClientState: ClientFormData = {
     smoking: false,
     foodPreferences: {},
     dislikedFoods: '',
+    likedFoods: '',
     lovedFoods: '',
     exercises: false,
     exerciseType: '',

@@ -1,5 +1,7 @@
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { ClientFormData, FoodPreference } from '@/types/client';
-import { ThumbsUp, ThumbsDown, Minus } from 'lucide-react';
+import { ThumbsUp, ThumbsDown, Minus, Edit } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface Props {
@@ -7,10 +9,15 @@ interface Props {
 }
 
 export default function TabPreferences({ client }: Props) {
+    const router = useRouter();
+
+    const handleEdit = () => {
+        router.push(`/clients/new?editId=${client.id}&step=4`);
+    };
 
     // Combine all preferences into a list for display, filtering by type if needed
     // Since our data model is just a Record<string, FoodPreference>, we'll iterate entries.
-    const preferences = Object.entries(client.foodPreferences);
+    const preferences = Object.entries(client.foodPreferences || {});
 
     const likes = preferences.filter(([_, pref]) => pref === 'like');
     const neutrals = preferences.filter(([_, pref]) => pref === 'neutral');
@@ -33,6 +40,19 @@ export default function TabPreferences({ client }: Props) {
 
     return (
         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
+            <div className="flex justify-between items-center pb-4 border-b">
+                <h3 className="text-lg font-medium text-gray-900">Διατροφικές Προτιμήσεις</h3>
+                {/* The button's onClick handler is updated and the button is now wrapped in a new div */}
+                <div className="flex justify-end pb-2">
+                    <button
+                        onClick={() => window.location.href = `/clients/new?editId=${client.id}&step=4`}
+                        className="text-sm font-medium text-blue-600 hover:text-blue-800 flex items-center"
+                    >
+                        <Edit className="w-4 h-4 mr-1" />
+                        Επεξεργασία
+                    </button>
+                </div>
+            </div>
 
             {/* Grid Layout */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

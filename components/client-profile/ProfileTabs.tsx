@@ -1,10 +1,10 @@
 import { cn } from '@/lib/utils';
 import {
     User, Stethoscope, Clock, Utensils, Target,
-    CreditCard, FileText, FileEdit
+    CreditCard, FileText, FileEdit, MessageSquare
 } from 'lucide-react';
 
-export type TabId = 'profile' | 'medical' | 'habits' | 'preferences' | 'goals' | 'financials' | 'mealplans' | 'notes';
+export type TabId = 'profile' | 'medical' | 'habits' | 'preferences' | 'goals' | 'financials' | 'mealplans' | 'feedback' | 'notes';
 
 interface Props {
     activeTab: TabId;
@@ -15,10 +15,11 @@ const TABS: { id: TabId; label: string; icon: any }[] = [
     { id: 'profile', label: 'Προφίλ', icon: User },
     { id: 'medical', label: 'Ιατρικό', icon: Stethoscope },
     { id: 'habits', label: 'Συνήθειες', icon: Clock },
-    { id: 'preferences', label: 'Προτιμήσεις', icon: Utensils },
+    { id: 'preferences', label: 'Διατροφή', icon: Utensils }, // Renamed from "Προτιμήσεις" to clear confusion, though user asked for side-by-side. Wait, user said "card next to notes".
     { id: 'goals', label: 'Στόχοι', icon: Target },
     { id: 'financials', label: 'Πακέτο & Πληρωμές', icon: CreditCard },
     { id: 'mealplans', label: 'Διαιτολόγια', icon: FileText },
+    { id: 'feedback', label: 'Feedback', icon: MessageSquare }, // Using generic MessageSquare if available, or imports.
     { id: 'notes', label: 'Σημειώσεις', icon: FileEdit },
 ];
 

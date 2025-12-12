@@ -1,0 +1,3155 @@
+{
+  "clients": [],
+  "mealPlans": [
+    {
+      "days": [
+        {
+          "date": "2025-12-12",
+          "dayNumber": 1,
+          "meals": {
+            "breakfast": {
+              "id": "f16ba387-9470-4355-b182-9b25862ee532",
+              "recipeId": "r_omelet_veg",
+              "recipeName": "Ομελέτα με Λαχανικά",
+              "description": "170g Αυγά, 70g Σπανάκι, 7ml Ελαιόλαδο",
+              "calories": 450,
+              "type": "breakfast",
+              "ingredients": [
+                {
+                  "name": "Αυγά",
+                  "amount": 170,
+                  "unit": "g",
+                  "foodId": "f_egg"
+                },
+                {
+                  "name": "Σπανάκι",
+                  "amount": 70,
+                  "unit": "g",
+                  "foodId": "f_spinach"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 7,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack1": {
+              "id": "6e56ac80-6b5f-4476-9cae-613ba9894d1b",
+              "recipeId": "r_fruit_nuts",
+              "recipeName": "Φρούτο και Αμύγδαλα",
+              "description": "120g Μήλο, 15g Αμύγδαλα",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Μήλο",
+                  "amount": 120,
+                  "unit": "g",
+                  "foodId": "f_apple"
+                },
+                {
+                  "name": "Αμύγδαλα",
+                  "amount": 15,
+                  "unit": "g",
+                  "foodId": "f_almonds"
+                }
+              ],
+              "locked": false
+            },
+            "lunch": {
+              "id": "749bec67-c452-45d2-94a3-8cf0c8b377a7",
+              "recipeId": "r_quinoa_salad",
+              "recipeName": "Σαλάτα Κινόα με Λαχανικά",
+              "description": "280g Κινόα (μαγ.), 160g Ντομάτα, 15ml Ελαιόλαδο",
+              "calories": 630,
+              "type": "lunch",
+              "ingredients": [
+                {
+                  "name": "Κινόα",
+                  "amount": 280,
+                  "unit": "g",
+                  "foodId": "f_quinoa"
+                },
+                {
+                  "name": "Ντομάτα",
+                  "amount": 160,
+                  "unit": "g",
+                  "foodId": "f_tomato"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 15,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "dinner": {
+              "id": "7170f374-7c28-4be9-bdc5-2e313776bf22",
+              "recipeId": "r_salmon_broccoli",
+              "recipeName": "Σολομός με Μπρόκολο",
+              "description": "110g Σολομός (μαγ.), 150g Μπρόκολο, 4ml Ελαιόλαδο",
+              "calories": 360,
+              "type": "dinner",
+              "ingredients": [
+                {
+                  "name": "Σολομός",
+                  "amount": 110,
+                  "unit": "g",
+                  "foodId": "f_salmon"
+                },
+                {
+                  "name": "Μπρόκολο",
+                  "amount": 150,
+                  "unit": "g",
+                  "foodId": "f_broccoli"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 4,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack2": {
+              "id": "b41f73f5-01e1-436d-8590-f62cf86aeaaf",
+              "recipeId": "r_banana_yogurt",
+              "recipeName": "Γιαούρτι με Μπανάνα & Μέλι",
+              "description": "110g Γιαούρτι, 70g Μπανάνα, 4g Μέλι",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Γιαούρτι",
+                  "amount": 110,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Μπανάνα",
+                  "amount": 70,
+                  "unit": "g",
+                  "foodId": "f_banana"
+                },
+                {
+                  "name": "Μέλι",
+                  "amount": 4,
+                  "unit": "g",
+                  "foodId": "f_honey"
+                }
+              ],
+              "locked": false
+            }
+          },
+          "totalCalories": 1800,
+          "macros": {
+            "protein": 72,
+            "carbs": 190,
+            "fat": 79
+          }
+        },
+        {
+          "date": "2025-12-13",
+          "dayNumber": 2,
+          "meals": {
+            "breakfast": {
+              "id": "a63b6566-58ed-4f9a-ad17-80fb3e8ee257",
+              "recipeId": "r_tahini_bread",
+              "recipeName": "Ψωμί ολικής με Ταχίνι και Μέλι",
+              "description": "70g Ψωμί Ολικής (ή φρυγανιές), 20g Ταχίνι, 10g Μέλι",
+              "calories": 450,
+              "type": "breakfast",
+              "ingredients": [
+                {
+                  "name": "Ψωμί Ολικής (ή φρυγανιές)",
+                  "amount": 70,
+                  "unit": "g",
+                  "foodId": "f_rusks"
+                },
+                {
+                  "name": "Ταχίνι",
+                  "amount": 20,
+                  "unit": "g",
+                  "foodId": "f_tahini"
+                },
+                {
+                  "name": "Μέλι",
+                  "amount": 10,
+                  "unit": "g",
+                  "foodId": "f_honey"
+                }
+              ],
+              "locked": false
+            },
+            "snack1": {
+              "id": "610d25b4-e834-44b1-94aa-944433e7b66b",
+              "recipeId": "r_banana_yogurt",
+              "recipeName": "Γιαούρτι με Μπανάνα & Μέλι",
+              "description": "110g Γιαούρτι, 70g Μπανάνα, 4g Μέλι",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Γιαούρτι",
+                  "amount": 110,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Μπανάνα",
+                  "amount": 70,
+                  "unit": "g",
+                  "foodId": "f_banana"
+                },
+                {
+                  "name": "Μέλι",
+                  "amount": 4,
+                  "unit": "g",
+                  "foodId": "f_honey"
+                }
+              ],
+              "locked": false
+            },
+            "lunch": {
+              "id": "cffbd3f7-de1f-48e9-a937-f491711c3ff7",
+              "recipeId": "r_salmon_broccoli",
+              "recipeName": "Σολομός με Μπρόκολο",
+              "description": "190g Σολομός (μαγ.), 260g Μπρόκολο, 7ml Ελαιόλαδο",
+              "calories": 630,
+              "type": "lunch",
+              "ingredients": [
+                {
+                  "name": "Σολομός",
+                  "amount": 190,
+                  "unit": "g",
+                  "foodId": "f_salmon"
+                },
+                {
+                  "name": "Μπρόκολο",
+                  "amount": 260,
+                  "unit": "g",
+                  "foodId": "f_broccoli"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 7,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "dinner": {
+              "id": "bba57dae-51a5-4876-91f3-6dd63cb26bbe",
+              "recipeId": "r_greek_salad",
+              "recipeName": "Χωριάτικη Σαλάτα (Ατομική)",
+              "description": "120g Ντομάτα, 80g Αγγούρι, 50g Φέτα, 10ml Ελαιόλαδο",
+              "calories": 360,
+              "type": "dinner",
+              "ingredients": [
+                {
+                  "name": "Ντομάτα",
+                  "amount": 120,
+                  "unit": "g",
+                  "foodId": "f_tomato"
+                },
+                {
+                  "name": "Αγγούρι",
+                  "amount": 80,
+                  "unit": "g",
+                  "foodId": "f_cucumber"
+                },
+                {
+                  "name": "Φέτα",
+                  "amount": 50,
+                  "unit": "g",
+                  "foodId": "f_feta"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 10,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack2": {
+              "id": "152010cb-c002-4abe-ad59-1d88e41cb6f6",
+              "recipeId": "r_banana_yogurt",
+              "recipeName": "Γιαούρτι με Μπανάνα & Μέλι",
+              "description": "110g Γιαούρτι, 70g Μπανάνα, 4g Μέλι",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Γιαούρτι",
+                  "amount": 110,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Μπανάνα",
+                  "amount": 70,
+                  "unit": "g",
+                  "foodId": "f_banana"
+                },
+                {
+                  "name": "Μέλι",
+                  "amount": 4,
+                  "unit": "g",
+                  "foodId": "f_honey"
+                }
+              ],
+              "locked": false
+            }
+          },
+          "totalCalories": 1800,
+          "macros": {
+            "protein": 89,
+            "carbs": 137,
+            "fat": 95
+          }
+        },
+        {
+          "date": "2025-12-14",
+          "dayNumber": 3,
+          "meals": {
+            "breakfast": {
+              "id": "9c9bb374-5f27-4e16-b163-f2eaffdc41e3",
+              "recipeId": "r_oats_yogurt",
+              "recipeName": "Βρώμη με Γιαούρτι και Φρούτα",
+              "description": "230g Βρώμη (μαγ.), 190g Γιαούρτι 2%, 130g Μήλο",
+              "calories": 450,
+              "type": "breakfast",
+              "ingredients": [
+                {
+                  "name": "Βρώμη",
+                  "amount": 230,
+                  "unit": "g",
+                  "foodId": "f_oats"
+                },
+                {
+                  "name": "Γιαούρτι 2%",
+                  "amount": 190,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Μήλο",
+                  "amount": 130,
+                  "unit": "g",
+                  "foodId": "f_apple"
+                }
+              ],
+              "locked": false
+            },
+            "snack1": {
+              "id": "7d1d2fec-89ba-4b4c-8853-3a698efb0673",
+              "recipeId": "r_fruit_nuts",
+              "recipeName": "Φρούτο και Αμύγδαλα",
+              "description": "120g Πορτοκάλι, 15g Αμύγδαλα",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Πορτοκάλι",
+                  "amount": 120,
+                  "unit": "g",
+                  "foodId": "f_orange"
+                },
+                {
+                  "name": "Αμύγδαλα",
+                  "amount": 15,
+                  "unit": "g",
+                  "foodId": "f_almonds"
+                }
+              ],
+              "locked": false
+            },
+            "lunch": {
+              "id": "f1b17db3-7818-42dd-9d69-d1c3cd5d14da",
+              "recipeId": "r_beef_potatoes",
+              "recipeName": "Μπιφτέκια Μοσχαρίσια με Πατάτες",
+              "description": "110g Κιμάς Μοσχαρίσιος (μαγ.), 230g Πατάτες (μαγ.), 15ml Ελαιόλαδο",
+              "calories": 630,
+              "type": "lunch",
+              "ingredients": [
+                {
+                  "name": "Κιμάς Μοσχαρίσιος",
+                  "amount": 110,
+                  "unit": "g",
+                  "foodId": "f_beef_mince"
+                },
+                {
+                  "name": "Πατάτες",
+                  "amount": 230,
+                  "unit": "g",
+                  "foodId": "f_potato"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 15,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "dinner": {
+              "id": "33657f0a-0adb-42d7-a400-6b18b0402cf8",
+              "recipeId": "r_spinach_rice",
+              "recipeName": "Σπανακόρυζο",
+              "description": "100g Σπανάκι (μαγ.), 140g Ρύζι Καστανό (μαγ.), 15ml Ελαιόλαδο",
+              "calories": 360,
+              "type": "dinner",
+              "ingredients": [
+                {
+                  "name": "Σπανάκι",
+                  "amount": 100,
+                  "unit": "g",
+                  "foodId": "f_spinach"
+                },
+                {
+                  "name": "Ρύζι Καστανό",
+                  "amount": 140,
+                  "unit": "g",
+                  "foodId": "f_rice_brown"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 15,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack2": {
+              "id": "b38cfd31-4114-4e5e-a9b5-ec54edf96fee",
+              "recipeId": "r_fruit_nuts",
+              "recipeName": "Φρούτο και Αμύγδαλα",
+              "description": "120g Μήλο, 15g Αμύγδαλα",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Μήλο",
+                  "amount": 120,
+                  "unit": "g",
+                  "foodId": "f_apple"
+                },
+                {
+                  "name": "Αμύγδαλα",
+                  "amount": 15,
+                  "unit": "g",
+                  "foodId": "f_almonds"
+                }
+              ],
+              "locked": false
+            }
+          },
+          "totalCalories": 1800,
+          "macros": {
+            "protein": 82,
+            "carbs": 195,
+            "fat": 73
+          }
+        },
+        {
+          "date": "2025-12-15",
+          "dayNumber": 4,
+          "meals": {
+            "breakfast": {
+              "id": "db866196-47c0-4515-87b9-dc042d1e3c16",
+              "recipeId": "r_omelet_veg",
+              "recipeName": "Ομελέτα με Λαχανικά",
+              "description": "170g Αυγά, 70g Λαχανικά (Πιπεριά/Σπανάκι), 7ml Ελαιόλαδο",
+              "calories": 450,
+              "type": "breakfast",
+              "ingredients": [
+                {
+                  "name": "Αυγά",
+                  "amount": 170,
+                  "unit": "g",
+                  "foodId": "f_egg"
+                },
+                {
+                  "name": "Λαχανικά (Πιπεριά/Σπανάκι)",
+                  "amount": 70,
+                  "unit": "g",
+                  "foodId": "f_lettuce"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 7,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack1": {
+              "id": "f501a71a-fe4f-4ac4-8562-bf5f17057171",
+              "recipeId": "r_fruit_nuts",
+              "recipeName": "Φρούτο και Αμύγδαλα",
+              "description": "120g Μήλο, 15g Αμύγδαλα",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Μήλο",
+                  "amount": 120,
+                  "unit": "g",
+                  "foodId": "f_apple"
+                },
+                {
+                  "name": "Αμύγδαλα",
+                  "amount": 15,
+                  "unit": "g",
+                  "foodId": "f_almonds"
+                }
+              ],
+              "locked": false
+            },
+            "lunch": {
+              "id": "da600ccf-ff87-4874-b641-bc4836a194b1",
+              "recipeId": "r_lentil_soup",
+              "recipeName": "Φακές Σούπα",
+              "description": "290g Φακές (μαγ.), 130g Ντομάτα, 15ml Ελαιόλαδο",
+              "calories": 630,
+              "type": "lunch",
+              "ingredients": [
+                {
+                  "name": "Φακές",
+                  "amount": 290,
+                  "unit": "g",
+                  "foodId": "f_lentils"
+                },
+                {
+                  "name": "Ντομάτα",
+                  "amount": 130,
+                  "unit": "g",
+                  "foodId": "f_tomato"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 15,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "dinner": {
+              "id": "4263b1f7-88ee-45f6-96e3-7c75bd44ed3b",
+              "recipeId": "r_fish_salad",
+              "recipeName": "Τσιπούρα Ψητή με Σαλάτα",
+              "description": "230g Τσιπούρα (μαγ.), 150g Μαρούλι, 10ml Ελαιόλαδο",
+              "calories": 360,
+              "type": "dinner",
+              "ingredients": [
+                {
+                  "name": "Τσιπούρα",
+                  "amount": 230,
+                  "unit": "g",
+                  "foodId": "f_fish_tsipoura"
+                },
+                {
+                  "name": "Μαρούλι",
+                  "amount": 150,
+                  "unit": "g",
+                  "foodId": "f_lettuce"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 10,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack2": {
+              "id": "eb6eb585-e8c4-4d55-9297-76259b5ec6a8",
+              "recipeId": "r_banana_yogurt",
+              "recipeName": "Γιαούρτι με Μπανάνα & Μέλι",
+              "description": "110g Γιαούρτι, 70g Μπανάνα, 4g Μέλι",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Γιαούρτι",
+                  "amount": 110,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Μπανάνα",
+                  "amount": 70,
+                  "unit": "g",
+                  "foodId": "f_banana"
+                },
+                {
+                  "name": "Μέλι",
+                  "amount": 4,
+                  "unit": "g",
+                  "foodId": "f_honey"
+                }
+              ],
+              "locked": false
+            }
+          },
+          "totalCalories": 1800,
+          "macros": {
+            "protein": 110,
+            "carbs": 140,
+            "fat": 81
+          }
+        },
+        {
+          "date": "2025-12-16",
+          "dayNumber": 5,
+          "meals": {
+            "breakfast": {
+              "id": "0c79e139-d8c9-48fb-ae9e-dbf017988bba",
+              "recipeId": "r_tahini_bread",
+              "recipeName": "Ψωμί ολικής με Ταχίνι και Μέλι",
+              "description": "70g Ψωμί Ολικής (ή φρυγανιές), 20g Ταχίνι, 10g Μέλι",
+              "calories": 450,
+              "type": "breakfast",
+              "ingredients": [
+                {
+                  "name": "Ψωμί Ολικής (ή φρυγανιές)",
+                  "amount": 70,
+                  "unit": "g",
+                  "foodId": "f_rusks"
+                },
+                {
+                  "name": "Ταχίνι",
+                  "amount": 20,
+                  "unit": "g",
+                  "foodId": "f_tahini"
+                },
+                {
+                  "name": "Μέλι",
+                  "amount": 10,
+                  "unit": "g",
+                  "foodId": "f_honey"
+                }
+              ],
+              "locked": false
+            },
+            "snack1": {
+              "id": "191e3a7b-6d85-44fe-be0b-785a449374c6",
+              "recipeId": "r_yogurt_walnut",
+              "recipeName": "Γιαούρτι με Καρύδια",
+              "description": "140g Γιαούρτι 2%, 9g Καρύδια",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Γιαούρτι 2%",
+                  "amount": 140,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Καρύδια",
+                  "amount": 9,
+                  "unit": "g",
+                  "foodId": "f_walnuts"
+                }
+              ],
+              "locked": false
+            },
+            "lunch": {
+              "id": "b311c4d5-1dcb-4f7e-8672-b428e60deda5",
+              "recipeId": "r_chicken_rice",
+              "recipeName": "Κοτόπουλο Φιλέτο με Ρύζι",
+              "description": "160g Κοτόπουλο Στήθος (μαγ.), 250g Ρύζι Μπασμάτι (μαγ.), 15ml Ελαιόλαδο",
+              "calories": 630,
+              "type": "lunch",
+              "ingredients": [
+                {
+                  "name": "Κοτόπουλο Στήθος",
+                  "amount": 160,
+                  "unit": "g",
+                  "foodId": "f_chicken_breast"
+                },
+                {
+                  "name": "Ρύζι Μπασμάτι",
+                  "amount": 250,
+                  "unit": "g",
+                  "foodId": "f_rice_basmati"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 15,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "dinner": {
+              "id": "80ae87a5-f4c9-4b3b-a723-b7cc56e86ce3",
+              "recipeId": "r_chicken_rice",
+              "recipeName": "Κοτόπουλο Φιλέτο με Ρύζι",
+              "description": "90g Κοτόπουλο Στήθος (μαγ.), 140g Ρύζι Μπασμάτι (μαγ.), 8ml Ελαιόλαδο",
+              "calories": 360,
+              "type": "dinner",
+              "ingredients": [
+                {
+                  "name": "Κοτόπουλο Στήθος",
+                  "amount": 90,
+                  "unit": "g",
+                  "foodId": "f_chicken_breast"
+                },
+                {
+                  "name": "Ρύζι Μπασμάτι",
+                  "amount": 140,
+                  "unit": "g",
+                  "foodId": "f_rice_basmati"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 8,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack2": {
+              "id": "42db107b-6310-4a09-9169-677293044ce6",
+              "recipeId": "r_fruit_nuts",
+              "recipeName": "Φρούτο και Αμύγδαλα",
+              "description": "120g Μήλο, 15g Αμύγδαλα",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Μήλο",
+                  "amount": 120,
+                  "unit": "g",
+                  "foodId": "f_apple"
+                },
+                {
+                  "name": "Αμύγδαλα",
+                  "amount": 15,
+                  "unit": "g",
+                  "foodId": "f_almonds"
+                }
+              ],
+              "locked": false
+            }
+          },
+          "totalCalories": 1800,
+          "macros": {
+            "protein": 107,
+            "carbs": 185,
+            "fat": 66
+          }
+        },
+        {
+          "date": "2025-12-17",
+          "dayNumber": 6,
+          "meals": {
+            "breakfast": {
+              "id": "e913acd0-499d-45c5-b8e8-c39f3e39a84a",
+              "recipeId": "r_oats_yogurt",
+              "recipeName": "Βρώμη με Γιαούρτι και Φρούτα",
+              "description": "230g Βρώμη (μαγ.), 190g Γιαούρτι 2%, 130g Μήλο",
+              "calories": 450,
+              "type": "breakfast",
+              "ingredients": [
+                {
+                  "name": "Βρώμη",
+                  "amount": 230,
+                  "unit": "g",
+                  "foodId": "f_oats"
+                },
+                {
+                  "name": "Γιαούρτι 2%",
+                  "amount": 190,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Μήλο",
+                  "amount": 130,
+                  "unit": "g",
+                  "foodId": "f_apple"
+                }
+              ],
+              "locked": false
+            },
+            "snack1": {
+              "id": "7c93a285-7022-4de6-8272-426c38f976b9",
+              "recipeId": "r_yogurt_walnut",
+              "recipeName": "Γιαούρτι με Καρύδια",
+              "description": "140g Γιαούρτι 2%, 9g Καρύδια",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Γιαούρτι 2%",
+                  "amount": 140,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Καρύδια",
+                  "amount": 9,
+                  "unit": "g",
+                  "foodId": "f_walnuts"
+                }
+              ],
+              "locked": false
+            },
+            "lunch": {
+              "id": "670ec1d2-811d-4f2d-bcfd-93cb3a327f6c",
+              "recipeId": "r_beef_potatoes",
+              "recipeName": "Μπιφτέκια Μοσχαρίσια με Πατάτες",
+              "description": "110g Κιμάς Μοσχαρίσιος (μαγ.), 230g Πατάτες (μαγ.), 15ml Ελαιόλαδο",
+              "calories": 630,
+              "type": "lunch",
+              "ingredients": [
+                {
+                  "name": "Κιμάς Μοσχαρίσιος",
+                  "amount": 110,
+                  "unit": "g",
+                  "foodId": "f_beef_mince"
+                },
+                {
+                  "name": "Πατάτες",
+                  "amount": 230,
+                  "unit": "g",
+                  "foodId": "f_potato"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 15,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "dinner": {
+              "id": "425bfdc6-aa36-4029-b3ac-5f78f3cdd25f",
+              "recipeId": "r_spinach_rice",
+              "recipeName": "Σπανακόρυζο",
+              "description": "100g Σπανάκι (μαγ.), 140g Ρύζι Καστανό (μαγ.), 15ml Ελαιόλαδο",
+              "calories": 360,
+              "type": "dinner",
+              "ingredients": [
+                {
+                  "name": "Σπανάκι",
+                  "amount": 100,
+                  "unit": "g",
+                  "foodId": "f_spinach"
+                },
+                {
+                  "name": "Ρύζι Καστανό",
+                  "amount": 140,
+                  "unit": "g",
+                  "foodId": "f_rice_brown"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 15,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack2": {
+              "id": "447c6d4d-383a-49d1-b545-5ed04557c816",
+              "recipeId": "r_fruit_nuts",
+              "recipeName": "Φρούτο και Αμύγδαλα",
+              "description": "120g Μήλο, 15g Αμύγδαλα",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Μήλο",
+                  "amount": 120,
+                  "unit": "g",
+                  "foodId": "f_apple"
+                },
+                {
+                  "name": "Αμύγδαλα",
+                  "amount": 15,
+                  "unit": "g",
+                  "foodId": "f_almonds"
+                }
+              ],
+              "locked": false
+            }
+          },
+          "totalCalories": 1800,
+          "macros": {
+            "protein": 88,
+            "carbs": 184,
+            "fat": 74
+          }
+        },
+        {
+          "date": "2025-12-18",
+          "dayNumber": 7,
+          "meals": {
+            "breakfast": {
+              "id": "8d0c51a8-bd3d-4c08-965c-2a33aa3b1bba",
+              "recipeId": "r_oats_yogurt",
+              "recipeName": "Βρώμη με Γιαούρτι και Φρούτα",
+              "description": "230g Βρώμη (μαγ.), 190g Γιαούρτι 2%, 130g Μήλο",
+              "calories": 450,
+              "type": "breakfast",
+              "ingredients": [
+                {
+                  "name": "Βρώμη",
+                  "amount": 230,
+                  "unit": "g",
+                  "foodId": "f_oats"
+                },
+                {
+                  "name": "Γιαούρτι 2%",
+                  "amount": 190,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Μήλο",
+                  "amount": 130,
+                  "unit": "g",
+                  "foodId": "f_apple"
+                }
+              ],
+              "locked": false
+            },
+            "snack1": {
+              "id": "92814c90-0d0d-4c92-8fa1-8bb3cabdb997",
+              "recipeId": "r_fruit_nuts",
+              "recipeName": "Φρούτο και Αμύγδαλα",
+              "description": "120g Μήλο, 15g Αμύγδαλα",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Μήλο",
+                  "amount": 120,
+                  "unit": "g",
+                  "foodId": "f_apple"
+                },
+                {
+                  "name": "Αμύγδαλα",
+                  "amount": 15,
+                  "unit": "g",
+                  "foodId": "f_almonds"
+                }
+              ],
+              "locked": false
+            },
+            "lunch": {
+              "id": "e43b0f2d-b10a-4669-9b99-d33fc2b355b3",
+              "recipeId": "r_quinoa_salad",
+              "recipeName": "Σαλάτα Κινόα με Λαχανικά",
+              "description": "280g Κινόα (μαγ.), 160g Ντομάτα, 15ml Ελαιόλαδο",
+              "calories": 630,
+              "type": "lunch",
+              "ingredients": [
+                {
+                  "name": "Κινόα",
+                  "amount": 280,
+                  "unit": "g",
+                  "foodId": "f_quinoa"
+                },
+                {
+                  "name": "Ντομάτα",
+                  "amount": 160,
+                  "unit": "g",
+                  "foodId": "f_tomato"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 15,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "dinner": {
+              "id": "95bbad52-2a62-4d48-973d-1313e6a6da8d",
+              "recipeId": "r_lentil_soup",
+              "recipeName": "Φακές Σούπα",
+              "description": "170g Φακές (μαγ.), 75g Ντομάτα, 9ml Ελαιόλαδο",
+              "calories": 360,
+              "type": "dinner",
+              "ingredients": [
+                {
+                  "name": "Φακές",
+                  "amount": 170,
+                  "unit": "g",
+                  "foodId": "f_lentils"
+                },
+                {
+                  "name": "Ντομάτα",
+                  "amount": 75,
+                  "unit": "g",
+                  "foodId": "f_tomato"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 9,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack2": {
+              "id": "899da41a-31b5-411d-bd02-6e6850ef4e71",
+              "recipeId": "r_banana_yogurt",
+              "recipeName": "Γιαούρτι με Μπανάνα & Μέλι",
+              "description": "110g Γιαούρτι, 70g Μπανάνα, 4g Μέλι",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Γιαούρτι",
+                  "amount": 110,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Μπανάνα",
+                  "amount": 70,
+                  "unit": "g",
+                  "foodId": "f_banana"
+                },
+                {
+                  "name": "Μέλι",
+                  "amount": 4,
+                  "unit": "g",
+                  "foodId": "f_honey"
+                }
+              ],
+              "locked": false
+            }
+          },
+          "totalCalories": 1800,
+          "macros": {
+            "protein": 75,
+            "carbs": 228,
+            "fat": 58
+          }
+        }
+      ],
+      "averageCalories": 1800,
+      "id": "d00fded6-cecc-4dad-b9ae-b8c4cfca819f",
+      "clientId": "0c678049-a6c8-4014-9272-02f8e5f8e9b7",
+      "name": "Διαιτολόγιο 12/12/2025",
+      "createdAt": "2025-12-12T18:09:51.686Z"
+    },
+    {
+      "days": [
+        {
+          "date": "2025-12-12",
+          "dayNumber": 1,
+          "meals": {
+            "breakfast": {
+              "id": "8ca34398-0cfe-4a59-80c8-7e14341ab3b9",
+              "recipeId": "r_tahini_bread",
+              "recipeName": "Ψωμί ολικής με Ταχίνι και Μέλι",
+              "description": "70g Ψωμί Ολικής (ή φρυγανιές), 20g Ταχίνι, 10g Μέλι",
+              "calories": 450,
+              "type": "breakfast",
+              "ingredients": [
+                {
+                  "name": "Ψωμί Ολικής (ή φρυγανιές)",
+                  "amount": 70,
+                  "unit": "g",
+                  "foodId": "f_rusks"
+                },
+                {
+                  "name": "Ταχίνι",
+                  "amount": 20,
+                  "unit": "g",
+                  "foodId": "f_tahini"
+                },
+                {
+                  "name": "Μέλι",
+                  "amount": 10,
+                  "unit": "g",
+                  "foodId": "f_honey"
+                }
+              ],
+              "locked": false
+            },
+            "snack1": {
+              "id": "eebf4e0d-8a7d-465b-a34f-3e68088a66b2",
+              "recipeId": "r_yogurt_walnut",
+              "recipeName": "Γιαούρτι με Καρύδια",
+              "description": "140g Γιαούρτι 2%, 9g Καρύδια",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Γιαούρτι 2%",
+                  "amount": 140,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Καρύδια",
+                  "amount": 9,
+                  "unit": "g",
+                  "foodId": "f_walnuts"
+                }
+              ],
+              "locked": false
+            },
+            "lunch": {
+              "id": "3b7f623f-2080-4bfc-8b97-aa0c6cfad8ba",
+              "recipeId": "r_lentil_soup",
+              "recipeName": "Φακές Σούπα",
+              "description": "290g Φακές (μαγ.), 130g Ντομάτα, 15ml Ελαιόλαδο",
+              "calories": 630,
+              "type": "lunch",
+              "ingredients": [
+                {
+                  "name": "Φακές",
+                  "amount": 290,
+                  "unit": "g",
+                  "foodId": "f_lentils"
+                },
+                {
+                  "name": "Ντομάτα",
+                  "amount": 130,
+                  "unit": "g",
+                  "foodId": "f_tomato"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 15,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "dinner": {
+              "id": "851fe2e5-ee84-4675-aab4-34bcdde2e286",
+              "recipeId": "r_greek_salad",
+              "recipeName": "Χωριάτικη Σαλάτα (Ατομική)",
+              "description": "120g Ντομάτα, 80g Αγγούρι, 50g Φέτα, 10ml Ελαιόλαδο",
+              "calories": 360,
+              "type": "dinner",
+              "ingredients": [
+                {
+                  "name": "Ντομάτα",
+                  "amount": 120,
+                  "unit": "g",
+                  "foodId": "f_tomato"
+                },
+                {
+                  "name": "Αγγούρι",
+                  "amount": 80,
+                  "unit": "g",
+                  "foodId": "f_cucumber"
+                },
+                {
+                  "name": "Φέτα",
+                  "amount": 50,
+                  "unit": "g",
+                  "foodId": "f_feta"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 10,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack2": {
+              "id": "7b6cc0ea-18f9-403a-8ec2-e6903a7c4f26",
+              "recipeId": "r_yogurt_walnut",
+              "recipeName": "Γιαούρτι με Καρύδια",
+              "description": "140g Γιαούρτι 2%, 9g Καρύδια",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Γιαούρτι 2%",
+                  "amount": 140,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Καρύδια",
+                  "amount": 9,
+                  "unit": "g",
+                  "foodId": "f_walnuts"
+                }
+              ],
+              "locked": false
+            }
+          },
+          "totalCalories": 1800,
+          "macros": {
+            "protein": 78,
+            "carbs": 161,
+            "fat": 88
+          }
+        },
+        {
+          "date": "2025-12-13",
+          "dayNumber": 2,
+          "meals": {
+            "breakfast": {
+              "id": "d776b769-fd94-4c24-b937-2fdc93d3b005",
+              "recipeId": "r_tahini_bread",
+              "recipeName": "Ψωμί ολικής με Ταχίνι και Μέλι",
+              "description": "70g Ψωμί Ολικής (ή φρυγανιές), 20g Ταχίνι, 10g Μέλι",
+              "calories": 450,
+              "type": "breakfast",
+              "ingredients": [
+                {
+                  "name": "Ψωμί Ολικής (ή φρυγανιές)",
+                  "amount": 70,
+                  "unit": "g",
+                  "foodId": "f_rusks"
+                },
+                {
+                  "name": "Ταχίνι",
+                  "amount": 20,
+                  "unit": "g",
+                  "foodId": "f_tahini"
+                },
+                {
+                  "name": "Μέλι",
+                  "amount": 10,
+                  "unit": "g",
+                  "foodId": "f_honey"
+                }
+              ],
+              "locked": false
+            },
+            "snack1": {
+              "id": "41a0bfb1-3646-4f57-8604-18de3d7fab61",
+              "recipeId": "r_fruit_nuts",
+              "recipeName": "Φρούτο και Αμύγδαλα",
+              "description": "120g Μήλο, 15g Αμύγδαλα",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Μήλο",
+                  "amount": 120,
+                  "unit": "g",
+                  "foodId": "f_apple"
+                },
+                {
+                  "name": "Αμύγδαλα",
+                  "amount": 15,
+                  "unit": "g",
+                  "foodId": "f_almonds"
+                }
+              ],
+              "locked": false
+            },
+            "lunch": {
+              "id": "8a916e59-84e0-4921-bca0-f7b42eb6e8ee",
+              "recipeId": "r_green_beans",
+              "recipeName": "Φασολάκια Λαδερά",
+              "description": "520g Φασολάκια (μαγ.), 30ml Ελαιόλαδο, 160g Ντομάτα",
+              "calories": 630,
+              "type": "lunch",
+              "ingredients": [
+                {
+                  "name": "Φασολάκια",
+                  "amount": 520,
+                  "unit": "g",
+                  "foodId": "f_beans_green"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 30,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                },
+                {
+                  "name": "Ντομάτα",
+                  "amount": 160,
+                  "unit": "g",
+                  "foodId": "f_tomato"
+                }
+              ],
+              "locked": false
+            },
+            "dinner": {
+              "id": "fd0d2dc1-c9dc-4029-90d0-eef799bf5d9e",
+              "recipeId": "r_beef_potatoes",
+              "recipeName": "Μπιφτέκια Μοσχαρίσια με Πατάτες",
+              "description": "60g Κιμάς Μοσχαρίσιος (μαγ.), 130g Πατάτες (μαγ.), 7ml Ελαιόλαδο",
+              "calories": 360,
+              "type": "dinner",
+              "ingredients": [
+                {
+                  "name": "Κιμάς Μοσχαρίσιος",
+                  "amount": 60,
+                  "unit": "g",
+                  "foodId": "f_beef_mince"
+                },
+                {
+                  "name": "Πατάτες",
+                  "amount": 130,
+                  "unit": "g",
+                  "foodId": "f_potato"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 7,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack2": {
+              "id": "ca09aecc-1067-4359-af5c-57a8859cc784",
+              "recipeId": "r_banana_yogurt",
+              "recipeName": "Γιαούρτι με Μπανάνα & Μέλι",
+              "description": "110g Γιαούρτι, 70g Μπανάνα, 4g Μέλι",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Γιαούρτι",
+                  "amount": 110,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Μπανάνα",
+                  "amount": 70,
+                  "unit": "g",
+                  "foodId": "f_banana"
+                },
+                {
+                  "name": "Μέλι",
+                  "amount": 4,
+                  "unit": "g",
+                  "foodId": "f_honey"
+                }
+              ],
+              "locked": false
+            }
+          },
+          "totalCalories": 1800,
+          "macros": {
+            "protein": 61,
+            "carbs": 190,
+            "fat": 87
+          }
+        },
+        {
+          "date": "2025-12-14",
+          "dayNumber": 3,
+          "meals": {
+            "breakfast": {
+              "id": "014ca20f-ca24-42e4-b786-cc06c9097e86",
+              "recipeId": "r_omelet_veg",
+              "recipeName": "Ομελέτα με Λαχανικά",
+              "description": "170g Αυγά, 70g Λαχανικά (Πιπεριά/Σπανάκι), 7ml Ελαιόλαδο",
+              "calories": 450,
+              "type": "breakfast",
+              "ingredients": [
+                {
+                  "name": "Αυγά",
+                  "amount": 170,
+                  "unit": "g",
+                  "foodId": "f_egg"
+                },
+                {
+                  "name": "Λαχανικά (Πιπεριά/Σπανάκι)",
+                  "amount": 70,
+                  "unit": "g",
+                  "foodId": "f_lettuce"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 7,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack1": {
+              "id": "49f5a4a9-b9e3-41d1-bad4-b7a0a9a0b58a",
+              "recipeId": "r_yogurt_walnut",
+              "recipeName": "Γιαούρτι με Καρύδια",
+              "description": "140g Γιαούρτι 2%, 9g Καρύδια",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Γιαούρτι 2%",
+                  "amount": 140,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Καρύδια",
+                  "amount": 9,
+                  "unit": "g",
+                  "foodId": "f_walnuts"
+                }
+              ],
+              "locked": false
+            },
+            "lunch": {
+              "id": "f60f602a-e983-45db-9855-cd113b407aaa",
+              "recipeId": "r_spinach_rice",
+              "recipeName": "Σπανακόρυζο",
+              "description": "180g Σπανάκι (μαγ.), 250g Ρύζι Καστανό (μαγ.), 25ml Ελαιόλαδο",
+              "calories": 630,
+              "type": "lunch",
+              "ingredients": [
+                {
+                  "name": "Σπανάκι",
+                  "amount": 180,
+                  "unit": "g",
+                  "foodId": "f_spinach"
+                },
+                {
+                  "name": "Ρύζι Καστανό",
+                  "amount": 250,
+                  "unit": "g",
+                  "foodId": "f_rice_brown"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 25,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "dinner": {
+              "id": "b1f249c9-c79b-4865-b83c-ef44276a10c0",
+              "recipeId": "r_fish_salad",
+              "recipeName": "Τσιπούρα Ψητή με Σαλάτα",
+              "description": "230g Τσιπούρα (μαγ.), 150g Μαρούλι, 10ml Ελαιόλαδο",
+              "calories": 360,
+              "type": "dinner",
+              "ingredients": [
+                {
+                  "name": "Τσιπούρα",
+                  "amount": 230,
+                  "unit": "g",
+                  "foodId": "f_fish_tsipoura"
+                },
+                {
+                  "name": "Μαρούλι",
+                  "amount": 150,
+                  "unit": "g",
+                  "foodId": "f_lettuce"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 10,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack2": {
+              "id": "54d9615a-11d2-4d17-a6f1-ca4808e5a76a",
+              "recipeId": "r_banana_yogurt",
+              "recipeName": "Γιαούρτι με Μπανάνα & Μέλι",
+              "description": "110g Γιαούρτι, 70g Μπανάνα, 4g Μέλι",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Γιαούρτι",
+                  "amount": 110,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Μπανάνα",
+                  "amount": 70,
+                  "unit": "g",
+                  "foodId": "f_banana"
+                },
+                {
+                  "name": "Μέλι",
+                  "amount": 4,
+                  "unit": "g",
+                  "foodId": "f_honey"
+                }
+              ],
+              "locked": false
+            }
+          },
+          "totalCalories": 1800,
+          "macros": {
+            "protein": 101,
+            "carbs": 137,
+            "fat": 89
+          }
+        },
+        {
+          "date": "2025-12-15",
+          "dayNumber": 4,
+          "meals": {
+            "breakfast": {
+              "id": "933384b3-a022-4be9-a59e-6022330ccaa1",
+              "recipeId": "r_omelet_veg",
+              "recipeName": "Ομελέτα με Λαχανικά",
+              "description": "170g Αυγά, 70g Λαχανικά (Πιπεριά/Σπανάκι), 7ml Ελαιόλαδο",
+              "calories": 450,
+              "type": "breakfast",
+              "ingredients": [
+                {
+                  "name": "Αυγά",
+                  "amount": 170,
+                  "unit": "g",
+                  "foodId": "f_egg"
+                },
+                {
+                  "name": "Λαχανικά (Πιπεριά/Σπανάκι)",
+                  "amount": 70,
+                  "unit": "g",
+                  "foodId": "f_lettuce"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 7,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack1": {
+              "id": "ea9c8326-66c6-436d-8a45-9a2906b43bac",
+              "recipeId": "r_fruit_nuts",
+              "recipeName": "Φρούτο και Αμύγδαλα",
+              "description": "120g Μήλο, 15g Αμύγδαλα",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Μήλο",
+                  "amount": 120,
+                  "unit": "g",
+                  "foodId": "f_apple"
+                },
+                {
+                  "name": "Αμύγδαλα",
+                  "amount": 15,
+                  "unit": "g",
+                  "foodId": "f_almonds"
+                }
+              ],
+              "locked": false
+            },
+            "lunch": {
+              "id": "724599db-13fd-4187-8652-8dbe5fb64d55",
+              "recipeId": "r_beef_potatoes",
+              "recipeName": "Μπιφτέκια Μοσχαρίσια με Πατάτες",
+              "description": "110g Κιμάς Μοσχαρίσιος (μαγ.), 230g Πατάτες (μαγ.), 15ml Ελαιόλαδο",
+              "calories": 630,
+              "type": "lunch",
+              "ingredients": [
+                {
+                  "name": "Κιμάς Μοσχαρίσιος",
+                  "amount": 110,
+                  "unit": "g",
+                  "foodId": "f_beef_mince"
+                },
+                {
+                  "name": "Πατάτες",
+                  "amount": 230,
+                  "unit": "g",
+                  "foodId": "f_potato"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 15,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "dinner": {
+              "id": "4b4cb102-dd8e-4eba-beea-edfb98638390",
+              "recipeId": "r_chicken_rice",
+              "recipeName": "Κοτόπουλο Φιλέτο με Ρύζι",
+              "description": "90g Κοτόπουλο Στήθος (μαγ.), 140g Ρύζι Μπασμάτι (μαγ.), 8ml Ελαιόλαδο",
+              "calories": 360,
+              "type": "dinner",
+              "ingredients": [
+                {
+                  "name": "Κοτόπουλο Στήθος",
+                  "amount": 90,
+                  "unit": "g",
+                  "foodId": "f_chicken_breast"
+                },
+                {
+                  "name": "Ρύζι Μπασμάτι",
+                  "amount": 140,
+                  "unit": "g",
+                  "foodId": "f_rice_basmati"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 8,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack2": {
+              "id": "c1830eb8-d3c5-445d-bda1-76d0b3678d30",
+              "recipeId": "r_fruit_nuts",
+              "recipeName": "Φρούτο και Αμύγδαλα",
+              "description": "120g Μήλο, 15g Αμύγδαλα",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Μήλο",
+                  "amount": 120,
+                  "unit": "g",
+                  "foodId": "f_apple"
+                },
+                {
+                  "name": "Αμύγδαλα",
+                  "amount": 15,
+                  "unit": "g",
+                  "foodId": "f_almonds"
+                }
+              ],
+              "locked": false
+            }
+          },
+          "totalCalories": 1800,
+          "macros": {
+            "protein": 107,
+            "carbs": 138,
+            "fat": 85
+          }
+        },
+        {
+          "date": "2025-12-16",
+          "dayNumber": 5,
+          "meals": {
+            "breakfast": {
+              "id": "76a96b45-744d-4cc1-b37e-9099097647ba",
+              "recipeId": "r_tahini_bread",
+              "recipeName": "Ψωμί ολικής με Ταχίνι και Μέλι",
+              "description": "70g Ψωμί Ολικής (ή φρυγανιές), 20g Ταχίνι, 10g Μέλι",
+              "calories": 450,
+              "type": "breakfast",
+              "ingredients": [
+                {
+                  "name": "Ψωμί Ολικής (ή φρυγανιές)",
+                  "amount": 70,
+                  "unit": "g",
+                  "foodId": "f_rusks"
+                },
+                {
+                  "name": "Ταχίνι",
+                  "amount": 20,
+                  "unit": "g",
+                  "foodId": "f_tahini"
+                },
+                {
+                  "name": "Μέλι",
+                  "amount": 10,
+                  "unit": "g",
+                  "foodId": "f_honey"
+                }
+              ],
+              "locked": false
+            },
+            "snack1": {
+              "id": "81622ca2-c382-4b94-be5b-116199d171fd",
+              "recipeId": "r_fruit_nuts",
+              "recipeName": "Φρούτο και Αμύγδαλα",
+              "description": "120g Μήλο, 15g Αμύγδαλα",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Μήλο",
+                  "amount": 120,
+                  "unit": "g",
+                  "foodId": "f_apple"
+                },
+                {
+                  "name": "Αμύγδαλα",
+                  "amount": 15,
+                  "unit": "g",
+                  "foodId": "f_almonds"
+                }
+              ],
+              "locked": false
+            },
+            "lunch": {
+              "id": "57c6e2e1-2f27-4407-8b80-689f25f02d6f",
+              "recipeId": "r_spinach_rice",
+              "recipeName": "Σπανακόρυζο",
+              "description": "180g Σπανάκι (μαγ.), 250g Ρύζι Καστανό (μαγ.), 25ml Ελαιόλαδο",
+              "calories": 630,
+              "type": "lunch",
+              "ingredients": [
+                {
+                  "name": "Σπανάκι",
+                  "amount": 180,
+                  "unit": "g",
+                  "foodId": "f_spinach"
+                },
+                {
+                  "name": "Ρύζι Καστανό",
+                  "amount": 250,
+                  "unit": "g",
+                  "foodId": "f_rice_brown"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 25,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "dinner": {
+              "id": "19b0a660-e4ef-4162-8e57-b602bcb67751",
+              "recipeId": "r_salmon_broccoli",
+              "recipeName": "Σολομός με Μπρόκολο",
+              "description": "110g Σολομός (μαγ.), 150g Μπρόκολο, 4ml Ελαιόλαδο",
+              "calories": 360,
+              "type": "dinner",
+              "ingredients": [
+                {
+                  "name": "Σολομός",
+                  "amount": 110,
+                  "unit": "g",
+                  "foodId": "f_salmon"
+                },
+                {
+                  "name": "Μπρόκολο",
+                  "amount": 150,
+                  "unit": "g",
+                  "foodId": "f_broccoli"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 4,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack2": {
+              "id": "25b4378c-2af1-4c34-86b4-2255a4aa88e6",
+              "recipeId": "r_fruit_nuts",
+              "recipeName": "Φρούτο και Αμύγδαλα",
+              "description": "120g Μήλο, 15g Αμύγδαλα",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Μήλο",
+                  "amount": 120,
+                  "unit": "g",
+                  "foodId": "f_apple"
+                },
+                {
+                  "name": "Αμύγδαλα",
+                  "amount": 15,
+                  "unit": "g",
+                  "foodId": "f_almonds"
+                }
+              ],
+              "locked": false
+            }
+          },
+          "totalCalories": 1800,
+          "macros": {
+            "protein": 65,
+            "carbs": 185,
+            "fat": 90
+          }
+        },
+        {
+          "date": "2025-12-17",
+          "dayNumber": 6,
+          "meals": {
+            "breakfast": {
+              "id": "f4ff3dc4-0ed3-4f65-9cbd-fe84f3418e0a",
+              "recipeId": "r_omelet_veg",
+              "recipeName": "Ομελέτα με Λαχανικά",
+              "description": "170g Αυγά, 70g Λαχανικά (Πιπεριά/Σπανάκι), 7ml Ελαιόλαδο",
+              "calories": 450,
+              "type": "breakfast",
+              "ingredients": [
+                {
+                  "name": "Αυγά",
+                  "amount": 170,
+                  "unit": "g",
+                  "foodId": "f_egg"
+                },
+                {
+                  "name": "Λαχανικά (Πιπεριά/Σπανάκι)",
+                  "amount": 70,
+                  "unit": "g",
+                  "foodId": "f_lettuce"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 7,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack1": {
+              "id": "62ee4d66-c1a3-4ee2-96d9-28c84a80f9d1",
+              "recipeId": "r_yogurt_walnut",
+              "recipeName": "Γιαούρτι με Καρύδια",
+              "description": "140g Γιαούρτι 2%, 9g Καρύδια",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Γιαούρτι 2%",
+                  "amount": 140,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Καρύδια",
+                  "amount": 9,
+                  "unit": "g",
+                  "foodId": "f_walnuts"
+                }
+              ],
+              "locked": false
+            },
+            "lunch": {
+              "id": "c49365fb-cb01-437e-9f83-6de85e217f93",
+              "recipeId": "r_chicken_rice",
+              "recipeName": "Κοτόπουλο Φιλέτο με Ρύζι",
+              "description": "160g Κοτόπουλο Στήθος (μαγ.), 250g Ρύζι Μπασμάτι (μαγ.), 15ml Ελαιόλαδο",
+              "calories": 630,
+              "type": "lunch",
+              "ingredients": [
+                {
+                  "name": "Κοτόπουλο Στήθος",
+                  "amount": 160,
+                  "unit": "g",
+                  "foodId": "f_chicken_breast"
+                },
+                {
+                  "name": "Ρύζι Μπασμάτι",
+                  "amount": 250,
+                  "unit": "g",
+                  "foodId": "f_rice_basmati"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 15,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "dinner": {
+              "id": "3615a4b6-e429-4914-8c24-f6081a893a6b",
+              "recipeId": "r_lentil_soup",
+              "recipeName": "Φακές Σούπα",
+              "description": "170g Φακές (μαγ.), 75g Ντομάτα, 9ml Ελαιόλαδο",
+              "calories": 360,
+              "type": "dinner",
+              "ingredients": [
+                {
+                  "name": "Φακές",
+                  "amount": 170,
+                  "unit": "g",
+                  "foodId": "f_lentils"
+                },
+                {
+                  "name": "Ντομάτα",
+                  "amount": 75,
+                  "unit": "g",
+                  "foodId": "f_tomato"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 9,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack2": {
+              "id": "07fb0f07-2ff3-4109-88f1-719e64ca80a2",
+              "recipeId": "r_yogurt_walnut",
+              "recipeName": "Γιαούρτι με Καρύδια",
+              "description": "140g Γιαούρτι 2%, 9g Καρύδια",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Γιαούρτι 2%",
+                  "amount": 140,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Καρύδια",
+                  "amount": 9,
+                  "unit": "g",
+                  "foodId": "f_walnuts"
+                }
+              ],
+              "locked": false
+            }
+          },
+          "totalCalories": 1800,
+          "macros": {
+            "protein": 119,
+            "carbs": 135,
+            "fat": 78
+          }
+        },
+        {
+          "date": "2025-12-18",
+          "dayNumber": 7,
+          "meals": {
+            "breakfast": {
+              "id": "65570543-882f-4e4d-b78a-08907a342678",
+              "recipeId": "r_tahini_bread",
+              "recipeName": "Ψωμί ολικής με Ταχίνι και Μέλι",
+              "description": "70g Ψωμί Ολικής (ή φρυγανιές), 20g Ταχίνι, 10g Μέλι",
+              "calories": 450,
+              "type": "breakfast",
+              "ingredients": [
+                {
+                  "name": "Ψωμί Ολικής (ή φρυγανιές)",
+                  "amount": 70,
+                  "unit": "g",
+                  "foodId": "f_rusks"
+                },
+                {
+                  "name": "Ταχίνι",
+                  "amount": 20,
+                  "unit": "g",
+                  "foodId": "f_tahini"
+                },
+                {
+                  "name": "Μέλι",
+                  "amount": 10,
+                  "unit": "g",
+                  "foodId": "f_honey"
+                }
+              ],
+              "locked": false
+            },
+            "snack1": {
+              "id": "132290f5-0e68-4672-81a4-104eb1814390",
+              "recipeId": "r_yogurt_walnut",
+              "recipeName": "Γιαούρτι με Καρύδια",
+              "description": "140g Γιαούρτι 2%, 9g Καρύδια",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Γιαούρτι 2%",
+                  "amount": 140,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Καρύδια",
+                  "amount": 9,
+                  "unit": "g",
+                  "foodId": "f_walnuts"
+                }
+              ],
+              "locked": false
+            },
+            "lunch": {
+              "id": "e53dcdbc-8d7e-4a37-bc49-d218a8139b04",
+              "recipeId": "r_fish_salad",
+              "recipeName": "Τσιπούρα Ψητή με Σαλάτα",
+              "description": "410g Τσιπούρα (μαγ.), 270g Μαρούλι, 20ml Ελαιόλαδο",
+              "calories": 630,
+              "type": "lunch",
+              "ingredients": [
+                {
+                  "name": "Τσιπούρα",
+                  "amount": 410,
+                  "unit": "g",
+                  "foodId": "f_fish_tsipoura"
+                },
+                {
+                  "name": "Μαρούλι",
+                  "amount": 270,
+                  "unit": "g",
+                  "foodId": "f_lettuce"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 20,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "dinner": {
+              "id": "540e88c1-55f8-4622-adb2-98aee7915c9c",
+              "recipeId": "r_greek_salad",
+              "recipeName": "Χωριάτικη Σαλάτα (Ατομική)",
+              "description": "120g Ντομάτα, 80g Αγγούρι, 50g Φέτα, 10ml Ελαιόλαδο",
+              "calories": 360,
+              "type": "dinner",
+              "ingredients": [
+                {
+                  "name": "Ντομάτα",
+                  "amount": 120,
+                  "unit": "g",
+                  "foodId": "f_tomato"
+                },
+                {
+                  "name": "Αγγούρι",
+                  "amount": 80,
+                  "unit": "g",
+                  "foodId": "f_cucumber"
+                },
+                {
+                  "name": "Φέτα",
+                  "amount": 50,
+                  "unit": "g",
+                  "foodId": "f_feta"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 10,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack2": {
+              "id": "d13d00c0-af38-4b7c-b0a6-f8657d6b0f0e",
+              "recipeId": "r_fruit_nuts",
+              "recipeName": "Φρούτο και Αμύγδαλα",
+              "description": "120g Μήλο, 15g Αμύγδαλα",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Μήλο",
+                  "amount": 120,
+                  "unit": "g",
+                  "foodId": "f_apple"
+                },
+                {
+                  "name": "Αμύγδαλα",
+                  "amount": 15,
+                  "unit": "g",
+                  "foodId": "f_almonds"
+                }
+              ],
+              "locked": false
+            }
+          },
+          "totalCalories": 1800,
+          "macros": {
+            "protein": 106,
+            "carbs": 107,
+            "fat": 104
+          }
+        }
+      ],
+      "averageCalories": 1800,
+      "id": "97655a67-1b35-4b11-b307-c43cce74851e",
+      "clientId": "12",
+      "name": "Διαιτολόγιο 12/12/2025",
+      "createdAt": "2025-12-12T20:16:48.365Z"
+    },
+    {
+      "days": [
+        {
+          "date": "2025-12-12",
+          "dayNumber": 1,
+          "meals": {
+            "breakfast": {
+              "id": "6cd43043-61eb-4fa1-b8f2-b3b870841f2b",
+              "recipeId": "r_oats_yogurt",
+              "recipeName": "Βρώμη με Γιαούρτι και Φρούτα",
+              "description": "230g Βρώμη (μαγ.), 190g Γιαούρτι 2%, 130g Μήλο",
+              "calories": 450,
+              "type": "breakfast",
+              "ingredients": [
+                {
+                  "name": "Βρώμη",
+                  "amount": 230,
+                  "unit": "g",
+                  "foodId": "f_oats"
+                },
+                {
+                  "name": "Γιαούρτι 2%",
+                  "amount": 190,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Μήλο",
+                  "amount": 130,
+                  "unit": "g",
+                  "foodId": "f_apple"
+                }
+              ],
+              "locked": false
+            },
+            "snack1": {
+              "id": "8975078d-575b-46d7-bbb8-83e0af266350",
+              "recipeId": "r_fruit_nuts",
+              "recipeName": "Φρούτο και Αμύγδαλα",
+              "description": "120g Μήλο, 15g Αμύγδαλα",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Μήλο",
+                  "amount": 120,
+                  "unit": "g",
+                  "foodId": "f_apple"
+                },
+                {
+                  "name": "Αμύγδαλα",
+                  "amount": 15,
+                  "unit": "g",
+                  "foodId": "f_almonds"
+                }
+              ],
+              "locked": false
+            },
+            "lunch": {
+              "id": "5e3cec8a-9078-4205-9d9e-87bcbd17ae89",
+              "recipeId": "r_green_beans",
+              "recipeName": "Φασολάκια Λαδερά",
+              "description": "520g Φασολάκια (μαγ.), 30ml Ελαιόλαδο, 160g Ντομάτα",
+              "calories": 630,
+              "type": "lunch",
+              "ingredients": [
+                {
+                  "name": "Φασολάκια",
+                  "amount": 520,
+                  "unit": "g",
+                  "foodId": "f_beans_green"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 30,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                },
+                {
+                  "name": "Ντομάτα",
+                  "amount": 160,
+                  "unit": "g",
+                  "foodId": "f_tomato"
+                }
+              ],
+              "locked": false
+            },
+            "dinner": {
+              "id": "63d90516-1c54-43cd-bd2c-98e3513aebf6",
+              "recipeId": "r_quinoa_salad",
+              "recipeName": "Σαλάτα Κινόα με Λαχανικά",
+              "description": "160g Κινόα (μαγ.), 90g Ντομάτα, 9ml Ελαιόλαδο",
+              "calories": 360,
+              "type": "dinner",
+              "ingredients": [
+                {
+                  "name": "Κινόα",
+                  "amount": 160,
+                  "unit": "g",
+                  "foodId": "f_quinoa"
+                },
+                {
+                  "name": "Ντομάτα",
+                  "amount": 90,
+                  "unit": "g",
+                  "foodId": "f_tomato"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 9,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack2": {
+              "id": "61cb5804-6d58-4480-a1a5-10acf4fefd86",
+              "recipeId": "r_yogurt_walnut",
+              "recipeName": "Γιαούρτι με Καρύδια",
+              "description": "140g Γιαούρτι 2%, 9g Καρύδια",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Γιαούρτι 2%",
+                  "amount": 140,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Καρύδια",
+                  "amount": 9,
+                  "unit": "g",
+                  "foodId": "f_walnuts"
+                }
+              ],
+              "locked": false
+            }
+          },
+          "totalCalories": 1800,
+          "macros": {
+            "protein": 65,
+            "carbs": 187,
+            "fat": 84
+          }
+        },
+        {
+          "date": "2025-12-13",
+          "dayNumber": 2,
+          "meals": {
+            "breakfast": {
+              "id": "cfba3632-2f81-470d-9736-eb8a633063bc",
+              "recipeId": "r_omelet_veg",
+              "recipeName": "Ομελέτα με Λαχανικά",
+              "description": "170g Αυγά, 70g Λαχανικά (Πιπεριά/Σπανάκι), 7ml Ελαιόλαδο",
+              "calories": 450,
+              "type": "breakfast",
+              "ingredients": [
+                {
+                  "name": "Αυγά",
+                  "amount": 170,
+                  "unit": "g",
+                  "foodId": "f_egg"
+                },
+                {
+                  "name": "Λαχανικά (Πιπεριά/Σπανάκι)",
+                  "amount": 70,
+                  "unit": "g",
+                  "foodId": "f_lettuce"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 7,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack1": {
+              "id": "6ab659e2-61c1-45aa-80a8-297111e3cc82",
+              "recipeId": "r_yogurt_walnut",
+              "recipeName": "Γιαούρτι με Καρύδια",
+              "description": "140g Γιαούρτι 2%, 9g Καρύδια",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Γιαούρτι 2%",
+                  "amount": 140,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Καρύδια",
+                  "amount": 9,
+                  "unit": "g",
+                  "foodId": "f_walnuts"
+                }
+              ],
+              "locked": false
+            },
+            "lunch": {
+              "id": "5f530349-bc39-48b8-80b5-535f5b7f063e",
+              "recipeId": "r_lentil_soup",
+              "recipeName": "Φακές Σούπα",
+              "description": "290g Φακές (μαγ.), 130g Ντομάτα, 15ml Ελαιόλαδο",
+              "calories": 630,
+              "type": "lunch",
+              "ingredients": [
+                {
+                  "name": "Φακές",
+                  "amount": 290,
+                  "unit": "g",
+                  "foodId": "f_lentils"
+                },
+                {
+                  "name": "Ντομάτα",
+                  "amount": 130,
+                  "unit": "g",
+                  "foodId": "f_tomato"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 15,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "dinner": {
+              "id": "9fb50c0b-796d-4929-b934-e6d5458517a3",
+              "recipeId": "r_salmon_broccoli",
+              "recipeName": "Σολομός με Μπρόκολο",
+              "description": "110g Σολομός (μαγ.), 150g Μπρόκολο, 4ml Ελαιόλαδο",
+              "calories": 360,
+              "type": "dinner",
+              "ingredients": [
+                {
+                  "name": "Σολομός",
+                  "amount": 110,
+                  "unit": "g",
+                  "foodId": "f_salmon"
+                },
+                {
+                  "name": "Μπρόκολο",
+                  "amount": 150,
+                  "unit": "g",
+                  "foodId": "f_broccoli"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 4,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack2": {
+              "id": "211a9ede-68d5-42cc-aa2c-9e6d698598ff",
+              "recipeId": "r_banana_yogurt",
+              "recipeName": "Γιαούρτι με Μπανάνα & Μέλι",
+              "description": "110g Γιαούρτι, 70g Μπανάνα, 4g Μέλι",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Γιαούρτι",
+                  "amount": 110,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Μπανάνα",
+                  "amount": 70,
+                  "unit": "g",
+                  "foodId": "f_banana"
+                },
+                {
+                  "name": "Μέλι",
+                  "amount": 4,
+                  "unit": "g",
+                  "foodId": "f_honey"
+                }
+              ],
+              "locked": false
+            }
+          },
+          "totalCalories": 1800,
+          "macros": {
+            "protein": 106,
+            "carbs": 130,
+            "fat": 86
+          }
+        },
+        {
+          "date": "2025-12-14",
+          "dayNumber": 3,
+          "meals": {
+            "breakfast": {
+              "id": "3f331f95-f273-42d1-aa54-de23127bea8a",
+              "recipeId": "r_omelet_veg",
+              "recipeName": "Ομελέτα με Λαχανικά",
+              "description": "170g Αυγά, 70g Λαχανικά (Πιπεριά/Σπανάκι), 7ml Ελαιόλαδο",
+              "calories": 450,
+              "type": "breakfast",
+              "ingredients": [
+                {
+                  "name": "Αυγά",
+                  "amount": 170,
+                  "unit": "g",
+                  "foodId": "f_egg"
+                },
+                {
+                  "name": "Λαχανικά (Πιπεριά/Σπανάκι)",
+                  "amount": 70,
+                  "unit": "g",
+                  "foodId": "f_lettuce"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 7,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack1": {
+              "id": "d21d0ff5-be1a-4506-9d4f-8828581a1762",
+              "recipeId": "r_banana_yogurt",
+              "recipeName": "Γιαούρτι με Μπανάνα & Μέλι",
+              "description": "110g Γιαούρτι, 70g Μπανάνα, 4g Μέλι",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Γιαούρτι",
+                  "amount": 110,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Μπανάνα",
+                  "amount": 70,
+                  "unit": "g",
+                  "foodId": "f_banana"
+                },
+                {
+                  "name": "Μέλι",
+                  "amount": 4,
+                  "unit": "g",
+                  "foodId": "f_honey"
+                }
+              ],
+              "locked": false
+            },
+            "lunch": {
+              "id": "525f10ec-54e3-4f98-a61a-b987357791b8",
+              "recipeId": "r_beef_potatoes",
+              "recipeName": "Μπιφτέκια Μοσχαρίσια με Πατάτες",
+              "description": "110g Κιμάς Μοσχαρίσιος (μαγ.), 230g Πατάτες (μαγ.), 15ml Ελαιόλαδο",
+              "calories": 630,
+              "type": "lunch",
+              "ingredients": [
+                {
+                  "name": "Κιμάς Μοσχαρίσιος",
+                  "amount": 110,
+                  "unit": "g",
+                  "foodId": "f_beef_mince"
+                },
+                {
+                  "name": "Πατάτες",
+                  "amount": 230,
+                  "unit": "g",
+                  "foodId": "f_potato"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 15,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "dinner": {
+              "id": "2f206c64-688c-4fdf-a64a-92ea59f5d459",
+              "recipeId": "r_spinach_rice",
+              "recipeName": "Σπανακόρυζο",
+              "description": "100g Σπανάκι (μαγ.), 140g Ρύζι Καστανό (μαγ.), 15ml Ελαιόλαδο",
+              "calories": 360,
+              "type": "dinner",
+              "ingredients": [
+                {
+                  "name": "Σπανάκι",
+                  "amount": 100,
+                  "unit": "g",
+                  "foodId": "f_spinach"
+                },
+                {
+                  "name": "Ρύζι Καστανό",
+                  "amount": 140,
+                  "unit": "g",
+                  "foodId": "f_rice_brown"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 15,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack2": {
+              "id": "e8e5b110-2cc0-4d1d-ba3b-7493725933ac",
+              "recipeId": "r_yogurt_walnut",
+              "recipeName": "Γιαούρτι με Καρύδια",
+              "description": "140g Γιαούρτι 2%, 9g Καρύδια",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Γιαούρτι 2%",
+                  "amount": 140,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Καρύδια",
+                  "amount": 9,
+                  "unit": "g",
+                  "foodId": "f_walnuts"
+                }
+              ],
+              "locked": false
+            }
+          },
+          "totalCalories": 1800,
+          "macros": {
+            "protein": 96,
+            "carbs": 147,
+            "fat": 85
+          }
+        },
+        {
+          "date": "2025-12-15",
+          "dayNumber": 4,
+          "meals": {
+            "breakfast": {
+              "id": "e7acbba0-4279-483f-a62e-38ab22269d69",
+              "recipeId": "r_tahini_bread",
+              "recipeName": "Ψωμί ολικής με Ταχίνι και Μέλι",
+              "description": "70g Ψωμί Ολικής (ή φρυγανιές), 20g Ταχίνι, 10g Μέλι",
+              "calories": 450,
+              "type": "breakfast",
+              "ingredients": [
+                {
+                  "name": "Ψωμί Ολικής (ή φρυγανιές)",
+                  "amount": 70,
+                  "unit": "g",
+                  "foodId": "f_rusks"
+                },
+                {
+                  "name": "Ταχίνι",
+                  "amount": 20,
+                  "unit": "g",
+                  "foodId": "f_tahini"
+                },
+                {
+                  "name": "Μέλι",
+                  "amount": 10,
+                  "unit": "g",
+                  "foodId": "f_honey"
+                }
+              ],
+              "locked": false
+            },
+            "snack1": {
+              "id": "0be2bd5c-1c43-45be-8715-c27204ea33e2",
+              "recipeId": "r_yogurt_walnut",
+              "recipeName": "Γιαούρτι με Καρύδια",
+              "description": "140g Γιαούρτι 2%, 9g Καρύδια",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Γιαούρτι 2%",
+                  "amount": 140,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Καρύδια",
+                  "amount": 9,
+                  "unit": "g",
+                  "foodId": "f_walnuts"
+                }
+              ],
+              "locked": false
+            },
+            "lunch": {
+              "id": "c11289b2-7d9f-4eca-bfb4-d9d3d5ee36e4",
+              "recipeId": "r_lentil_soup",
+              "recipeName": "Φακές Σούπα",
+              "description": "290g Φακές (μαγ.), 130g Ντομάτα, 15ml Ελαιόλαδο",
+              "calories": 630,
+              "type": "lunch",
+              "ingredients": [
+                {
+                  "name": "Φακές",
+                  "amount": 290,
+                  "unit": "g",
+                  "foodId": "f_lentils"
+                },
+                {
+                  "name": "Ντομάτα",
+                  "amount": 130,
+                  "unit": "g",
+                  "foodId": "f_tomato"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 15,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "dinner": {
+              "id": "f7024f79-fb3b-4e50-94a3-b778479efd92",
+              "recipeId": "r_lentil_soup",
+              "recipeName": "Φακές Σούπα",
+              "description": "170g Φακές (μαγ.), 75g Ντομάτα, 9ml Ελαιόλαδο",
+              "calories": 360,
+              "type": "dinner",
+              "ingredients": [
+                {
+                  "name": "Φακές",
+                  "amount": 170,
+                  "unit": "g",
+                  "foodId": "f_lentils"
+                },
+                {
+                  "name": "Ντομάτα",
+                  "amount": 75,
+                  "unit": "g",
+                  "foodId": "f_tomato"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 9,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack2": {
+              "id": "ede1b7de-eb90-4e7b-be33-53f79aeb554f",
+              "recipeId": "r_fruit_nuts",
+              "recipeName": "Φρούτο και Αμύγδαλα",
+              "description": "120g Μήλο, 15g Αμύγδαλα",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Μήλο",
+                  "amount": 120,
+                  "unit": "g",
+                  "foodId": "f_apple"
+                },
+                {
+                  "name": "Αμύγδαλα",
+                  "amount": 15,
+                  "unit": "g",
+                  "foodId": "f_almonds"
+                }
+              ],
+              "locked": false
+            }
+          },
+          "totalCalories": 1800,
+          "macros": {
+            "protein": 77,
+            "carbs": 203,
+            "fat": 71
+          }
+        },
+        {
+          "date": "2025-12-16",
+          "dayNumber": 5,
+          "meals": {
+            "breakfast": {
+              "id": "6ec0ca13-0ccd-4d66-8808-06a6353d7e78",
+              "recipeId": "r_tahini_bread",
+              "recipeName": "Ψωμί ολικής με Ταχίνι και Μέλι",
+              "description": "70g Ψωμί Ολικής (ή φρυγανιές), 20g Ταχίνι, 10g Μέλι",
+              "calories": 450,
+              "type": "breakfast",
+              "ingredients": [
+                {
+                  "name": "Ψωμί Ολικής (ή φρυγανιές)",
+                  "amount": 70,
+                  "unit": "g",
+                  "foodId": "f_rusks"
+                },
+                {
+                  "name": "Ταχίνι",
+                  "amount": 20,
+                  "unit": "g",
+                  "foodId": "f_tahini"
+                },
+                {
+                  "name": "Μέλι",
+                  "amount": 10,
+                  "unit": "g",
+                  "foodId": "f_honey"
+                }
+              ],
+              "locked": false
+            },
+            "snack1": {
+              "id": "9d2887ed-84fd-4312-932e-1a5a9cd977fd",
+              "recipeId": "r_yogurt_walnut",
+              "recipeName": "Γιαούρτι με Καρύδια",
+              "description": "140g Γιαούρτι 2%, 9g Καρύδια",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Γιαούρτι 2%",
+                  "amount": 140,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Καρύδια",
+                  "amount": 9,
+                  "unit": "g",
+                  "foodId": "f_walnuts"
+                }
+              ],
+              "locked": false
+            },
+            "lunch": {
+              "id": "b2bf2c3a-09e2-4295-ba2f-00992fd53e46",
+              "recipeId": "r_spinach_rice",
+              "recipeName": "Σπανακόρυζο",
+              "description": "180g Σπανάκι (μαγ.), 250g Ρύζι Καστανό (μαγ.), 25ml Ελαιόλαδο",
+              "calories": 630,
+              "type": "lunch",
+              "ingredients": [
+                {
+                  "name": "Σπανάκι",
+                  "amount": 180,
+                  "unit": "g",
+                  "foodId": "f_spinach"
+                },
+                {
+                  "name": "Ρύζι Καστανό",
+                  "amount": 250,
+                  "unit": "g",
+                  "foodId": "f_rice_brown"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 25,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "dinner": {
+              "id": "f13c2409-c4ed-4364-b5e2-924835676a54",
+              "recipeId": "r_beef_potatoes",
+              "recipeName": "Μπιφτέκια Μοσχαρίσια με Πατάτες",
+              "description": "60g Κιμάς Μοσχαρίσιος (μαγ.), 130g Πατάτες (μαγ.), 7ml Ελαιόλαδο",
+              "calories": 360,
+              "type": "dinner",
+              "ingredients": [
+                {
+                  "name": "Κιμάς Μοσχαρίσιος",
+                  "amount": 60,
+                  "unit": "g",
+                  "foodId": "f_beef_mince"
+                },
+                {
+                  "name": "Πατάτες",
+                  "amount": 130,
+                  "unit": "g",
+                  "foodId": "f_potato"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 7,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack2": {
+              "id": "493f2f47-7d5c-435e-9e3f-315ebe6cba84",
+              "recipeId": "r_fruit_nuts",
+              "recipeName": "Φρούτο και Αμύγδαλα",
+              "description": "120g Μήλο, 15g Αμύγδαλα",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Μήλο",
+                  "amount": 120,
+                  "unit": "g",
+                  "foodId": "f_apple"
+                },
+                {
+                  "name": "Αμύγδαλα",
+                  "amount": 15,
+                  "unit": "g",
+                  "foodId": "f_almonds"
+                }
+              ],
+              "locked": false
+            }
+          },
+          "totalCalories": 1800,
+          "macros": {
+            "protein": 67,
+            "carbs": 197,
+            "fat": 83
+          }
+        },
+        {
+          "date": "2025-12-17",
+          "dayNumber": 6,
+          "meals": {
+            "breakfast": {
+              "id": "f3626e5d-9094-43c5-9783-9f5911c52cf1",
+              "recipeId": "r_tahini_bread",
+              "recipeName": "Ψωμί ολικής με Ταχίνι και Μέλι",
+              "description": "70g Ψωμί Ολικής (ή φρυγανιές), 20g Ταχίνι, 10g Μέλι",
+              "calories": 450,
+              "type": "breakfast",
+              "ingredients": [
+                {
+                  "name": "Ψωμί Ολικής (ή φρυγανιές)",
+                  "amount": 70,
+                  "unit": "g",
+                  "foodId": "f_rusks"
+                },
+                {
+                  "name": "Ταχίνι",
+                  "amount": 20,
+                  "unit": "g",
+                  "foodId": "f_tahini"
+                },
+                {
+                  "name": "Μέλι",
+                  "amount": 10,
+                  "unit": "g",
+                  "foodId": "f_honey"
+                }
+              ],
+              "locked": false
+            },
+            "snack1": {
+              "id": "983c45a8-8082-4e2a-a77c-085b41500b90",
+              "recipeId": "r_yogurt_walnut",
+              "recipeName": "Γιαούρτι με Καρύδια",
+              "description": "140g Γιαούρτι 2%, 9g Καρύδια",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Γιαούρτι 2%",
+                  "amount": 140,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Καρύδια",
+                  "amount": 9,
+                  "unit": "g",
+                  "foodId": "f_walnuts"
+                }
+              ],
+              "locked": false
+            },
+            "lunch": {
+              "id": "221fec92-3e4c-4c76-95f8-0aea70bda275",
+              "recipeId": "r_beef_potatoes",
+              "recipeName": "Μπιφτέκια Μοσχαρίσια με Πατάτες",
+              "description": "110g Κιμάς Μοσχαρίσιος (μαγ.), 230g Πατάτες (μαγ.), 15ml Ελαιόλαδο",
+              "calories": 630,
+              "type": "lunch",
+              "ingredients": [
+                {
+                  "name": "Κιμάς Μοσχαρίσιος",
+                  "amount": 110,
+                  "unit": "g",
+                  "foodId": "f_beef_mince"
+                },
+                {
+                  "name": "Πατάτες",
+                  "amount": 230,
+                  "unit": "g",
+                  "foodId": "f_potato"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 15,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "dinner": {
+              "id": "5a5ece20-77d4-4558-b200-5e9dccbd0744",
+              "recipeId": "r_fish_salad",
+              "recipeName": "Τσιπούρα Ψητή με Σαλάτα",
+              "description": "230g Τσιπούρα (μαγ.), 150g Μαρούλι, 10ml Ελαιόλαδο",
+              "calories": 360,
+              "type": "dinner",
+              "ingredients": [
+                {
+                  "name": "Τσιπούρα",
+                  "amount": 230,
+                  "unit": "g",
+                  "foodId": "f_fish_tsipoura"
+                },
+                {
+                  "name": "Μαρούλι",
+                  "amount": 150,
+                  "unit": "g",
+                  "foodId": "f_lettuce"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 10,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack2": {
+              "id": "9ff74e87-2d27-4258-8a88-04a5d326b56b",
+              "recipeId": "r_yogurt_walnut",
+              "recipeName": "Γιαούρτι με Καρύδια",
+              "description": "140g Γιαούρτι 2%, 9g Καρύδια",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Γιαούρτι 2%",
+                  "amount": 140,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Καρύδια",
+                  "amount": 9,
+                  "unit": "g",
+                  "foodId": "f_walnuts"
+                }
+              ],
+              "locked": false
+            }
+          },
+          "totalCalories": 1800,
+          "macros": {
+            "protein": 110,
+            "carbs": 130,
+            "fat": 89
+          }
+        },
+        {
+          "date": "2025-12-18",
+          "dayNumber": 7,
+          "meals": {
+            "breakfast": {
+              "id": "3973e45c-4d15-47b1-ac01-28758bd3113f",
+              "recipeId": "r_omelet_veg",
+              "recipeName": "Ομελέτα με Λαχανικά",
+              "description": "170g Αυγά, 70g Λαχανικά (Πιπεριά/Σπανάκι), 7ml Ελαιόλαδο",
+              "calories": 450,
+              "type": "breakfast",
+              "ingredients": [
+                {
+                  "name": "Αυγά",
+                  "amount": 170,
+                  "unit": "g",
+                  "foodId": "f_egg"
+                },
+                {
+                  "name": "Λαχανικά (Πιπεριά/Σπανάκι)",
+                  "amount": 70,
+                  "unit": "g",
+                  "foodId": "f_lettuce"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 7,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack1": {
+              "id": "adb6b9c8-b3f2-4883-b24d-b4eda8fbd4f1",
+              "recipeId": "r_banana_yogurt",
+              "recipeName": "Γιαούρτι με Μπανάνα & Μέλι",
+              "description": "110g Γιαούρτι, 70g Μπανάνα, 4g Μέλι",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Γιαούρτι",
+                  "amount": 110,
+                  "unit": "g",
+                  "foodId": "f_yogurt"
+                },
+                {
+                  "name": "Μπανάνα",
+                  "amount": 70,
+                  "unit": "g",
+                  "foodId": "f_banana"
+                },
+                {
+                  "name": "Μέλι",
+                  "amount": 4,
+                  "unit": "g",
+                  "foodId": "f_honey"
+                }
+              ],
+              "locked": false
+            },
+            "lunch": {
+              "id": "d99c3957-03c2-4988-a188-bdbedf1d68a8",
+              "recipeId": "r_fish_salad",
+              "recipeName": "Τσιπούρα Ψητή με Σαλάτα",
+              "description": "410g Τσιπούρα (μαγ.), 270g Μαρούλι, 20ml Ελαιόλαδο",
+              "calories": 630,
+              "type": "lunch",
+              "ingredients": [
+                {
+                  "name": "Τσιπούρα",
+                  "amount": 410,
+                  "unit": "g",
+                  "foodId": "f_fish_tsipoura"
+                },
+                {
+                  "name": "Μαρούλι",
+                  "amount": 270,
+                  "unit": "g",
+                  "foodId": "f_lettuce"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 20,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "dinner": {
+              "id": "11eb39c7-3b96-4dab-b80d-2c762f7c9cdf",
+              "recipeId": "r_spinach_rice",
+              "recipeName": "Σπανακόρυζο",
+              "description": "100g Σπανάκι (μαγ.), 140g Ρύζι Καστανό (μαγ.), 15ml Ελαιόλαδο",
+              "calories": 360,
+              "type": "dinner",
+              "ingredients": [
+                {
+                  "name": "Σπανάκι",
+                  "amount": 100,
+                  "unit": "g",
+                  "foodId": "f_spinach"
+                },
+                {
+                  "name": "Ρύζι Καστανό",
+                  "amount": 140,
+                  "unit": "g",
+                  "foodId": "f_rice_brown"
+                },
+                {
+                  "name": "Ελαιόλαδο",
+                  "amount": 15,
+                  "unit": "ml",
+                  "foodId": "f_olive_oil"
+                }
+              ],
+              "locked": false
+            },
+            "snack2": {
+              "id": "5babea7e-7a6d-4764-a249-3b3aee00c6c2",
+              "recipeId": "r_fruit_nuts",
+              "recipeName": "Φρούτο και Αμύγδαλα",
+              "description": "120g Μήλο, 15g Αμύγδαλα",
+              "calories": 180,
+              "type": "snack",
+              "ingredients": [
+                {
+                  "name": "Μήλο",
+                  "amount": 120,
+                  "unit": "g",
+                  "foodId": "f_apple"
+                },
+                {
+                  "name": "Αμύγδαλα",
+                  "amount": 15,
+                  "unit": "g",
+                  "foodId": "f_almonds"
+                }
+              ],
+              "locked": false
+            }
+          },
+          "totalCalories": 1800,
+          "macros": {
+            "protein": 115,
+            "carbs": 116,
+            "fat": 92
+          }
+        }
+      ],
+      "averageCalories": 1800,
+      "id": "da153833-e651-4783-9071-0ee67d1998ff",
+      "clientId": "12",
+      "name": "Διαιτολόγιο 12/12/2025",
+      "createdAt": "2025-12-12T20:20:56.451Z"
+    }
+  ]
+}

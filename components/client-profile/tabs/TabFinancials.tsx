@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { ClientFormData } from '@/types/client';
 import { cn } from '@/lib/utils';
-import { Calculator, Calendar, CreditCard, Plus, Trash2 } from 'lucide-react';
+import { Calculator, Calendar, CreditCard, Plus, Trash2, Edit } from 'lucide-react';
 import { format } from 'date-fns';
 
 interface Props {
@@ -23,6 +24,8 @@ const MOCK_PAYMENTS: Payment[] = [
 ];
 
 export default function TabFinancials({ client }: Props) {
+    const router = useRouter();
+
     // State for package details (initialized from client data)
     const [packageDetails, setPackageDetails] = useState({
         type: client.collaborationType || '',
@@ -138,6 +141,16 @@ export default function TabFinancials({ client }: Props) {
 
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-300">
+             <div className="flex justify-end pb-0">
+                <button
+                    onClick={() => window.location.href = `/clients/new?editId=${client.id}&step=8`}
+                    className="text-sm font-medium text-blue-600 hover:text-blue-800 flex items-center"
+                >
+                    <Edit className="w-4 h-4 mr-1" />
+                    Επεξεργασία Στοιχείων
+                </button>
+            </div>
+
             {isRenewing && (
                 <div className="bg-blue-50 p-6 rounded-xl border border-blue-200 animate-in slide-in-from-top-4 mb-6">
                     <h4 className="font-bold text-blue-800 mb-4">Νέα Ανανέωση / Πακέτο</h4>

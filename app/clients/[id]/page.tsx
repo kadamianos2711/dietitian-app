@@ -15,129 +15,64 @@ import TabGoals from '@/components/client-profile/tabs/TabGoals';
 import TabFinancials from '@/components/client-profile/tabs/TabFinancials';
 import TabMealPlans from '@/components/client-profile/tabs/TabMealPlans';
 import TabNotes from '@/components/client-profile/tabs/TabNotes';
+import TabFeedback from '@/components/client-profile/tabs/TabFeedback';
 
-import { useParams } from 'next/navigation';
+// Printing
+import { Printer } from 'lucide-react';
+import RecommendationsPrint from '@/components/print/RecommendationsPrint';
+import { RECOMMENDATIONS_DB } from '@/data/recommendations';
+
+import { useParams, useSearchParams } from 'next/navigation';
 
 export default function ClientProfilePage() {
     const params = useParams();
+    const searchParams = useSearchParams();
     const id = params?.id as string; // Safely access id
 
-    const [activeTab, setActiveTab] = useState<TabId>('profile');
-    const [client, setClient] = useState<ClientFormData | null>(null);
+    const [activeTab, setActiveTab] = useState<TabId>((searchParams.get('tab') as TabId) || 'profile');
 
     useEffect(() => {
-        // FULL DEMO CLIENT CONSTANT
-        const DEMO_CLIENT_ALEX: ClientFormData = {
-            ...initialClientState,
-            // 1. Personal
-            firstName: 'Αλέξανδρος',
-            lastName: 'Γεωργίου',
-            fathersName: 'Δημήτριος',
-            birthDate: '1988-03-12',
-            gender: 'male',
-            phone: '6945551234',
-            email: 'alex.georgiou@example.com',
-            occupation: 'Ιδιωτικός Υπάλληλος',
-            address: {
-                street: 'Τσιμισκή',
-                number: '45',
-                area: 'Κέντρο',
-                city: 'Θεσσαλονίκη',
-                postalCode: '54623'
-            },
+        const tab = searchParams.get('tab') as TabId;
+        if (tab) {
+            setActiveTab(tab);
+        }
+    }, [searchParams]);
 
-            // 2. Health
-            conditions: ['Χοληστερίνη', 'Εποχιακές αλλεργίες'],
-            medications: ['Xozal (κατά περιόδους)'],
-            medicalNotes: 'Πρόσφατες εξετάσεις (Δεκ 2024) έδειξαν ελαφρώς αυξημένη LDL.',
+    const [client, setClient] = useState<ClientFormData | null>(null);
+    const [showPrintRecs, setShowPrintRecs] = useState(false);
 
-            // 3. Habits
-            wakeUpTime: '07:30',
-            bedTime: '23:30',
-            workSchedule: '9-5',
-            workHoursFrom: '09:00',
-            workHoursTo: '17:00',
-            mealsPerDay: '4',
-            coffee: true,
-            coffeeCups: '2',
-            coffeeSugar: 'metrios' as any, // Type cast for strict check if needed
-            coffeeMilk: true,
-            alcohol: true,
-            alcoholFrequency: '1-2 φορές/εβδομάδα (Κρασί)',
-            smoking: false,
-            delivery: true,
-            eatingOut: true,
-
-            // 4. Preferences
-            foodPreferences: {},
-            lovedFoods: 'Μακαρόνια, Μοσχαράκι kokkinisto, Σοκολάτα',
-            dislikedFoods: 'Μπάμιες, Συκώτι',
-
-            // 5. Exercise
-            exercises: true,
-            exerciseType: 'Crossfit',
-            exerciseFrequency: '3 φορές/βδομάδα',
-            sleepHours: '7-8',
-
-            // 6. Goals
-            goals: ['weight_loss', 'energy'],
-            goalNotes: 'Στόχος τα 85kg μέχρι το καλοκαίρι. Θέλει περισσότερη ενέργεια τα απογεύματα.',
-
-            // 8. Financials - Active Package
-            collaborationType: '3 μήνες',
-            startDate: '2025-12-01',
-            endDate: '2026-02-22',
-            packagePrice: '150',
-            hasVat: true,
-            finalPrice: '186.00',
-            installments: '3',
-            initialPayment: {
-                amount: '62',
-                date: '2025-12-01',
-                method: 'card'
-            },
-            paymentPlan: [
-                { number: 1, amount: '62.00', date: '2025-12-01', reminderDate: '', isPaid: true },
-                { number: 2, amount: '62.00', date: '2026-01-01', reminderDate: '2025-12-28', isPaid: false },
-                { number: 3, amount: '62.00', date: '2026-02-01', reminderDate: '2026-01-28', isPaid: false },
-            ],
-            // Historical Packages
-            packages: [
-                {
-                    id: 'old_pkg_1',
-                    type: '1 μήνας',
-                    startDate: '2025-10-01',
-                    endDate: '2025-10-28',
-                    sessions: 4,
-                    price: '60',
-                    status: 'completed'
+    useEffect(() => {
+        const fetchClient = async () => {
+            try {
+                // If it's a new client creation flow (e.g. id='new'), handle separately (not focus now)
+                if (id === 'new') {
+                     // ... logic for new client from local storage or defaults
+                     setClient({ ...initialClientState, firstName: 'Νέος', lastName: 'Πελάτης' });
+                     return;
                 }
-            ]
+
+                const res = await fetch(`/api/clients?id=${id}`);
+                if (!res.ok) {
+                    throw new Error('Client not found');
+                }
+                const data = await res.json();
+                
+                // Ensure foodPreferences is at least empty object if missing
+                setClient({ ...data, foodPreferences: data.foodPreferences || {} });
+            } catch (error) {
+                console.error("Failed to fetch client:", error);
+                
+                // Fallback for specific demo ID or just Error
+                if (id === '12') {
+                     // keeping demo for safety if API fails?
+                     // actually explicit demo ID should probably still work via API if we seeded it, 
+                     // but let's assume we want to use the API primarily now.
+                }
+            }
         };
 
-        // Routing Logic
-        if (id === '12') {
-            setClient(DEMO_CLIENT_ALEX);
-            return;
-        }
-
-        // For other IDs or generic view, IF we have specific logic we add it here.
-        // Otherwise try localStorage (Draft) or Fallback
-
-        const saved = localStorage.getItem('currentClientDraft');
-        if (saved) {
-            try {
-                setClient(JSON.parse(saved));
-            } catch (e) {
-                console.error(e);
-            }
-        } else {
-            // Default blank fallback
-            setClient({
-                ...initialClientState,
-                firstName: 'Νέος',
-                lastName: 'Πελάτης'
-            });
+        if (id) {
+            fetchClient();
         }
     }, [id]);
 
@@ -152,6 +87,7 @@ export default function ClientProfilePage() {
             case 'goals': return <TabGoals client={client} />;
             case 'financials': return <TabFinancials client={client} />;
             case 'mealplans': return <TabMealPlans client={client} />;
+            case 'feedback': return <TabFeedback client={client} />;
             case 'notes': return <TabNotes client={client} />;
             default: return null;
         }
@@ -169,8 +105,6 @@ export default function ClientProfilePage() {
                             <h1 className="text-2xl font-bold text-gray-900">
                                 {client.firstName} {client.lastName}
                             </h1>
-                            {/* Assuming 'cn' is a utility function for class names, if not defined, this will cause an error */}
-                            {/* For this example, I'll assume it's available or replace with direct class names if not */}
                             <span className={client.collaborationType ? "px-2.5 py-0.5 rounded-full text-xs font-medium border bg-green-50 text-green-700 border-green-200" : "px-2.5 py-0.5 rounded-full text-xs font-medium border bg-gray-100 text-gray-600 border-gray-200"}>
                                 {client.collaborationType || 'Χωρίς Πακέτο'}
                             </span>
@@ -184,10 +118,20 @@ export default function ClientProfilePage() {
                         </div>
                     </div>
 
-                    <div className="text-right text-sm text-gray-500">
-                        <div className="font-medium text-gray-900 mb-1">Επόμενο Ραντεβού</div>
-                        {/* Mock data for now, real app would query appointments */}
-                        <div>-</div>
+                    <div className="flex flex-col items-end gap-2">
+                        <div className="text-sm text-gray-500">
+                            <span className="font-medium text-gray-900">Επόμενο Ραντεβού:</span> -
+                        </div>
+                        <button
+                            onClick={() => {
+                                setShowPrintRecs(true);
+                                setTimeout(() => window.print(), 100);
+                            }}
+                            className="inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none"
+                        >
+                            <Printer className="h-4 w-4 mr-1.5 text-gray-500" />
+                            Εκτύπωση Συστάσεων
+                        </button>
                     </div>
                 </div>
 
@@ -198,6 +142,19 @@ export default function ClientProfilePage() {
                     {renderTabContent()}
                 </div>
             </div>
+
+            {/* Print Area - Hidden normally, visible on print if showPrintRecs is true */}
+            {showPrintRecs && client && (
+                <div className="hidden print:block fixed inset-0 bg-white z-[9999] p-8">
+                    <RecommendationsPrint 
+                        clientName={`${client.firstName} ${client.lastName}`}
+                        recommendations={client.conditions
+                            .map(c => RECOMMENDATIONS_DB[c] || null) // Map condition names to DB
+                            .filter(Boolean) as RecommendationData[]
+                        } 
+                    />
+                </div>
+            )}
         </AppLayout>
     );
 }

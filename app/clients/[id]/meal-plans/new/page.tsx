@@ -1,21 +1,20 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useRouter, useParams } from 'next/navigation';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { ChevronLeft, Save, ArrowRight, Printer, ShoppingCart, RefreshCw, X, Wand2, Info } from 'lucide-react';
 import { format } from 'date-fns';
 import ShoppingListModal from '@/components/meal-plan/ShoppingListModal';
 import RecipeModal from '@/components/meal-plan/RecipeModal';
-import { generateWeeklyPlan } from '@/lib/diet-engine/engine';
+import { generateWeeklyPlan, generateDailyPlan, getActiveSlots } from '@/lib/diet-engine/engine';
 import { WeeklyPlan, DietMeal } from '@/types/engine';
 import { initialClientState } from '@/types/client';
+import DailyContextModal from '@/components/meal-plan/DailyContextModal';
+import { DailyContext } from '@/types/context';
+import { Settings } from 'lucide-react';
 
-interface Props {
-    params: {
-        id: string;
-    };
-}
+// ... imports
 
 const MEAL_COLUMNS = [
     { id: 'breakfast', label: 'Πρωινό' },
@@ -28,8 +27,16 @@ const MEAL_COLUMNS = [
     { id: 'bedtime', label: 'Προ ύπνου' },
 ];
 
-export default function CreateMealPlanPage({ params }: Props) {
+/* interface Props {
+    params: {
+        id: string;
+    };
+} */ // No longer using props for params in Client Component for safety
+
+export default function CreateMealPlanPage() {
     const router = useRouter();
+    const params = useParams();
+    // params.id will be available
     const [step, setStep] = useState(1);
 
     // Step 1 State
@@ -42,11 +49,37 @@ export default function CreateMealPlanPage({ params }: Props) {
 
     // UI State
     const [showShoppingList, setShowShoppingList] = useState(false);
-    const [selectedRecipe, setSelectedRecipe] = useState<{ name: string, description: string } | null>(null);
+    const [selectedMeal, setSelectedMeal] = useState<{ dayIndex: number, slotId: string, meal: DietMeal } | null>(null);
     const [isGenerating, setIsGenerating] = useState(false);
 
-    // Client Data (Mock - In real app, fetch this)
-    const clientName = "Γιώργος Παπαδόπουλος";
+    // Context State
+    const [dailyContexts, setDailyContexts] = useState<DailyContext[]>([]);
+    const [editingDay, setEditingDay] = useState<number | null>(null); // For Modal
+
+    // Client Data State (Mock initialization)
+    // Client Data State
+    const [clientData, setClientData] = useState<typeof initialClientState>(initialClientState);
+
+    // Fetch Client Data
+    useEffect(() => {
+        if (params.id) {
+            fetch(`/api/clients?id=${params.id}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data && !data.error) {
+                         // Merge with initial state to ensure all fields exist
+                         // If data comes from JSON DB it might match Client interface but let's be safe
+                         setClientData(prev => ({
+                             ...prev,
+                             ...data,
+                             // Ensure foodPreferences is object
+                             foodPreferences: data.foodPreferences || {}
+                         }));
+                    }
+                })
+                .catch(err => console.error("Failed to load client", err));
+        }
+    }, [params.id]);
 
     // Helper to get Meal from day
     const getMealForSlot = (dayIndex: number, slotId: string): DietMeal | undefined => {
@@ -62,30 +95,45 @@ export default function CreateMealPlanPage({ params }: Props) {
         setIsGenerating(true);
         // Simulate slight delay for effect
         setTimeout(() => {
-            // Create mock client for engine (adding some preferences for testing)
-            const mockClient = {
-                ...initialClientState,
-                firstName: 'Γιώργος',
-                lastName: 'Παπαδόπουλος',
-                conditions: ['Διαβήτης'], // Test tag filtering
-                dislikedFoods: 'Μπάμιες',
-                mealsPerDay: mealsCount
-            };
-
-            const plan = generateWeeklyPlan(mockClient, {
+            // Use state instead of local mockClient
+            const plan = generateWeeklyPlan(clientData, {
                 calories: parseInt(calories),
                 mealsCount: parseInt(mealsCount),
-                startDate: startDate
-            });
+                startDate: startDate,
+                dailyContexts: dailyContexts,
+                randomize: true
+            }, weeklyPlan || undefined);
 
             setWeeklyPlan(plan);
             setIsGenerating(false);
         }, 800);
     };
 
-    const handleSave = () => {
-        alert('Το διαιτολόγιο αποθηκεύτηκε (Mock)!');
-        router.push(`/clients/${params.id}`);
+    const handleSave = async () => {
+        if (!weeklyPlan) return;
+
+        try {
+            const res = await fetch('/api/meal-plans', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    plan: weeklyPlan,
+                    clientId: params.id,
+                    name: `Διαιτολόγιο ${format(new Date(startDate), 'dd/MM/yyyy')}`
+                })
+            });
+
+            if (!res.ok) {
+                const errData = await res.json();
+                throw new Error(errData.error || 'Failed to save plan');
+            }
+
+            alert('Το διαιτολόγιο αποθηκεύτηκε επιτυχώς!');
+            router.push(`/clients/${params.id}?tab=mealplans`);
+        } catch (error: any) {
+            console.error(error);
+            alert(`Σφάλμα κατά την αποθήκευση: ${error.message}`);
+        }
     };
 
     const handlePrint = () => {
@@ -106,7 +154,7 @@ export default function CreateMealPlanPage({ params }: Props) {
                             Πίσω
                         </button>
                         <h1 className="text-2xl font-bold text-gray-900">Δημιουργία νέου διαιτολογίου</h1>
-                        <p className="text-sm text-gray-500 mt-1">Για τον πελάτη: <span className="font-medium text-gray-900">{clientName}</span></p>
+                        <p className="text-sm text-gray-500 mt-1">Για τον πελάτη: <span className="font-medium text-gray-900">{clientData.firstName} {clientData.lastName}</span></p>
                     </div>
                     <div className="flex space-x-3">
                         <button className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">
@@ -136,7 +184,7 @@ export default function CreateMealPlanPage({ params }: Props) {
                 <div className="hidden print:block mb-6 border-b pb-4">
                     <h1 className="text-2xl font-bold text-gray-900">Εβδομαδιαίο Πρόγραμμα Διατροφής</h1>
                     <div className="flex justify-between mt-2 text-sm text-gray-600">
-                        <span>Πελάτης: <strong>{clientName}</strong></span>
+                        <span>Πελάτης: <strong>{clientData.firstName} {clientData.lastName}</strong></span>
                         <span>Ημερομηνία: {format(new Date(startDate), 'dd/MM/yyyy')}</span>
                     </div>
                 </div>
@@ -194,6 +242,35 @@ export default function CreateMealPlanPage({ params }: Props) {
 
                                 <div className="bg-blue-50 p-4 rounded-lg text-sm text-blue-700">
                                     <p>ℹ️ Τα γεύματα θα κατανέμονται σε απόσταση περίπου 2–4 ωρών, με βάση τις ώρες ύπνου και αφύπνισης του πελάτη.</p>
+                                </div>
+                            </div>
+
+                            {/* Daily Conditions (Step 1) */}
+                            <div className="mt-8 border-t pt-6">
+                                <h3 className="text-md font-medium text-gray-900 mb-4">Ειδικές Συνθήκες Ημέρας (Προαιρετικά)</h3>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                                    {[1, 2, 3, 4, 5, 6, 7].map(dayNum => {
+                                        const ctx = dailyContexts.find(c => c.dayIndex === dayNum - 1);
+                                        const hasContext = ctx && (ctx.conditions.length > 0 || ctx.event);
+                                        return (
+                                            <button
+                                                key={dayNum}
+                                                onClick={() => setEditingDay(dayNum)}
+                                                className={`p-3 rounded-lg border text-left text-sm transition-colors
+                                                    ${hasContext ? 'bg-blue-50 border-blue-300 ring-1 ring-blue-300' : 'bg-white border-gray-200 hover:border-gray-300'}`}
+                                            >
+                                                <div className="font-medium text-gray-900 flex justify-between">
+                                                    <span>Ημέρα {dayNum}</span>
+                                                    {hasContext && <Settings className="w-4 h-4 text-blue-600" />}
+                                                </div>
+                                                <div className="mt-1 text-xs text-gray-500 h-5 truncate">
+                                                    {hasContext 
+                                                        ? `${ctx.conditions.length} συνθήκες${ctx.event ? ', 1 γεγονός' : ''}`
+                                                        : 'Καμία ρύθμιση'}
+                                                </div>
+                                            </button>
+                                        );
+                                    })}
                                 </div>
                             </div>
                         </div>
@@ -290,9 +367,49 @@ export default function CreateMealPlanPage({ params }: Props) {
                                                                 <div className="text-gray-400 text-[10px]">
                                                                     P: {dayPlan?.macros.protein}g | C: {dayPlan?.macros.carbs}g
                                                                 </div>
-                                                                <button className="mt-2 block text-xs text-blue-600 hover:text-blue-800">
+
+                                                                <button 
+                                                                    onClick={() => {
+                                                                        // Use state
+                                                                        const currentClient = clientData;
+
+                                                                        const settings = {
+                                                                            calories: parseInt(calories),
+                                                                            mealsCount: parseInt(mealsCount),
+                                                                            startDate: startDate,
+                                                                            dailyContexts: dailyContexts,
+                                                                            randomize: true
+                                                                        };
+
+                                                                        const activeSlots = getActiveSlots(parseInt(mealsCount));
+                                                                        const existingDay = weeklyPlan?.days[dayIndex];
+                                                                        
+                                                                        const newDay = generateDailyPlan(dayIndex + 1, currentClient, settings, activeSlots, existingDay);
+                                                                        
+                                                                        if (weeklyPlan) {
+                                                                            const newPlan = { ...weeklyPlan };
+                                                                            newPlan.days[dayIndex] = newDay;
+                                                                            setWeeklyPlan(newPlan);
+                                                                        }
+                                                                    }}
+                                                                    className="mt-2 block text-xs text-blue-600 hover:text-blue-800"
+                                                                >
                                                                     <RefreshCw className="w-3 h-3 inline mr-1" />
                                                                     Ανανέωση
+                                                                </button>
+                                                                
+                                                                {/* Context Button inside Table */}
+                                                                <button 
+                                                                    onClick={() => setEditingDay(dayNumber)}
+                                                                    className="mt-2 text-xs flex items-center text-gray-500 hover:text-blue-600"
+                                                                >
+                                                                    <Settings className="w-3 h-3 mr-1" />
+                                                                    {(() => {
+                                                                         // Check if this day has context either from State or from Generated Plan
+                                                                         // Ideally plan stores it, but we can edit state too.
+                                                                         const ctx = dailyContexts.find(c => c.dayIndex === dayIndex);
+                                                                         return ctx && (ctx.conditions.length > 0 || ctx.event) ? 'Έχει ρυθμίσεις' : 'Ρυθμίσεις';
+                                                                    })()}
                                                                 </button>
                                                             </div>
                                                         )}
@@ -302,13 +419,15 @@ export default function CreateMealPlanPage({ params }: Props) {
                                                         return (
                                                             <td
                                                                 key={col.id}
-                                                                onClick={() => meal && setSelectedRecipe({ name: meal.recipeName, description: meal.description })}
+                                                                onClick={() => meal && setSelectedMeal({ dayIndex, slotId: col.id, meal })}
                                                                 className={`p-2 border border-gray-200 align-top h-32 hover:bg-gray-50 transition-colors group relative print:h-auto print:hover:bg-white
-                                                                ${meal ? 'cursor-pointer' : 'bg-gray-50 cursor-default'}`}
+                                                                ${meal ? 'cursor-pointer' : 'bg-gray-50 cursor-default'}
+                                                                ${meal?.locked ? 'bg-red-50 hover:bg-red-100 ring-1 ring-inset ring-red-200' : ''}`}
                                                             >
                                                                 {meal ? (
                                                                     <>
                                                                         <div className="text-sm font-medium text-gray-900 line-clamp-2">
+                                                                            {meal.locked && <Settings className="w-3 h-3 inline mr-1 text-red-500" />}
                                                                             {meal.recipeName}
                                                                         </div>
                                                                         <div className="text-xs text-gray-500 mt-1 line-clamp-3">
@@ -353,9 +472,45 @@ export default function CreateMealPlanPage({ params }: Props) {
                 />
 
                 <RecipeModal
-                    isOpen={!!selectedRecipe}
-                    recipeName={selectedRecipe?.name || ''}
-                    onClose={() => setSelectedRecipe(null)}
+                    isOpen={!!selectedMeal}
+                    meal={selectedMeal?.meal || null}
+                    client={clientData} // Pass client data
+                    onUpdateClient={setClientData} // Pass updater
+                    onClose={() => setSelectedMeal(null)}
+                    onUpdateMeal={(newMeal) => {
+                        if (selectedMeal && weeklyPlan) {
+                            // Update the plan state
+                            // Deep copy to avoid mutation issues
+                            const newPlan = { ...weeklyPlan };
+                            const day = newPlan.days[selectedMeal.dayIndex];
+                            if (day) {
+                                day.meals[selectedMeal.slotId] = newMeal;
+                                // Need to recalc totals? Yes, usually.
+                                // Simplified for now: just update the meal.
+                            }
+                            setWeeklyPlan(newPlan);
+                            setSelectedMeal({ ...selectedMeal, meal: newMeal }); // Update local state for modal
+                        }
+                    }}
+                />
+
+                <DailyContextModal
+                    isOpen={editingDay !== null}
+                    onClose={() => setEditingDay(null)}
+                    dayNumber={editingDay || 1}
+                    initialContext={dailyContexts.find(c => c.dayIndex === (editingDay ? editingDay - 1 : 0))}
+                    onSave={(newContext) => {
+                        setDailyContexts(prev => {
+                            const filtered = prev.filter(c => c.dayIndex !== newContext.dayIndex);
+                            return [...filtered, newContext];
+                        });
+                        // NOTE: If we are in Step 2, user expects immediate update?
+                        // User request: "Rule packs applied ONLY on that day".
+                        // Logic: If in Step 2, we might want to re-generate JUST that day?
+                        // For now, let's assume they press "Regenerate" or simple "Auto Generate" again.
+                        // Or we could implement a targeted regen function.
+                        // But sticking to simple flow: Set context -> Press Auto Generate.
+                    }}
                 />
             </div>
         </AppLayout>

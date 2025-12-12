@@ -1,13 +1,26 @@
 import { ClientFormData } from '@/types/client';
-import { Stethoscope, Pill, FileText } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { Stethoscope, Pill, FileText, Edit } from 'lucide-react';
 
 interface Props {
     client: ClientFormData;
 }
 
 export default function TabMedical({ client }: Props) {
+    const router = useRouter();
+
     return (
         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
+
+            <div className="flex justify-end pb-2">
+                <button
+                    onClick={() => window.location.href = `/clients/new?editId=${client.id}&step=2`}
+                    className="text-sm font-medium text-blue-600 hover:text-blue-800 flex items-center"
+                >
+                    <Edit className="w-4 h-4 mr-1" />
+                    Επεξεργασία
+                </button>
+            </div>
 
             {/* Conditions */}
             <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">

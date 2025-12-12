@@ -213,6 +213,11 @@ export const RECIPE_DB: Recipe[] = [
             { foodId: 'f_tomato', name: 'Ντομάτα', amount: 100, unit: 'g' },
             { foodId: 'f_olive_oil', name: 'Ελαιόλαδο', amount: 10, unit: 'ml' }
         ],
+        instructions: [
+            '1. Βράστε την κινόα.',
+            '2. Ψιλοκόψτε τα λαχανικά.',
+            '3. Ανακατέψτε όλα τα υλικά μαζί.'
+        ]
     },
     // --- LEGUMES / TRADITIONAL ---
     {

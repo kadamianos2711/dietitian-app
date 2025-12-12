@@ -3,8 +3,8 @@
 import Link from 'next/link';
 
 import { AppLayout } from '@/components/layout/AppLayout';
-import { Search, UserPlus, Filter, MoreHorizontal, FileText } from 'lucide-react';
-import { useState } from 'react';
+import { Search, UserPlus, Filter, MoreHorizontal, FileText, Edit, Trash2 } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 
 // Mock data type
@@ -52,14 +52,76 @@ const clients: Client[] = [
     { id: '11', name: 'Παύλος Μελάς', email: 'p.melas@example.com', status: 'inactive', lastVisit: '15/09/2025', financialStatus: 'debt' }
 ];
 
+import ConfirmationModal from '@/components/ui/ConfirmationModal';
+
 export default function ClientsPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const [financialFilter, setFinancialFilter] = useState<string>('all');
+    const [clientsList, setClientsList] = useState<Client[]>(clients); // Start with mock, overwrite with real
+    
+    // Modal State
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [clientToDelete, setClientToDelete] = useState<Client | null>(null);
+
+    const handleDeleteClick = (e: React.MouseEvent, client: Client) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setClientToDelete(client);
+        setDeleteModalOpen(true);
+    };
+
+    const handleConfirmDelete = async () => {
+        if (!clientToDelete) return;
+
+        try {
+            const res = await fetch(`/api/clients?id=${clientToDelete.id}`, { method: 'DELETE' });
+            // Treat 200/204 OR 404 (not found in DB = already deleted or mock) as success for UI
+            if (res.ok || res.status === 404) {
+                setClientsList(prev => prev.filter(c => c.id !== clientToDelete.id));
+            } else {
+                const err = await res.json();
+                alert(`Failed to delete: ${err.error || 'Unknown error'}`);
+            }
+        } catch (error) {
+            console.error(error);
+            alert('Error deleting client');
+        }
+    };
+
+    // Fetch clients
+    useEffect(() => {
+        fetch('/api/clients')
+            .then(res => res.json())
+            .then(data => {
+                if (Array.isArray(data)) {
+                    // Map DB clients to UI Client format
+                    const mapped = data.map((c: any) => ({
+                        id: c.id,
+                        name: `${c.firstName} ${c.lastName}`,
+                        email: c.email || '',
+                        status: 'active' as const,
+                        lastVisit: new Date(c.createdAt).toLocaleDateString('el-GR'),
+                        financialStatus: 'paid' as const,
+                        phone: c.phone
+                    }));
+                    if (mapped.length > 0) {
+                        setClientsList(prev => {
+                            // Avoid duplicates if strict mode runs twice
+                            const newIds = new Set(mapped.map(m => m.id));
+                            const uniqueMock = clients.filter(c => !newIds.has(c.id));
+                            return [...mapped, ...uniqueMock];
+                        });
+                    }
+                }
+            })
+            .catch(err => console.error(err));
+    }, []);
 
     // Filter Logic
-    const filteredClients = clients.filter(client => {
+    const filteredClients = clientsList.filter(client => {
         const matchesSearch = client.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            client.email.toLowerCase().includes(searchTerm.toLowerCase());
+            client.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (client.phone && client.phone.includes(searchTerm));
 
         // For demo purposes, matching the financial filter string exactly
         // Map UI values to internal values
@@ -112,7 +174,7 @@ export default function ClientsPage() {
                         <input
                             type="text"
                             className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                            placeholder="Αναζήτηση με όνομα ή email..."
+                            placeholder="Αναζήτηση με όνομα, email ή τηλέφωνο..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
@@ -209,9 +271,26 @@ export default function ClientsPage() {
                                             {getFinancialBadge(client.financialStatus)}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <button className="text-gray-400 hover:text-gray-600">
-                                                <MoreHorizontal className="h-5 w-5" />
-                                            </button>
+                                            <div className="flex justify-end space-x-2">
+                                                <button 
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        e.stopPropagation();
+                                                        window.location.href = `/clients/new?mode=dietitian&editId=${client.id}`;
+                                                    }}
+                                                    className="text-blue-600 hover:text-blue-900"
+                                                    title="Επεξεργασία"
+                                                >
+                                                    <Edit className="h-5 w-5" />
+                                                </button>
+                                                <button 
+                                                    onClick={(e) => handleDeleteClick(e, client)}
+                                                    className="text-red-600 hover:text-red-900"
+                                                    title="Διαγραφή"
+                                                >
+                                                    <Trash2 className="h-5 w-5" />
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))}
@@ -243,6 +322,16 @@ export default function ClientsPage() {
                     </div>
                 </div>
             </div>
+
+            <ConfirmationModal
+                isOpen={deleteModalOpen}
+                onClose={() => setDeleteModalOpen(false)}
+                onConfirm={handleConfirmDelete}
+                title="Διαγραφή Πελάτη"
+                message={`Είστε σίγουρος ότι θέλετε να διαγράψετε τον πελάτη ${clientToDelete?.name}; Η ενέργεια αυτή δεν μπορεί να αναιρεθεί.`}
+                confirmText="Διαγραφή"
+                isDestructive={true}
+            />
         </AppLayout>
     );
 }

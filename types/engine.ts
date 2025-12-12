@@ -1,4 +1,5 @@
 import { ClientFormData } from './client';
+import { DailyContext } from './context';
 
 export type FoodTag =
     | 'breakfast' | 'snack' | 'main' | 'salad' | 'smoothie' | 'meal-prep' | 'drink' // Usage
@@ -115,6 +116,8 @@ export interface PlanSettings {
     calories: number;
     mealsCount: number; // 4 - 7
     startDate: string;
+    dailyContexts?: DailyContext[];
+    randomize?: boolean;
 }
 
 export type MealType = 'breakfast' | 'snack' | 'lunch' | 'dinner';
@@ -124,7 +127,9 @@ export interface DailyPlan {
     dayNumber: number;
     meals: Record<string, DietMeal>; // key: 'breakfast', 'snack1', etc.
     totalCalories: number;
+    totalCalories: number;
     macros: { protein: number; carbs: number; fat: number };
+    context?: DailyContext;
 }
 
 export interface DietMeal {
@@ -134,7 +139,8 @@ export interface DietMeal {
     description: string; // "120g Kotopoulo..."
     calories: number;
     type: MealType;
-    ingredients: string[]; // For shopping list
+    ingredients: { name: string; amount: number; unit?: string; foodId: string }[]; // Structured for editing
+    locked?: boolean;
 }
 
 export interface WeeklyPlan {
