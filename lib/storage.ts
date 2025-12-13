@@ -10,6 +10,7 @@ export interface MealPlan extends WeeklyPlan {
     clientId: string;
     name: string;
     createdAt: string;
+    status?: 'active' | 'archived'; // Add optional status
 }
 
 const DB_PATH = path.join(process.cwd(), 'data', 'db.json');
@@ -17,6 +18,10 @@ const DB_PATH = path.join(process.cwd(), 'data', 'db.json');
 interface DBData {
     clients: (ClientFormData & { id: string, createdAt: string })[];
     mealPlans: (WeeklyPlan & { id: string, clientId: string, createdAt: string, name?: string })[];
+    settings?: {
+        foodSheetUrl?: string;
+        recipeSheetUrl?: string;
+    };
 }
 
 // In-memory cache for simple locking (not robust for multi-process but fine for local div)
@@ -125,4 +130,16 @@ export async function updateMealPlan(id: string, updates: Partial<MealPlan>) {
     db.mealPlans[idx] = { ...db.mealPlans[idx], ...updates };
     await writeDB(db);
     return db.mealPlans[idx];
+}
+
+export async function getSettings() {
+    const db = await readDB();
+    return db.settings || {};
+}
+
+export async function saveSettings(settings: { foodSheetUrl?: string; recipeSheetUrl?: string }) {
+    const db = await readDB();
+    db.settings = { ...db.settings, ...settings };
+    await writeDB(db);
+    return db.settings;
 }

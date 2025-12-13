@@ -185,6 +185,7 @@ export default function Step3_Habits({ data, update }: Props) {
                             {data.coffee && (
                                 <input
                                     type="number"
+                                    step="any"
                                     placeholder="κούπες/μέρα"
                                     value={data.coffeeCups}
                                     onChange={(e) => update({ coffeeCups: e.target.value })}
@@ -255,6 +256,7 @@ export default function Step3_Habits({ data, update }: Props) {
                                 <span className="text-sm text-gray-500">Ποτά/εβδομάδα:</span>
                                 <input
                                     type="number"
+                                    step="any"
                                     value={data.alcoholFrequency}
                                     onChange={(e) => update({ alcoholFrequency: e.target.value })}
                                     className="w-20 rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm p-1 border"

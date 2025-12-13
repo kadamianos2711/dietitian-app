@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { FOOD_DB } from '@/data/foodDB';
+// import { FOOD_DB } from '@/data/foodDB';
 import { Search, Plus, Pencil, Trash2 } from 'lucide-react';
 import { AppLayout } from '@/components/layout/AppLayout';
 import FoodFormModal from '@/components/database/FoodFormModal';
@@ -11,6 +11,7 @@ export default function FoodsPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [localFoods, setLocalFoods] = useState<FoodItem[]>([]);
+    const [dbFoods, setDbFoods] = useState<FoodItem[]>([]);
     const [deletedIds, setDeletedIds] = useState<string[]>([]);
     const [editingFood, setEditingFood] = useState<FoodItem | undefined>(undefined);
 
@@ -25,6 +26,14 @@ export default function FoodsPage() {
         } catch (e) {
             console.error('Failed to parse storage', e);
         }
+
+        // Fetch DB Foods
+        fetch('/api/database', { cache: 'no-store' })
+            .then(res => res.json())
+            .then(data => {
+                if (data.foods) setDbFoods(data.foods);
+            })
+            .catch(err => console.error("Failed to fetch foods", err));
     }, []);
 
     const handleDelete = (id: string) => {
@@ -39,7 +48,7 @@ export default function FoodsPage() {
         }
 
         // 2. If it exists in DB (or we just deleted a shadow), add to deletedIds
-        if (FOOD_DB.some(f => f.id === id)) {
+        if (dbFoods.some(f => f.id === id)) {
             const updatedDeleted = [...deletedIds, id];
             setDeletedIds(updatedDeleted);
             localStorage.setItem('deleted_food_ids', JSON.stringify(updatedDeleted));
@@ -77,10 +86,20 @@ export default function FoodsPage() {
         setEditingFood(undefined);
     };
 
+    const handleResetLocal = () => {
+        if (confirm('Προσοχή! Αυτή η ενέργεια θα διαγράψει ΟΛΕΣ τις χειροκίνητες αλλαγές που έχετε κάνει και θα επαναφέρει τη βάση στην αρχική της μορφή (όπως είναι στο αρχείο). Είστε σίγουροι;')) {
+            localStorage.removeItem('custom_foods');
+            localStorage.removeItem('deleted_food_ids');
+            setLocalFoods([]);
+            setDeletedIds([]);
+            window.location.reload();
+        }
+    };
+
     // Combine static DB with local custom foods (Local shadows DB)
     const allFoods = [
         ...localFoods,
-        ...FOOD_DB.filter(dbFood => !localFoods.find(local => local.id === dbFood.id))
+        ...dbFoods.filter(dbFood => !localFoods.find(local => local.id === dbFood.id))
     ].filter(f => !deletedIds.includes(f.id)); // Filter deleted
 
     const filteredFoods = allFoods.filter(food =>
@@ -121,6 +140,17 @@ export default function FoodsPage() {
                             <Plus className="h-4 w-4 mr-2" />
                             Νέο Τρόφιμο
                         </button>
+                        
+                        {(localFoods.length > 0 || deletedIds.length > 0) && (
+                            <button
+                                onClick={handleResetLocal}
+                                className="inline-flex items-center px-4 py-2 border border-red-300 text-sm font-medium rounded-md text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                                title="Διαγραφή όλων των χειροκίνητων αλλαγών και επαναφορά από το αρχείο"
+                            >
+                                <Trash2 className="h-4 w-4 mr-2" />
+                                Επαναφορά Βάσης
+                            </button>
+                        )}
                     </div>
                 </div>
 
@@ -231,6 +261,7 @@ export default function FoodsPage() {
                     onClose={handleCloseModal}
                     onSave={handleSaveFood}
                     initialData={editingFood}
+                    foodDB={dbFoods} // Pass dynamic DB
                 />
             </div>
         </AppLayout>

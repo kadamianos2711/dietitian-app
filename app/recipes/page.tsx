@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { RECIPE_DB } from '@/data/recipeDB';
+// import { RECIPE_DB } from '@/data/recipeDB';
+import { FoodItem } from '@/types/engine';
 import { Search, Clock, BarChart, Euro, Plus, Pencil, Trash2 } from 'lucide-react';
 import RecipeModal from '@/components/meal-plan/RecipeModal';
 import RecipeFormModal from '@/components/database/RecipeFormModal';
@@ -13,6 +14,8 @@ export default function RecipesPage() {
     const [selectedRecipeName, setSelectedRecipeName] = useState<string | null>(null);
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [localRecipes, setLocalRecipes] = useState<Recipe[]>([]);
+    const [dbRecipes, setDbRecipes] = useState<Recipe[]>([]);
+    const [dbFoods, setDbFoods] = useState<FoodItem[]>([]);
     const [deletedIds, setDeletedIds] = useState<string[]>([]);
     const [editingRecipe, setEditingRecipe] = useState<Recipe | undefined>(undefined);
 
@@ -26,6 +29,15 @@ export default function RecipesPage() {
         } catch (e) {
             console.error('Failed to parse storage', e);
         }
+
+        // Fetch DB
+        fetch('/api/database')
+            .then(res => res.json())
+            .then(data => {
+                if (data.recipes) setDbRecipes(data.recipes);
+                if (data.foods) setDbFoods(data.foods);
+            })
+            .catch(err => console.error("Failed to fetch recipes", err));
     }, []);
 
     const handleDelete = (id: string, e: React.MouseEvent) => {
@@ -41,7 +53,7 @@ export default function RecipesPage() {
         }
 
         // 2. If it exists in DB (or we just deleted a shadow), add to deletedIds
-        if (RECIPE_DB.some(r => r.id === id)) {
+        if (dbRecipes.some(r => r.id === id)) {
             const updatedDeleted = [...deletedIds, id];
             setDeletedIds(updatedDeleted);
             localStorage.setItem('deleted_recipe_ids', JSON.stringify(updatedDeleted));
@@ -78,7 +90,7 @@ export default function RecipesPage() {
     // Shadowing logic for Recipes
     const allRecipes = [
         ...localRecipes,
-        ...RECIPE_DB.filter(dbRecipe => !localRecipes.find(local => local.id === dbRecipe.id))
+        ...dbRecipes.filter(dbRecipe => !localRecipes.find(local => local.id === dbRecipe.id))
     ].filter(r => !deletedIds.includes(r.id)); // Filter deleted
 
     const filteredRecipes = allRecipes.filter(recipe =>
@@ -248,13 +260,42 @@ export default function RecipesPage() {
                 <RecipeModal
                     isOpen={!!selectedRecipeName}
                     onClose={() => setSelectedRecipeName(null)}
-                    recipeName={selectedRecipeName || ''}
+                    meal={{
+                        recipeName: selectedRecipeName || '',
+                        recipeId: '', // Will search by name inside modal if ID missing, or we should pass ID. 
+                        // Actually RecipeModal expects a 'meal' object. 
+                        // The existing code was constructing a fake meal?
+                        // "recipeName={selectedRecipeName}" was passed before but RecipeModal expects `meal` prop?
+                        // Wait, previous code was: 
+                        // <RecipeModal ... recipeName={selectedRecipeName || ''} />
+                        // BUT RecipeModal props define `meal: DietMeal | null`.
+                        // AND `recipeName` wasn't in props in the file I viewed earlier.
+                        // Wait, I saw `interface Props { meal: DietMeal | null ... }`.
+                        // The original usage in RecipesPage seemed to pass `recipeName` which implies I might have misread the file or RecipesPage was broken/using different version?
+                        // Let's look at RecipesPage line 251 in previous `view_file`.
+                        // It was: `recipeName={selectedRecipeName || ''}`
+                        // BUT `RecipeModal.tsx` props were `meal: DietMeal | null`.
+                        // This implies `RecipesPage` was ALREADY passing wrong props or I missed optional props?
+                        // I checked `RecipeModal.tsx` content. It ONLY had `meal` in props.
+                        // So `RecipesPage` was likely broken or I am confused.
+                        // I will reconstruct a fake meal object to satisfy the prop.
+                        // The modal logic searches by ID OR Name.
+                        id: '', 
+                        calories: 0, 
+                        type: 'lunch', 
+                        ingredients: [], 
+                        description: '', 
+                        locked: false 
+                    }}
+                    recipeDB={dbRecipes}
+                    foodDB={dbFoods}
                 />
                 <RecipeFormModal
                     isOpen={isAddModalOpen}
                     onClose={handleCloseModal}
                     onSave={handleSaveRecipe}
                     initialData={editingRecipe}
+                    foodDB={dbFoods}
                 />
             </div>
         </AppLayout>

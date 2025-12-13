@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { cn } from '@/lib/utils';
-
+import { ClientFormData } from '@/types/client';
 interface Props {
     data: ClientFormData;
     update: (data: Partial<ClientFormData>) => void;
@@ -73,15 +73,15 @@ export default function Step8_Financial({ data, update }: Props) {
     useEffect(() => {
         const count = parseInt(data.installments);
         if (isNaN(count) || count < 2) {
-            if (data.paymentPlan.length > 0) {
+            if ((data.paymentPlan || []).length > 0) {
                 update({ paymentPlan: [] });
             }
             return;
         }
 
         // If count changes, adjust array
-        if (data.paymentPlan.length !== count) {
-            const currentPlan = [...data.paymentPlan];
+        if ((data.paymentPlan || []).length !== count) {
+            const currentPlan = [...(data.paymentPlan || [])];
 
             // If growing
             if (count > currentPlan.length) {
@@ -108,7 +108,8 @@ export default function Step8_Financial({ data, update }: Props) {
     }, [data.installments, data.finalPrice, data.initialPayment.amount]);
 
     const updateInstallment = (index: number, field: keyof typeof data.paymentPlan[0], value: any) => {
-        const newPlan = [...data.paymentPlan];
+        const newPlan = [...(data.paymentPlan || [])];
+        if (!newPlan[index]) return; // Guard
         newPlan[index] = { ...newPlan[index], [field]: value };
         update({ paymentPlan: newPlan });
     };
@@ -165,6 +166,7 @@ export default function Step8_Financial({ data, update }: Props) {
                             <div className="relative mt-1 rounded-md shadow-sm">
                                 <input
                                     type="number"
+                                    step="0.01"
                                     value={data.packagePrice}
                                     onChange={(e) => update({ packagePrice: e.target.value })}
                                     className="block w-full rounded-md border-gray-300 pl-3 pr-12 focus:border-green-500 focus:ring-green-500 sm:text-sm p-2 border"
@@ -219,6 +221,7 @@ export default function Step8_Financial({ data, update }: Props) {
                             <div className="grid grid-cols-3 gap-4">
                                 <input
                                     type="number"
+                                    step="0.01"
                                     placeholder="Ποσό (€)"
                                     value={data.initialPayment.amount}
                                     onChange={(e) => update({ initialPayment: { ...data.initialPayment, amount: e.target.value } })}
@@ -247,7 +250,7 @@ export default function Step8_Financial({ data, update }: Props) {
                         {(data.paymentPlan || []).length > 0 && (
                             <div className="space-y-3 animate-in fade-in slide-in-from-top-4">
                                 <h4 className="font-medium text-gray-900">Πλάνο Δόσεων</h4>
-                                {data.paymentPlan.map((inst, idx) => (
+                                {(data.paymentPlan || []).map((inst, idx) => (
                                     <div key={idx} className={cn(
                                         "grid grid-cols-1 md:grid-cols-9 gap-4 items-center border p-3 rounded-lg shadow-sm transition-colors",
                                         inst.isPaid ? "bg-green-50 border-green-200" : "bg-white border-gray-200"
@@ -259,6 +262,7 @@ export default function Step8_Financial({ data, update }: Props) {
                                             <label className="block text-xs text-gray-400 mb-1">Ποσό (€)</label>
                                             <input
                                                 type="number"
+                                                step="0.01"
                                                 value={inst.amount}
                                                 onChange={(e) => updateInstallment(idx, 'amount', e.target.value)}
                                                 disabled={inst.isPaid}

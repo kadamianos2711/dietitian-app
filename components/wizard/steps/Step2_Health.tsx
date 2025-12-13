@@ -36,7 +36,7 @@ const MEDICATIONS = [
 export default function Step2_Health({ data, update }: Props) {
 
     const toggleCondition = (condition: string) => {
-        const current = data.conditions;
+        const current = data.conditions || [];
         if (current.includes(condition)) {
             update({ conditions: current.filter(c => c !== condition) });
         } else {
@@ -45,7 +45,7 @@ export default function Step2_Health({ data, update }: Props) {
     };
 
     const toggleMedication = (med: string) => {
-        const current = data.medications;
+        const current = data.medications || [];
         if (current.includes(med)) {
             update({ medications: current.filter(m => m !== med) });
         } else {
@@ -67,7 +67,7 @@ export default function Step2_Health({ data, update }: Props) {
                             <label key={condition} className="flex items-center space-x-3 p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">
                                 <input
                                     type="checkbox"
-                                    checked={data.conditions.includes(condition)}
+                                    checked={(data.conditions || []).includes(condition)}
                                     onChange={() => toggleCondition(condition)}
                                     className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                                 />
@@ -99,7 +99,7 @@ export default function Step2_Health({ data, update }: Props) {
                         <label key={med} className="flex items-center space-x-3 p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">
                             <input
                                 type="checkbox"
-                                checked={data.medications.includes(med)}
+                                checked={(data.medications || []).includes(med)}
                                 onChange={() => toggleMedication(med)}
                                 className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                             />

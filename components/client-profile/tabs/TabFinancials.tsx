@@ -40,7 +40,7 @@ export default function TabFinancials({ client }: Props) {
     const [isAddingPayment, setIsAddingPayment] = useState(false);
     const [newPayment, setNewPayment] = useState<Partial<Payment>>({
         date: new Date().toISOString().split('T')[0],
-        amount: 0,
+        amount: 0, 
         method: 'cash',
         description: '',
         isPaid: true
@@ -181,6 +181,7 @@ export default function TabFinancials({ client }: Props) {
                             <label className="block text-xs font-semibold text-blue-600 uppercase mb-1">Τιμή</label>
                             <input
                                 type="number"
+                                step="0.01"
                                 value={newPackage.price}
                                 onChange={e => setNewPackage({ ...newPackage, price: e.target.value })}
                                 className="w-full rounded-md border-blue-300 p-2 text-sm"
@@ -271,7 +272,7 @@ export default function TabFinancials({ client }: Props) {
                         <h4 className="text-sm font-bold text-green-800 mb-3">Καταχώρηση Πληρωμής</h4>
                         <div className="grid grid-cols-1 sm:grid-cols-5 gap-3 items-end">
                             <input type="date" className="p-2 border rounded text-sm" value={newPayment.date} onChange={e => setNewPayment({ ...newPayment, date: e.target.value })} />
-                            <input type="number" placeholder="Ποσό" className="p-2 border rounded text-sm" value={newPayment.amount} onChange={e => setNewPayment({ ...newPayment, amount: Number(e.target.value) })} />
+                            <input type="number" step="0.01" placeholder="Ποσό" className="p-2 border rounded text-sm" value={newPayment.amount} onChange={e => setNewPayment({ ...newPayment, amount: e.target.value as any })} />
                             <select className="p-2 border rounded text-sm" value={newPayment.method} onChange={e => setNewPayment({ ...newPayment, method: e.target.value as any })}>
                                 <option value="cash">Μετρητά</option>
                                 <option value="card">Κάρτα</option>

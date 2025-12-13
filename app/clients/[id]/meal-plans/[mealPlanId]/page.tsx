@@ -8,7 +8,7 @@ import { format } from 'date-fns';
 import ShoppingListModal from '@/components/meal-plan/ShoppingListModal';
 import RecipeModal from '@/components/meal-plan/RecipeModal';
 import { generateWeeklyPlan, generateDailyPlan, getActiveSlots } from '@/lib/diet-engine/engine';
-import { WeeklyPlan, DietMeal } from '@/types/engine';
+import { WeeklyPlan, DietMeal, FoodItem, Recipe } from '@/types/engine';
 import { initialClientState } from '@/types/client';
 import DailyContextModal from '@/components/meal-plan/DailyContextModal';
 import { DailyContext } from '@/types/context';
@@ -55,6 +55,10 @@ export default function EditMealPlanPage() {
     const [dailyContexts, setDailyContexts] = useState<DailyContext[]>([]);
     const [editingDay, setEditingDay] = useState<number | null>(null);
 
+    // DB State
+    const [foodDB, setFoodDB] = useState<FoodItem[]>([]);
+    const [recipeDB, setRecipeDB] = useState<Recipe[]>([]);
+
     // Client Data State
     const [clientData, setClientData] = useState<typeof initialClientState>(initialClientState);
 
@@ -68,6 +72,16 @@ export default function EditMealPlanPage() {
                 if (clientD && !clientD.error) {
                     setClientData(prev => ({ ...prev, ...clientD, foodPreferences: clientD.foodPreferences || {} }));
                 }
+
+                // Fetch DB (Parallel with Plan fetch)
+                fetch('/api/database')
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.foods) setFoodDB(data.foods);
+                        if (data.recipes) setRecipeDB(data.recipes);
+                    })
+                    .catch(err => console.error("Failed to load DB", err));
+
 
                 // Fetch Meal Plan
                 const planRes = await fetch(`/api/meal-plans?id=${mealPlanId}`);
@@ -141,7 +155,7 @@ export default function EditMealPlanPage() {
                 startDate: startDate,
                 dailyContexts: dailyContexts,
                 randomize: true
-            }, weeklyPlan || undefined);
+            }, foodDB, recipeDB, weeklyPlan || undefined);
 
             setWeeklyPlan(plan);
             setIsGenerating(false);
@@ -323,7 +337,7 @@ export default function EditMealPlanPage() {
                                                                     const activeSlots = getActiveSlots(parseInt(mealsCount));
                                                                     const existingDay = weeklyPlan?.days[dayIndex];
                                                                     
-                                                                    const newDay = generateDailyPlan(dayIndex + 1, currentClient, settings, activeSlots, existingDay);
+                                                                    const newDay = generateDailyPlan(dayIndex + 1, currentClient, settings, activeSlots, foodDB, recipeDB, existingDay);
                                                                     
                                                                     if (weeklyPlan) {
                                                                         const newPlan = { ...weeklyPlan };
@@ -411,6 +425,8 @@ export default function EditMealPlanPage() {
                     meal={selectedMeal?.meal || null}
                     client={clientData}
                     onUpdateClient={setClientData}
+                    recipeDB={recipeDB}
+                    foodDB={foodDB}
                     onClose={() => setSelectedMeal(null)}
                     onUpdateMeal={(newMeal) => {
                         if (selectedMeal && weeklyPlan) {

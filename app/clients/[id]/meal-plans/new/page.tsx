@@ -8,7 +8,7 @@ import { format } from 'date-fns';
 import ShoppingListModal from '@/components/meal-plan/ShoppingListModal';
 import RecipeModal from '@/components/meal-plan/RecipeModal';
 import { generateWeeklyPlan, generateDailyPlan, getActiveSlots } from '@/lib/diet-engine/engine';
-import { WeeklyPlan, DietMeal } from '@/types/engine';
+import { WeeklyPlan, DietMeal, FoodItem, Recipe } from '@/types/engine';
 import { initialClientState } from '@/types/client';
 import DailyContextModal from '@/components/meal-plan/DailyContextModal';
 import { DailyContext } from '@/types/context';
@@ -60,25 +60,39 @@ export default function CreateMealPlanPage() {
     // Client Data State
     const [clientData, setClientData] = useState<typeof initialClientState>(initialClientState);
 
-    // Fetch Client Data
+    // DB State
+    const [foodDB, setFoodDB] = useState<FoodItem[]>([]);
+    const [recipeDB, setRecipeDB] = useState<Recipe[]>([]);
+    const [isDbLoading, setIsDbLoading] = useState(true);
+
+    // Fetch Client & DB Data
     useEffect(() => {
-        if (params.id) {
-            fetch(`/api/clients?id=${params.id}`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data && !data.error) {
-                         // Merge with initial state to ensure all fields exist
-                         // If data comes from JSON DB it might match Client interface but let's be safe
-                         setClientData(prev => ({
-                             ...prev,
-                             ...data,
-                             // Ensure foodPreferences is object
-                             foodPreferences: data.foodPreferences || {}
-                         }));
-                    }
-                })
-                .catch(err => console.error("Failed to load client", err));
-        }
+        const fetchData = async () => {
+             // 1. Client
+             if (params.id) {
+                 fetch(`/api/clients?id=${params.id}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data && !data.error) {
+                             setClientData(prev => ({ ...prev, ...data, foodPreferences: data.foodPreferences || {} }));
+                        }
+                    })
+                    .catch(err => console.error("Failed to load client", err));
+             }
+
+             // 2. Database
+             try {
+                 const res = await fetch('/api/database');
+                 const data = await res.json();
+                 if (data.foods) setFoodDB(data.foods);
+                 if (data.recipes) setRecipeDB(data.recipes);
+             } catch (error) {
+                 console.error("Failed to load DB", error);
+             } finally {
+                 setIsDbLoading(false);
+             }
+        };
+        fetchData();
     }, [params.id]);
 
     // Helper to get Meal from day
@@ -102,7 +116,7 @@ export default function CreateMealPlanPage() {
                 startDate: startDate,
                 dailyContexts: dailyContexts,
                 randomize: true
-            }, weeklyPlan || undefined);
+            }, foodDB, recipeDB, weeklyPlan || undefined);
 
             setWeeklyPlan(plan);
             setIsGenerating(false);
@@ -283,9 +297,9 @@ export default function CreateMealPlanPage() {
                                 <div className="flex items-center space-x-4">
                                     <button
                                         onClick={handleAutoGenerate}
-                                        disabled={isGenerating}
+                                        disabled={isGenerating || isDbLoading}
                                         className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium text-white shadow-sm transition-all
-                                            ${isGenerating ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 hover:shadow-md'}`}
+                                            ${(isGenerating || isDbLoading) ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 hover:shadow-md'}`}
                                     >
                                         {isGenerating ? (
                                             <>
@@ -384,7 +398,7 @@ export default function CreateMealPlanPage() {
                                                                         const activeSlots = getActiveSlots(parseInt(mealsCount));
                                                                         const existingDay = weeklyPlan?.days[dayIndex];
                                                                         
-                                                                        const newDay = generateDailyPlan(dayIndex + 1, currentClient, settings, activeSlots, existingDay);
+                                                                        const newDay = generateDailyPlan(dayIndex + 1, currentClient, settings, activeSlots, foodDB, recipeDB, existingDay);
                                                                         
                                                                         if (weeklyPlan) {
                                                                             const newPlan = { ...weeklyPlan };
@@ -469,13 +483,16 @@ export default function CreateMealPlanPage() {
                 <ShoppingListModal
                     isOpen={showShoppingList}
                     onClose={() => setShowShoppingList(false)}
+                    plan={weeklyPlan}
                 />
 
                 <RecipeModal
                     isOpen={!!selectedMeal}
                     meal={selectedMeal?.meal || null}
-                    client={clientData} // Pass client data
-                    onUpdateClient={setClientData} // Pass updater
+                    client={clientData} 
+                    onUpdateClient={setClientData} 
+                    recipeDB={recipeDB} // Pass dynamic DB
+                    foodDB={foodDB}
                     onClose={() => setSelectedMeal(null)}
                     onUpdateMeal={(newMeal) => {
                         if (selectedMeal && weeklyPlan) {

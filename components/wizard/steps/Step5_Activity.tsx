@@ -53,6 +53,7 @@ export default function Step5_Activity({ data, update }: Props) {
                         <label className="block text-sm font-medium text-gray-700">Συχνότητα (φορές / εβδομάδα)</label>
                         <input
                             type="number"
+                            step="any"
                             value={data.exerciseFrequency}
                             onChange={(e) => update({ exerciseFrequency: e.target.value })}
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm p-2 border"
@@ -69,6 +70,7 @@ export default function Step5_Activity({ data, update }: Props) {
                 <div className="flex items-center space-x-2">
                     <input
                         type="number"
+                        step="any"
                         value={data.sleepHours}
                         onChange={(e) => update({ sleepHours: e.target.value })}
                         className="block w-24 rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm p-2 border"

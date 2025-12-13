@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { X, Printer, Lock, Unlock, RefreshCw, ChevronRight, Heart, ThumbsUp, ThumbsDown } from 'lucide-react';
-import { RECIPE_DB } from '@/data/recipeDB';
-import { DietMeal, Recipe } from '@/types/engine';
+// import { RECIPE_DB } from '@/data/recipeDB';
+import { DietMeal, Recipe, FoodItem } from '@/types/engine';
 import { getRecipeAlternates, getIngredientSubstitutes, smartRound } from '@/lib/diet-engine/engine';
 import { initialClientState, ClientFormData, FoodPreference } from '@/types/client'; // Using default for now
 
@@ -10,21 +10,24 @@ interface Props {
     isOpen: boolean;
     onClose: () => void;
     meal: DietMeal | null;
-    onUpdateMeal: (newMeal: DietMeal) => void;
+    onUpdateMeal?: (newMeal: DietMeal) => void;
     client?: ClientFormData;
     onUpdateClient?: (client: ClientFormData) => void;
+    recipeDB: Recipe[];
+    foodDB: FoodItem[];
 }
 
-export default function RecipeModal({ isOpen, onClose, meal, onUpdateMeal, client, onUpdateClient }: Props) {
+export default function RecipeModal({ isOpen, onClose, meal, onUpdateMeal, client, onUpdateClient, recipeDB = [], foodDB = [] }: Props) {
     const [view, setView] = useState<'details' | 'replace_meal' | 'replace_ingredient'>('details');
     const [selectedIngIndex, setSelectedIngIndex] = useState<number | null>(null);
 
     if (!isOpen || !meal) return null;
 
-    const recipe = RECIPE_DB.find(r => r.id === meal.recipeId) || RECIPE_DB.find(r => r.name === meal.recipeName);
+    const recipe = recipeDB.find(r => r.id === meal.recipeId) || recipeDB.find(r => r.name === meal.recipeName);
 
     // Locking
     const toggleLock = () => {
+        if (!meal || !onUpdateMeal) return;
         onUpdateMeal({ ...meal, locked: !meal.locked });
     };
 
@@ -78,7 +81,7 @@ export default function RecipeModal({ isOpen, onClose, meal, onUpdateMeal, clien
 
     // Replace Meal Logic
     const alternates = view === 'replace_meal' 
-        ? getRecipeAlternates(meal.recipeId, meal.type, initialClientState) // Passing mock client for now
+        ? getRecipeAlternates(meal.recipeId, meal.type, initialClientState, recipeDB) // Passing mock client for now
         : [];
 
     const handleReplaceMeal = (newRecipe: Recipe) => {
@@ -101,20 +104,22 @@ export default function RecipeModal({ isOpen, onClose, meal, onUpdateMeal, clien
         // Update description
         const desc = newIngredients.map(i => `${i.amount}${i.unit} ${i.name}`).join(', ');
 
-        onUpdateMeal({
-            ...meal,
-            recipeId: newRecipe.id,
-            recipeName: newRecipe.name,
-            description: desc,
-            ingredients: newIngredients,
-            // Keep calories same
-        });
+        if (onUpdateMeal) {
+            onUpdateMeal({
+                ...meal,
+                recipeId: newRecipe.id,
+                recipeName: newRecipe.name,
+                description: desc,
+                ingredients: newIngredients,
+                // Keep calories same
+            });
+        }
         setView('details');
     };
 
     // Replace Ingredient Logic
     const substitutes = (view === 'replace_ingredient' && selectedIngIndex !== null)
-        ? getIngredientSubstitutes(meal.ingredients[selectedIngIndex].foodId)
+        ? getIngredientSubstitutes(meal.ingredients[selectedIngIndex].foodId, foodDB)
         : [];
     
     const handleReplaceIngredient = (sub: { foodId: string, name: string }) => {
@@ -144,12 +149,14 @@ export default function RecipeModal({ isOpen, onClose, meal, onUpdateMeal, clien
              newRecipeName = newRecipeName.replace(oldNameRegex, sub.name);
         }
 
-        onUpdateMeal({
-            ...meal,
-            recipeName: newRecipeName,
-            ingredients: newIngs,
-            description: desc
-        });
+        if (onUpdateMeal) {
+            onUpdateMeal({
+                ...meal,
+                recipeName: newRecipeName,
+                ingredients: newIngs,
+                description: desc
+            });
+        }
         setView('details');
         setSelectedIngIndex(null);
     };

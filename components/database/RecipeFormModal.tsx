@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react';
 import { X, Plus, Trash } from 'lucide-react';
 import { Recipe, RecipeCategory, RecipeTime, RecipeCost, RecipeDifficulty, RecipeIngredient, FoodItem } from '@/types/engine';
-import { FOOD_DB } from '@/data/foodDB';
+// import { FOOD_DB } from '@/data/foodDB';
 import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
@@ -11,9 +11,10 @@ interface Props {
     onClose: () => void;
     onSave: (recipe: Recipe) => void;
     initialData?: Recipe;
+    foodDB: FoodItem[];  
 }
 
-export default function RecipeFormModal({ isOpen, onClose, onSave, initialData }: Props) {
+export default function RecipeFormModal({ isOpen, onClose, onSave, initialData, foodDB = [] }: Props) {
     if (!isOpen) return null;
 
     // Load custom foods optionally if we were passing them in props, but for now we use FOOD_DB + Local Foods from localStorage?
@@ -26,7 +27,7 @@ export default function RecipeFormModal({ isOpen, onClose, onSave, initialData }
         return [];
     });
 
-    const allFoods = useMemo(() => [...localFoods, ...FOOD_DB], [localFoods]);
+    const allFoods = useMemo(() => [...localFoods, ...foodDB], [localFoods, foodDB]);
 
     const [formData, setFormData] = useState<Partial<Recipe>>({
         name: '',
@@ -50,7 +51,7 @@ export default function RecipeFormModal({ isOpen, onClose, onSave, initialData }
 
     const [ingredientSearch, setIngredientSearch] = useState('');
     const [selectedFoodId, setSelectedFoodId] = useState('');
-    const [amount, setAmount] = useState(100);
+    const [amount, setAmount] = useState<string | number>(100);
     const [instructionText, setInstructionText] = useState('');
 
     const calculateMacros = (ingredients: RecipeIngredient[]) => {
@@ -83,7 +84,7 @@ export default function RecipeFormModal({ isOpen, onClose, onSave, initialData }
         const newIngredient: RecipeIngredient = {
             foodId: food.id,
             name: food.name, // Snapshot name
-            amount: amount,
+                amount: Number(amount),
             unit: 'g'
         };
 
@@ -125,7 +126,7 @@ export default function RecipeFormModal({ isOpen, onClose, onSave, initialData }
             instructions: formData.instructions || [],
             macros: macros,
             tags: formData.tags || [],
-            servings: formData.servings || 1
+            servings: Number(formData.servings) || 1
         };
 
         onSave(newRecipe);
@@ -201,10 +202,11 @@ export default function RecipeFormModal({ isOpen, onClose, onSave, initialData }
                                 <label className="text-xs font-medium text-gray-700 whitespace-nowrap">Μερίδες:</label>
                                 <input
                                     type="number"
+                                    step="any"
                                     min="1"
                                     className="w-full px-2 py-2 border border-gray-300 rounded-md text-sm"
                                     value={formData.servings}
-                                    onChange={e => setFormData({ ...formData, servings: Number(e.target.value) })}
+                                    onChange={e => setFormData({ ...formData, servings: e.target.value as any })}
                                 />
                             </div>
                         </div>
@@ -246,9 +248,10 @@ export default function RecipeFormModal({ isOpen, onClose, onSave, initialData }
                             </div>
                             <input
                                 type="number"
+                                step="any"
                                 className="w-20 px-3 py-2 border border-gray-300 rounded-md"
                                 value={amount}
-                                onChange={e => setAmount(Number(e.target.value))}
+                                onChange={e => setAmount(e.target.value)}
                             />
                             <div className="py-2 text-sm text-gray-500">g</div>
                             <button

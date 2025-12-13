@@ -8,7 +8,9 @@ export type FoodTag =
     | 'kidney-friendly' | 'uric-acid-friendly' | 'nafld-friendly'
     | 'constipation-friendly' | 'ibs-friendly' | 'low-fodmap' | 'gastritis-friendly'
     | 'gluten-intolerance-friendly' | 'easy-digest' | 'high-protein' | 'low-carb'
-    | 'high-fiber' | 'omega-3' | 'iron' | 'calcium' | 'oxidants'; // Added nutrient tags
+    | 'high-fiber' | 'omega-3' | 'iron' | 'calcium' | 'oxidants' | 'high-fat'
+    | 'low-fat' | 'diet-friendly' | 'keto-friendly' | 'low-cal' | 'hydrating'
+    | 'detox' | 'potassium' | 'energy' | 'vitamin-c' | 'raw'; // Added missing tags from DB
 
 export type FoodCategory =
     | 'Fruits' | 'Vegetables' | 'Protein' | 'Starch'
@@ -42,6 +44,8 @@ export interface Micronutrients {
     vitaminB6?: number; // mg
     vitaminB9?: number; // ug
     vitaminB12?: number; // ug
+    omega3?: number; // mg
+    lycopene?: number; // ug
 }
 
 export interface FoodItem {
@@ -127,7 +131,6 @@ export interface DailyPlan {
     dayNumber: number;
     meals: Record<string, DietMeal>; // key: 'breakfast', 'snack1', etc.
     totalCalories: number;
-    totalCalories: number;
     macros: { protein: number; carbs: number; fat: number };
     context?: DailyContext;
 }
@@ -144,6 +147,9 @@ export interface DietMeal {
 }
 
 export interface WeeklyPlan {
+    id?: string; // Add optional ID
+    name?: string; // Add optional Name
     days: DailyPlan[];
     averageCalories: number;
+    settings?: PlanSettings;
 }

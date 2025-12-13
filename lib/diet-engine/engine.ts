@@ -1,7 +1,8 @@
 import { ClientFormData } from '@/types/client';
 import { PlanSettings, WeeklyPlan, DailyPlan, DietMeal, MealType, Recipe } from '@/types/engine';
-import { RECIPE_DB } from '@/data/recipeDB';
-import { FOOD_DB } from '@/data/foodDB';
+// Removed static DB imports to support dynamic loading
+// import { RECIPE_DB } from '@/data/recipeDB';
+// import { FOOD_DB } from '@/data/foodDB';
 import { v4 as uuidv4 } from 'uuid';
 
 const MEAL_RATIOS: Record<number, Record<string, number>> = {
@@ -22,19 +23,21 @@ const COLUMN_TO_TYPE: Record<string, MealType> = {
     bedtime: 'snack'
 };
 
-function getCookedFactor(foodId: string): number {
-    const food = FOOD_DB.find(f => f.id === foodId);
+function getCookedFactor(foodId: string, foodDB: FoodItem[]): number {
+    const food = foodDB.find(f => f.id === foodId);
     return food ? food.conversionFactor : 1.0;
 }
 
-export function generateWeeklyPlan(client: ClientFormData, settings: PlanSettings, existingPlan?: WeeklyPlan): WeeklyPlan {
+import { FoodItem } from '@/types/engine'; // Ensure FoodItem is imported if not already
+
+export function generateWeeklyPlan(client: ClientFormData, settings: PlanSettings, foodDB: FoodItem[], recipeDB: Recipe[], existingPlan?: WeeklyPlan): WeeklyPlan {
     const days: DailyPlan[] = [];
     let weeklyCalories = 0;
     const activeSlots = getActiveSlots(settings.mealsCount);
 
     for (let i = 0; i < 7; i++) {
         const existingDay = existingPlan?.days[i];
-        const dayPlan = generateDailyPlan(i + 1, client, settings, activeSlots, existingDay);
+        const dayPlan = generateDailyPlan(i + 1, client, settings, activeSlots, foodDB, recipeDB, existingDay);
         days.push(dayPlan);
         weeklyCalories += dayPlan.totalCalories;
     }
@@ -65,7 +68,7 @@ function getTargetCaloriesForSlot(totalCalories: number, slotId: string, count: 
     return Math.round(totalCalories * ratio);
 }
 
-export function generateDailyPlan(dayNum: number, client: ClientFormData, settings: PlanSettings, slots: string[], existingDay?: DailyPlan): DailyPlan {
+export function generateDailyPlan(dayNum: number, client: ClientFormData, settings: PlanSettings, slots: string[], foodDB: FoodItem[], recipeDB: Recipe[], existingDay?: DailyPlan): DailyPlan {
     const meals: Record<string, DietMeal> = {};
     let dailyCalories = 0;
     let protein = 0, carbs = 0, fat = 0;
@@ -75,32 +78,32 @@ export function generateDailyPlan(dayNum: number, client: ClientFormData, settin
     const context = settings.dailyContexts?.find(c => c.dayIndex === dayNum - 1);
 
     slots.forEach(slotId => {
+        // ... locking logic ... (kept simple by just changing the call below)
+        
         // LOCKING LOGIC
         if (existingDay && existingDay.meals[slotId] && existingDay.meals[slotId].locked) {
             const lockedMeal = existingDay.meals[slotId];
             meals[slotId] = lockedMeal;
             dailyCalories += lockedMeal.calories;
-            // Note: We don't verify macros for locked meals, just add them up
-            // Ideally we should look up recipe again to get raw macros, but let's assume accuracy
             return; 
         }
 
         const mealType = COLUMN_TO_TYPE[slotId] || 'snack';
         const targetCals = getTargetCaloriesForSlot(settings.calories, slotId, settings.mealsCount);
 
-        const recipe = selectRecipe(client, mealType, slotId, dayNum, context, settings.randomize);
+        const recipe = selectRecipe(client, mealType, slotId, dayNum, recipeDB, context, settings.randomize);
 
         if (recipe) {
             const factor = targetCals / recipe.macros.calories;
             const finalCals = Math.round(recipe.macros.calories * factor);
 
             // Format Description with COOKED weights if applicable
-            const description = formatIngredientsForDiet(recipe, factor);
+            const description = formatIngredientsForDiet(recipe, factor, foodDB);
 
             // Structured Ingredients
             const structuredIngredients = recipe.ingredients.map(ing => {
                 const rawAmount = ing.amount * factor;
-                const convFactor = getCookedFactor(ing.foodId);
+                const convFactor = getCookedFactor(ing.foodId, foodDB);
                 const amount = smartRound(rawAmount * convFactor);
                 return {
                     name: ing.name,
@@ -147,7 +150,7 @@ export function generateDailyPlan(dayNum: number, client: ClientFormData, settin
 
 import { DailyContext, DailyConditionType } from '@/types/context';
 
-function selectRecipe(client: ClientFormData, type: MealType, slotId: string, dayNum: number, context?: DailyContext, randomize?: boolean): Recipe | null {
+function selectRecipe(client: ClientFormData, type: MealType, slotId: string, dayNum: number, recipeDB: Recipe[], context?: DailyContext, randomize?: boolean): Recipe | null {
     // 1. Filter by Category / Type
     // ... (rest is same) -> Need to be careful not to delete logic. 
     // I should probably use multi_replace or use a larger chunk.
@@ -158,8 +161,7 @@ function selectRecipe(client: ClientFormData, type: MealType, slotId: string, da
     // I will use multi_replace.
 
     // 1. Filter by Category / Type
-    // NOTE: 'dinner' usually takes 'main' recipes in this simple logic, unless we strictly filter for dinner recipes
-    let candidates = RECIPE_DB.filter(r => {
+    let candidates = recipeDB.filter(r => {
         if (type === 'lunch' || type === 'dinner') return r.category === 'main' || r.tags.includes('main');
         return r.category === type || r.tags.includes(type);
     });
@@ -293,14 +295,14 @@ const smartRound = (amount: number): number => {
     return Math.round(amount / 10) * 10;
 };
 
-function formatIngredientsForDiet(recipe: Recipe, factor: number): string {
+function formatIngredientsForDiet(recipe: Recipe, factor: number, foodDB: FoodItem[]): string {
     // For the diet plan (what client sees), we might want to approximate Cooked weight for main items
     // and just Raw for others, or just list main items.
 
     return recipe.ingredients.map(ing => {
         const rawAmount = ing.amount * factor;
         // Use foodId to get accurate factor
-        const convFactor = getCookedFactor(ing.foodId);
+        const convFactor = getCookedFactor(ing.foodId, foodDB);
         let amount = rawAmount * convFactor;
 
         // Apply smart rounding
@@ -314,10 +316,10 @@ function formatIngredientsForDiet(recipe: Recipe, factor: number): string {
 
 // --- ADVANCED HELPERS ---
 
-export function getRecipeAlternates(currentRecipeId: string, type: MealType, client: ClientFormData, context?: DailyContext): Recipe[] {
+export function getRecipeAlternates(currentRecipeId: string, type: MealType, client: ClientFormData, recipeDB: Recipe[], context?: DailyContext): Recipe[] {
     // Re-use select logic but get ALL candidates
     // 1. Filter by Category
-    let candidates = RECIPE_DB.filter(r => {
+    let candidates = recipeDB.filter(r => {
         if (r.id === currentRecipeId) return false; // Exclude current
         if (type === 'lunch' || type === 'dinner') return r.category === 'main' || r.tags.includes('main');
         return r.category === type || r.tags.includes(type);
@@ -350,13 +352,13 @@ export function getRecipeAlternates(currentRecipeId: string, type: MealType, cli
     return candidates.slice(0, 5);
 }
 
-export function getIngredientSubstitutes(originalFoodId: string): { foodId: string, name: string }[] {
-    const original = FOOD_DB.find(f => f.id === originalFoodId);
+export function getIngredientSubstitutes(originalFoodId: string, foodDB: FoodItem[]): { foodId: string, name: string }[] {
+    const original = foodDB.find(f => f.id === originalFoodId);
     if (!original) return [];
 
     // Simple matching: Same category, similar macros?
     // For MVP: Return foods of SAME category.
-    return FOOD_DB.filter(f => 
+    return foodDB.filter(f => 
         f.id !== originalFoodId && 
         f.category === original.category &&
         f.form === original.form // raw vs cooked match usually good

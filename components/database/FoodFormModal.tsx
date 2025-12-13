@@ -10,6 +10,7 @@ interface Props {
     onClose: () => void;
     onSave: (food: FoodItem) => void;
     initialData?: FoodItem;
+    foodDB?: FoodItem[]; // Made optional to avoid strict issues if not passed
 }
 
 const DEFAULT_CONVERSION_FACTORS: Record<string, number> = {
@@ -25,7 +26,7 @@ const DEFAULT_CONVERSION_FACTORS: Record<string, number> = {
 
 type Tab = 'basic' | 'micros' | 'tags';
 
-export default function FoodFormModal({ isOpen, onClose, onSave, initialData }: Props) {
+export default function FoodFormModal({ isOpen, onClose, onSave, initialData, foodDB = [] }: Props) {
     if (!isOpen) return null;
 
     const [activeTab, setActiveTab] = useState<Tab>('basic');
@@ -56,12 +57,12 @@ export default function FoodFormModal({ isOpen, onClose, onSave, initialData }: 
         });
     };
 
-    const handleMicroChange = (key: keyof Micronutrients, value: string) => {
+    const handleMicroChange = (key: keyof Micronutrients, value: any) => {
         setFormData({
             ...formData,
             micros: {
                 ...formData.micros,
-                [key]: Number(value) || 0
+                [key]: value
             }
         });
     };
@@ -189,37 +190,41 @@ export default function FoodFormModal({ isOpen, onClose, onSave, initialData }: 
                                             <label className="block text-xs font-medium text-gray-600 mb-1">Θερμίδες</label>
                                             <input
                                                 type="number"
+                                                step="any"
                                                 required
                                                 className="w-full px-2 py-2 border border-gray-300 rounded-md text-sm"
                                                 value={formData.macros?.calories}
-                                                onChange={e => setFormData({ ...formData, macros: { ...formData.macros!, calories: Number(e.target.value) } })}
+                                                onChange={e => setFormData({ ...formData, macros: { ...formData.macros!, calories: e.target.value as any } })}
                                             />
                                         </div>
                                         <div>
                                             <label className="block text-xs font-medium text-blue-600 mb-1">Πρωτεΐνη</label>
                                             <input
                                                 type="number"
+                                                step="any"
                                                 className="w-full px-2 py-2 border border-gray-300 rounded-md text-sm"
                                                 value={formData.macros?.protein}
-                                                onChange={e => setFormData({ ...formData, macros: { ...formData.macros!, protein: Number(e.target.value) } })}
+                                                onChange={e => setFormData({ ...formData, macros: { ...formData.macros!, protein: e.target.value as any } })}
                                             />
                                         </div>
                                         <div>
                                             <label className="block text-xs font-medium text-green-600 mb-1">Υδατ/κες</label>
                                             <input
                                                 type="number"
+                                                step="any"
                                                 className="w-full px-2 py-2 border border-gray-300 rounded-md text-sm"
                                                 value={formData.macros?.carbs}
-                                                onChange={e => setFormData({ ...formData, macros: { ...formData.macros!, carbs: Number(e.target.value) } })}
+                                                onChange={e => setFormData({ ...formData, macros: { ...formData.macros!, carbs: e.target.value as any } })}
                                             />
                                         </div>
                                         <div>
                                             <label className="block text-xs font-medium text-yellow-600 mb-1">Λιπαρά</label>
                                             <input
                                                 type="number"
+                                                step="any"
                                                 className="w-full px-2 py-2 border border-gray-300 rounded-md text-sm"
                                                 value={formData.macros?.fat}
-                                                onChange={e => setFormData({ ...formData, macros: { ...formData.macros!, fat: Number(e.target.value) } })}
+                                                onChange={e => setFormData({ ...formData, macros: { ...formData.macros!, fat: e.target.value as any } })}
                                             />
                                         </div>
                                     </div>
@@ -232,10 +237,10 @@ export default function FoodFormModal({ isOpen, onClose, onSave, initialData }: 
                                     <div className="flex items-center space-x-2">
                                         <input
                                             type="number"
-                                            step="0.1"
+                                            step="any"
                                             className="w-24 px-3 py-2 border border-gray-300 rounded-md"
                                             value={formData.conversionFactor}
-                                            onChange={e => setFormData({ ...formData, conversionFactor: Number(e.target.value) })}
+                                            onChange={e => setFormData({ ...formData, conversionFactor: e.target.value as any })}
                                         />
                                         <span className="text-xs text-gray-500">
                                             {Number(formData.conversionFactor) > 1 ? '(Το τρόφιμο διογκώνεται)' : '(Το τρόφιμο χάνει βάρος)'}
@@ -271,6 +276,7 @@ export default function FoodFormModal({ isOpen, onClose, onSave, initialData }: 
                                             <label className="block text-xs font-medium text-gray-600 mb-1">{m.label}</label>
                                             <input
                                                 type="number"
+                                                step="any"
                                                 className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
                                                 value={formData.micros?.[m.key as keyof Micronutrients] || ''}
                                                 onChange={e => handleMicroChange(m.key as keyof Micronutrients, e.target.value)}
@@ -295,6 +301,7 @@ export default function FoodFormModal({ isOpen, onClose, onSave, initialData }: 
                                             <label className="block text-xs font-medium text-gray-600 mb-1">{v.label}</label>
                                             <input
                                                 type="number"
+                                                step="any"
                                                 className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
                                                 value={formData.micros?.[v.key as keyof Micronutrients] || ''}
                                                 onChange={e => handleMicroChange(v.key as keyof Micronutrients, e.target.value)}

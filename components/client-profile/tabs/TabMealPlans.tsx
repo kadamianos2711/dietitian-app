@@ -118,10 +118,10 @@ export default function TabMealPlans({ client }: TabMealPlansProps) {
                                         <div className="text-xs text-gray-500">{format(new Date(plan.createdAt), 'dd/MM/yyyy')}</div>
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                        {plan.calories} kcal
+                                        {plan.settings?.calories || 0} kcal
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                        {plan.mealsCount}
+                                        {plan.settings?.mealsCount || 0}
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap">
                                         <span className={`inline-flex px-2 text-xs font-semibold leading-5 rounded-full ${plan.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>

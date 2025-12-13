@@ -20,7 +20,7 @@ import TabFeedback from '@/components/client-profile/tabs/TabFeedback';
 // Printing
 import { Printer } from 'lucide-react';
 import RecommendationsPrint from '@/components/print/RecommendationsPrint';
-import { RECOMMENDATIONS_DB } from '@/data/recommendations';
+import { RECOMMENDATIONS_DB, RecommendationData } from '@/data/recommendations';
 
 import { useParams, useSearchParams } from 'next/navigation';
 
